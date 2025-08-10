@@ -1459,9 +1459,7 @@
 <!-- Firebase Auth -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>\
     <script>
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
+       
         const firebaseConfig = {
         apiKey: "AIzaSyBIJcN5IUCZSaxO6AWiCYDHB-Kxrk1UEz4",
         authDomain: "wuwaemy.firebaseapp.com",
@@ -1550,7 +1548,6 @@ const auth = firebase.auth();
                {name: "Commando of Conviction", rarity: 4, image: "https://www.prydwen.gg/static/fdd237561891d62b1a797f4abc373e59/d8057/21020044.webp" },
                {name: "Dauntless Evernight", rarity: 4, image: "https://www.prydwen.gg/static/ff9b1b486e67e7133c92236b8a25b899/d8057/21010044.webp" },
                {name: "Discord", rarity: 4, image: "https://www.prydwen.gg/static/188f761e3e5ca1b039df7959c0034929/d8057/21010024.webp" },
-               {name: "Endless Collapse", rarity: 4, image: "https://www.prydwen.gg/static/09a30f2c72ec0257465c33f850cac4c0/d8057/21020084.webp" },
                {name: "Fables of Wisdom", rarity: 4, image: "https://www.prydwen.gg/static/8cff04fe945ad669d9fdd96cf70bfbb0/d8057/21020094.webp" },
                {name: "Fusion Accretion", rarity: 4, image: "https://www.prydwen.gg/static/ec64c738dc213ff8577c0e49ec0eabd4/d8057/21050084.webp" },
                {name: "Gauntlets#21D", rarity: 4, image: "https://www.prydwen.gg/static/b4dfa7b4e2579ccf865d3715c08bb3a5/d8057/21040034.webp" },
@@ -1956,7 +1953,8 @@ const auth = firebase.auth();
                     authButton.textContent = translations[currentLanguage]['auth-login'];
                     authButton.classList.add('pulse');
                     welcomeMessage.style.display = 'block';
-                }
+                }        
+                <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
             });
             
             function loadUserData() {
