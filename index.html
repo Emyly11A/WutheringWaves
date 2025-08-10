@@ -1311,10 +1311,6 @@
             </form>
             <form class="auth-form" id="registerForm">
                 <div class="form-group">
-                    <label class="form-label" for="registerUsername" data-translate="auth-username">Nume utilizator</label>
-                    <input type="text" class="form-input" id="registerUsername" required>
-                </div>
-                <div class="form-group">
                     <label class="form-label" for="registerEmail" data-translate="auth-email">Email</label>
                     <input type="email" class="form-input" id="registerEmail" required>
                 </div>
@@ -2037,13 +2033,12 @@ const auth = firebase.auth();
             // Process login form
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const email = document.getElementById('loginEmail').value; // Poți folosi și email aici
+                const email = document.getElementById('loginEmail').value; // Folosește emailul!
                 const password = document.getElementById('loginPassword').value;
 
                 auth.signInWithEmailAndPassword(email, password)
                     .then((userCredential) => {
                         authModal.classList.remove('active');
-                        // Poți salva user-ul curent în variabila ta și să actualizezi UI-ul
                     })
                     .catch((error) => {
                         loginMessage.textContent = error.message;
