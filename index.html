@@ -1454,10 +1454,28 @@
         </div>
     </div>
     
+    <!-- Firebase App (core) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>\
     <script>
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
+        const firebaseConfig = {
+        apiKey: "AIzaSyBIJcN5IUCZSaxO6AWiCYDHB-Kxrk1UEz4",
+        authDomain: "wuwaemy.firebaseapp.com",
+        projectId: "wuwaemy",
+        storageBucket: "wuwaemy.firebasestorage.app",
+        messagingSenderId: "959818398485",
+        appId: "1:959818398485:web:2691ee4f42c8336d1d071c",
+        measurementId: "G-MSYL1JZ0QG"
+        };
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
         document.addEventListener('DOMContentLoaded', () => {
             // Game data
-            const characters = [
+           const characters = [
                 // 5-star
                 {name: "Aalto", rarity: 4, image: "https://www.prydwen.gg/static/28692b3a188f6b7b14a9d28aa90bf3c8/b26e2/aalto_card.webp" },
                 {name: "Augusta", rarity: 5, image: "https://www.prydwen.gg/static/2f1f1aad1444416525bca51ce823bff7/b26e2/aug_card.webp" },
@@ -1915,13 +1933,15 @@
                 });
             }
             
-            // --- Check for authenticated user on page load ---
-            checkAuthenticatedUser();
-            
-            function checkAuthenticatedUser() {
-                const savedUser = localStorage.getItem('wwCurrentUser');
-                if (savedUser) {
-                    currentUser = JSON.parse(savedUser);
+            // --- User state change listener ---
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // user.displayName, user.email etc.
+                    // Actualizează UI-ul pentru utilizator logat
+                    currentUser = {
+                        username: user.displayName || user.email,
+                        email: user.email
+                    };
                     usernameSpan.textContent = currentUser.username;
                     userInfo.style.display = 'flex';
                     authButton.textContent = translations[currentLanguage]['auth-logout'];
@@ -1931,12 +1951,13 @@
                     // Load user data
                     loadUserData();
                 } else {
+                    // Actualizează UI-ul pentru utilizator delogat
                     userInfo.style.display = 'none';
                     authButton.textContent = translations[currentLanguage]['auth-login'];
                     authButton.classList.add('pulse');
                     welcomeMessage.style.display = 'block';
                 }
-            }
+            });
             
             function loadUserData() {
                 if (!currentUser) return;
@@ -1975,45 +1996,18 @@
             
             // --- Authentication modal handling ---
             authButton.addEventListener('click', () => {
-                if (currentUser) {
-                    // Logout
-                    localStorage.removeItem('wwCurrentUser');
-                    currentUser = null;
-                    checkAuthenticatedUser();
-                    
-                    // Reset data
-                    totalWishes = 0;
-                    pity5Star = 0;
-                    pity4Star = 0;
-                    count5Star = 0;
-                    count4Star = 0;
-                    count3Star = 0;
-                    pityHistory = [];
-                    obtainedCharacters = [];
-                    obtainedWeapons = [];
-                    last5StarWish = 0;
-                    
-                    // Update UI
-                    totalWishesSpan.textContent = totalWishes;
-                    pity5StarSpan.textContent = pity5Star;
-                    pity4StarSpan.textContent = pity4Star;
-                    stat5Star.textContent = count5Star;
-                    stat4Star.textContent = count4Star;
-                    stat3Star.textContent = count3Star;
-                    stat5Rate.textContent = '0%';
-                    wishResultsDiv.innerHTML = `<h3 data-translate="wish-prompt">${translations[currentLanguage]['wish-prompt']}</h3>`;
-                    updatePityHistory();
-                    updateCharactersCollection();
-                    updateWeaponsCollection();
-                } else {
-                    // Open authentication modal
-                    authModal.classList.add('active');
-                    loginForm.reset();
-                    registerForm.reset();
-                    loginMessage.className = 'form-message';
-                    registerMessage.className = 'form-message';
-                }
-            });
+    if (auth.currentUser) {
+        auth.signOut();
+        // Resetează UI-ul
+    } else {
+        // Deschide modalul de autentificare
+        authModal.classList.add('active');
+        loginForm.reset();
+        registerForm.reset();
+        loginMessage.className = 'form-message';
+        registerMessage.className = 'form-message';
+    }
+});
             
             closeModal.addEventListener('click', () => {
                 authModal.classList.remove('active');
@@ -2044,99 +2038,49 @@
             // Process login form
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
-                const username = document.getElementById('loginUsername').value;
+                const email = document.getElementById('loginUsername').value; // Poți folosi și email aici
                 const password = document.getElementById('loginPassword').value;
-                
-                const users = getUsers();
-                const user = users.find(u => u.username === username && u.password === password);
-                
-                if (user) {
-                    // Successful login
-                    currentUser = {
-                        username: user.username,
-                        email: user.email
-                    };
-                    
-                    localStorage.setItem('wwCurrentUser', JSON.stringify(currentUser));
-                    checkAuthenticatedUser();
-                    authModal.classList.remove('active');
-                    
-                    // Load user data
-                    loadUserData();
-                } else {
-                    // Failed login
-                    loginMessage.textContent = translations[currentLanguage]['auth-error-login'];
-                    loginMessage.className = 'form-message error';
-                }
+
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        authModal.classList.remove('active');
+                        // Poți salva user-ul curent în variabila ta și să actualizezi UI-ul
+                    })
+                    .catch((error) => {
+                        loginMessage.textContent = error.message;
+                        loginMessage.className = 'form-message error';
+                    });
             });
             
             // Process registration form
             registerForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
-                const username = document.getElementById('registerUsername').value;
                 const email = document.getElementById('registerEmail').value;
                 const password = document.getElementById('registerPassword').value;
+                const username = document.getElementById('registerUsername').value;
                 const confirmPassword = document.getElementById('confirmPassword').value;
-                
-                // Validation
+
                 if (password !== confirmPassword) {
-                    registerMessage.textContent = translations[currentLanguage]['auth-error-password'];
+                    registerMessage.textContent = "Parolele nu se potrivesc.";
                     registerMessage.className = 'form-message error';
                     return;
                 }
-                
-                const users = getUsers();
-                
-                // Check if username already exists
-                if (users.some(u => u.username === username)) {
-                    registerMessage.textContent = translations[currentLanguage]['auth-error-username'];
-                    registerMessage.className = 'form-message error';
-                    return;
-                }
-                
-                // Check if email already exists
-                if (users.some(u => u.email === email)) {
-                    registerMessage.textContent = translations[currentLanguage]['auth-error-email'];
-                    registerMessage.className = 'form-message error';
-                    return;
-                }
-                
-                // Add new user
-                const newUser = {
-                    username,
-                    email,
-                    password
-                };
-                
-                users.push(newUser);
-                saveUsers(users);
-                
-                // Create initial user data
-                saveUserDataToLocalStorage(username, {
-                    totalWishes: 0,
-                    pity5Star: 0,
-                    pity4Star: 0,
-                    count5Star: 0,
-                    count4Star: 0,
-                    count3Star: 0,
-                    pityHistory: [],
-                    obtainedCharacters: [],
-                    obtainedWeapons: [],
-                    last5StarWish: 0
-                });
-                
-                registerMessage.textContent = translations[currentLanguage]['auth-success-register'];
-                registerMessage.className = 'form-message success';
-                
-                // Reset form
-                registerForm.reset();
-                
-                // Switch to login tab after a short delay
-                setTimeout(() => {
-                    authTabs[0].click();
-                }, 1500);
+
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Set displayName (opțional)
+                        return userCredential.user.updateProfile({ displayName: username });
+                    })
+                    .then(() => {
+                        registerMessage.textContent = "Înregistrare reușită! Acum te poți autentifica.";
+                        registerMessage.className = 'form-message success';
+                        registerForm.reset();
+                        setTimeout(() => { authTabs[0].click(); }, 1500);
+                    })
+                    .catch((error) => {
+                        registerMessage.textContent = error.message;
+                        registerMessage.className = 'form-message error';
+                    });
             });
             
             // --- Language selector handling ---
