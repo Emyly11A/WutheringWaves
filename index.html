@@ -1467,7 +1467,7 @@
         apiKey: "AIzaSyBIJcN5IUCZSaxO6AWiCYDHB-Kxrk1UEz4",
         authDomain: "wuwaemy.firebaseapp.com",
         projectId: "wuwaemy",
-        storageBucket: "wuwaemy.firebasestorage.app",
+        storageBucket: "wuwaemy.appspot.com ",
         messagingSenderId: "959818398485",
         appId: "1:959818398485:web:2691ee4f42c8336d1d071c",
         measurementId: "G-MSYL1JZ0QG"
@@ -1551,7 +1551,7 @@ const auth = firebase.auth();
                {name: "Commando of Conviction", rarity: 4, image: "https://www.prydwen.gg/static/fdd237561891d62b1a797f4abc373e59/d8057/21020044.webp" },
                {name: "Dauntless Evernight", rarity: 4, image: "https://www.prydwen.gg/static/ff9b1b486e67e7133c92236b8a25b899/d8057/21010044.webp" },
                {name: "Discord", rarity: 4, image: "https://www.prydwen.gg/static/188f761e3e5ca1b039df7959c0034929/d8057/21010024.webp" },
-               {name: "Fables of Wisdom", rarity: 4, image: "https://www.prydwen.gg/static/8cff04fe945ad669d9fdd96cf70bfbb0/d8057/21020094.webp" },
+               {name: "Fables of Wisdom", rarity:  4, image: "https://www.prydwen.gg/static/8cff04fe945ad669d9fdd96cf70bfbb0/d8057/21020094.webp" },
                {name: "Fusion Accretion", rarity: 4, image: "https://www.prydwen.gg/static/ec64c738dc213ff8577c0e49ec0eabd4/d8057/21050084.webp" },
                {name: "Gauntlets#21D", rarity: 4, image: "https://www.prydwen.gg/static/b4dfa7b4e2579ccf865d3715c08bb3a5/d8057/21040034.webp" },
                {name: "Helios Cleaver", rarity: 4, image: "https://www.prydwen.gg/static/7e404c8965d96ba9485904887fa13c1d/d8057/21010064.webp" },
@@ -1961,7 +1961,6 @@ const auth = firebase.auth();
             
             function loadUserData() {
                 if (!currentUser) return;
-                
                 const userData = getUserData(currentUser.username);
                 if (userData) {
                     totalWishes = userData.totalWishes || 0;
