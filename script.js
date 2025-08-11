@@ -484,7 +484,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
     auth.onAuthStateChanged((user) => {
         if (user) {
-            loadUserCurrencies(user);
+            // Încarcă datele și dacă nu există documentul, îl creezi
+            db.collection('users').doc(user.uid).get().then(doc => {
+                if (!doc.exists) {
+                    // Creează documentul cu valorile default
+                    createUserData(user).then(() => {
+                        loadUserCurrencies(user);
+                    });
+                } else {
+                    loadUserCurrencies(user);
+                }
+            });
             // user.displayName, user.email etc.
             // Actualizează UI-ul pentru utilizator logat
             currentUser = {
@@ -496,17 +506,13 @@ document.addEventListener('DOMContentLoaded', () => {
             authButton.textContent = translations[currentLanguage]['auth-logout'];
             authButton.classList.remove('pulse');
             welcomeMessage.style.display = 'none';
-            
-            // Load user data
             loadUserData();
-            loadAstrite(user); // Load astrite balance
         } else {
             // Actualizează UI-ul pentru utilizator delogat
             userInfo.style.display = 'none';
             authButton.textContent = translations[currentLanguage]['auth-login'];
             authButton.classList.add('pulse');
             welcomeMessage.style.display = 'block';
-            
             updateAstriteDisplay(0);
             updateShellCreditsDisplay(0);
         }        
