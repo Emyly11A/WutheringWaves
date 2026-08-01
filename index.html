@@ -10,9 +10,27 @@
 <body>
     <!-- Navigație -->
     <nav>
-        <div class="nav-container">
+        <div class="nav-container vertical-nav">
             <div class="logo" data-translate="logo">Wuthering Waves Collection</div>
-            <button class="menu-toggle" id="menuToggle" aria-label="Deschide meniul">&#9776;</button>
+            <!-- Mută aici blocul pentru user logat -->
+            <div class="profile-dropdown-container" id="profileDropdownContainer" style="display:none;">
+                <button class="profile-btn" id="profileBtn">
+                    <svg class="user-icon" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    <span class="username" id="username"></span>
+                </button>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="profile-title">Profilul meu</div>
+                    <div class="profile-row"><span>Shell Credits</span> <span id="profileShellCredits">0</span></div>
+                    <div class="profile-row"><span>Astrite:</span> <span id="profileAstrite">0</span></div>
+                    <div class="profile-row"><span>Caractere 5★:</span> <span id="profileChar5">0</span></div>
+                    <div class="profile-row"><span>Caractere 4★:</span> <span id="profileChar4">0</span></div>
+                    <div class="profile-row"><span>Arme 5★:</span> <span id="profileWeap5">0</span></div>
+                    <div class="profile-row"><span>Arme 4★:</span> <span id="profileWeap4">0</span></div>
+                    <div class="profile-row"><span>Arme 3★:</span> <span id="profileWeap3">0</span></div>
+                </div>
+            </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="nav-link active" data-page="main" data-translate="nav-main">Meniu Principal</a></li>
                 <li><a href="#" class="nav-link" data-page="wish" data-translate="nav-wish">Wish</a></li>
@@ -20,45 +38,9 @@
                 <li><a href="#" class="nav-link" data-page="weapons" data-translate="nav-weapons">Arme</a></li>
                 <li><a href="#" class="nav-link" data-page="domain" data-translate="nav-domain">Domain</a></li>
             </ul>
-            <div class="auth-container">
-                <div class="user-info" id="userInfo" style="display: none;">
-                    <svg class="user-icon" viewBox="0 0 24 24">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                    <div class="profile-dropdown-container">
-                      <span class="username" id="username" style="cursor:pointer"></span>
-                      <div class="profile-dropdown" id="profileDropdown">
-                        <div class="profile-title">Profilul meu</div>
-                        <div class="profile-row"><span>Shell Credits</span> <span id="profileShellCredits">0</span></div>
-                        <div class="profile-row"><span>Astrite:</span> <span id="profileAstrite">0</span></div>
-                        <div class="profile-row"><span>Caractere 5★:</span> <span id="profileChar5">0</span></div>
-                        <div class="profile-row"><span>Caractere 4★:</span> <span id="profileChar4">0</span></div>
-                        <div class="profile-row"><span>Arme 5★:</span> <span id="profileWeap5">0</span></div>
-                        <div class="profile-row"><span>Arme 4★:</span> <span id="profileWeap4">0</span></div>
-                        <div class="profile-row"><span>Arme 3★:</span> <span id="profileWeap3">0</span></div>
-                      </div>
-                    </div>
-                    <span id="shellCreditsDisplay" class="shell-badge">
-                      <svg class="shell-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" style="vertical-align:middle;">
-                         <circle cx="12" cy="12" r="10" fill="#b8e0ff" stroke="#4a90e2" stroke-width="2"/>
-                         <path d="M8 12c1.5-2 6.5-2 8 0" stroke="#4a90e2" stroke-width="2" stroke-linecap="round"/>
-                      </svg>
-                      <span class="shell-label">Shell Credits:</span>
-                      <span class="shell-value" id="shellCreditsValue">0</span>
-                    </span>
-                    <span id="astriteDisplay" class="astrite-badge">
-                      <svg class="astrite-icon" viewBox="0 0 24 24" width="22" height="22" fill="none">
-                        <circle cx="12" cy="12" r="10" fill="#ffe066" stroke="#bfa800" stroke-width="2"/>
-                        <path d="M7 15c2-2 8-2 10 0" stroke="#bfa800" stroke-width="2" stroke-linecap="round"/>
-                        <path d="M9 10c1-1 5-1 6 0" stroke="#bfa800" stroke-width="2" stroke-linecap="round"/>
-                      </svg>
-                      <span class="astrite-label">Astrite:</span>
-                      <span class="astrite-value" id="astriteValue">0</span>
-                    </span>
-                </div>
-                <button class="auth-button pulse" id="authButton" data-translate="auth-login">Autentificare</button>
-                
-                <!-- Selector de limbă -->
+            <div class="menu-user-block">
+                <!-- Bloc pentru user nelogat -->
+                <button class="auth-button pulse" id="authButton" data-translate="auth-login" style="display:block;">Autentificare</button>
                 <div class="language-selector">
                     <div class="language-button" id="languageButton">
                         <img src="https://flagcdn.com/24x18/ro.png" alt="Română" class="flag-icon" id="currentFlag">
@@ -78,6 +60,27 @@
             </div>
         </div>
     </nav>
+
+    <!-- Badge-urile sus-dreapta -->
+    <div class="top-badges">
+        <span id="shellCreditsDisplay" class="shell-badge">
+            <svg class="shell-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+                <circle cx="12" cy="12" r="10" fill="#b8e0ff" stroke="#4a90e2" stroke-width="2"/>
+                <path d="M8 12c1.5-2 6.5-2 8 0" stroke="#4a90e2" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="shell-label">Shell Credits:</span>
+            <span class="shell-value" id="shellCreditsValue">0</span>
+        </span>
+        <span id="astriteDisplay" class="astrite-badge">
+            <svg class="astrite-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
+                <circle cx="12" cy="12" r="10" fill="#ffe066" stroke="#bfa800" stroke-width="2"/>
+                <path d="M7 15c2-2 8-2 10 0" stroke="#bfa800" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 10c1-1 5-1 6 0" stroke="#bfa800" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="astrite-label">Astrite:</span>
+            <span class="astrite-value" id="astriteValue">0</span>
+        </span>
+    </div>
     
     <!-- Modal Autentificare/Înregistrare -->
     <div class="modal" id="authModal">
@@ -164,8 +167,6 @@
                 
                 <div class="counters">
                     <div class="counter-box" data-translate="wish-total-wishes">Total Trageri: <span id="totalWishes">0</span></div>
-                    <div class="counter-box" data-translate="wish-pity-5">Pity 5-stele: <span id="pity5Star">0</span>/80</div>
-                    <div class="counter-box" data-translate="wish-pity-4">Pity 4-stele: <span id="pity4Star">0</span>/10</div>
                 </div>
                 
                 <div class="filter-buttons">
@@ -254,14 +255,13 @@
                 <br></br>
                 <!-- Aici vei adăuga joculețul și butoane pentru Shell Credits -->
                 <div class="domain-game-area" id="domainGameArea">
-                    <p> VA URMA! </p>
                     <!-- Joculețul va fi aici -->
                     <button id="playDomainGame" class="wish-button" data-translate="domain-play-btn">Joacă!</button>
                     <div id="domainGameResult"></div>
                 </div>
                 <br></br>
                 <div class="domain-currency">
-                    <span class="shell-badge">Shell Credits: <span id="shellCreditsValue">0</span></span>
+                    <span class="shell-badge">Shell Credits: <span id="shellCreditsValueDomain">0</span></span>
                 </div>
             </div>
         </div>
@@ -275,4 +275,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
