@@ -2,130 +2,172 @@ document.addEventListener('DOMContentLoaded', () => {
     // Game data
    const characters = [
         // 5-star
-        {name: "Aalto", rarity: 4, image: "https://www.prydwen.gg/static/28692b3a188f6b7b14a9d28aa90bf3c8/b26e2/aalto_card.webp" },
-        {name: "Augusta", rarity: 5, image: "https://www.prydwen.gg/static/2f1f1aad1444416525bca51ce823bff7/b26e2/aug_card.webp" },
-        {name: "Baizhi", rarity: 4, image: "https://www.prydwen.gg/static/3752f18605107b5fdb36835e9e7a2b90/b26e2/baizhi_card.webp" },
-        {name: "Brant", rarity: 5, image: "https://www.prydwen.gg/static/30c84393d4f1fff8fcdb71ef6be8e090/b26e2/card_brant.webp" },
-        {name: "Calcharo", rarity: 5, image: "https://www.prydwen.gg/static/7b01c2f05825303762d3e6b9da538c7d/b26e2/kakarot_card.webp" },
-        {name: "Camellya", rarity: 5, image: "https://www.prydwen.gg/static/fa50106c1d7d6d2f02033da9c00628f1/b26e2/card_cam.webp" },
-        {name: "Cantarella", rarity: 5, image: "https://www.prydwen.gg/static/c62fb9a25dd8420d6fc03c1ca064dae2/b26e2/card_canta.webp" },
-        {name: "Carlotta", rarity: 5, image: "https://www.prydwen.gg/static/72a394e25463af4c5b9c309f516c9d17/b26e2/card_carlotta.webp" },
-        {name: "Cartethyia", rarity: 5, image: "https://www.prydwen.gg/static/f63677cedd1006e204f353b1f3c0af14/b26e2/cart_card.webp" },
-        {name: "Changli", rarity: 5, image: "https://www.prydwen.gg/static/7eb8b347a3aa1837164c79a5e520d268/b26e2/card_changli.webp" },
-        {name: "Chisa", rarity: 5, image: "https://www.prydwen.gg/static/1e11acd3163c86536e6c69aa7005424a/b26e2/chisa_card.webp" },
-        {name: "Chixia", rarity: 4, image: "https://www.prydwen.gg/static/689148c2dc5b0b38aeb2c75ca8b3ef65/b26e2/chixia_card.webp" },
-        {name: "Ciaccona", rarity: 5, image: "https://www.prydwen.gg/static/b70837a5b18151413c72027b8ddfac64/b26e2/cia_card.webp" },
-        {name: "Danjin", rarity: 4, image: "https://www.prydwen.gg/static/431f962f5a8febb92f44ae9138aa5e01/b26e2/danjin_card.webp" },
-        {name: "Encore", rarity: 5, image: "https://www.prydwen.gg/static/0acc12c57906dc3c1f47e038832ec1f4/b26e2/encore_card.webp" },
-        {name: "Galbrena", rarity: 5, image: "https://www.prydwen.gg/static/aa301f37c792e3d46dce891092c9cc0f/b26e2/gal_card.webp" },
-        {name: "Iuno", rarity: 5, image: "https://www.prydwen.gg/static/250723737f0c5c477d1e161f5991c9fc/b26e2/iuno_card.webp" },
-        {name: "Jianxin", rarity: 5, image: "https://www.prydwen.gg/static/c215e7a42cbfd78f85455f192dc0e4f/b26e2/jiaxin_card.webp" },
-        {name: "Jinshi", rarity: 5, image: "https://www.prydwen.gg/static/136095b0f95ac4be3ddc7e2d585855bf/b26e2/jihni_card.webp" },
-        {name: "Jiyan", rarity: 5, image: "https://www.prydwen.gg/static/5020d60083afc09d2fb6bce4a35225bc/b26e2/jiyan_card.webp" },
-        {name: "Lingyang", rarity: 5, image: "https://www.prydwen.gg/static/672fdaae2b01f8355d5631a989e5f472/b26e2/ling_card.webp" },
-        {name: "Lumi", rarity: 4 , image: "https://www.prydwen.gg/static/f25eefa86b00502ff430328006610ca2/b26e2/card_lumi.webp" },
-        {name: "Lupa", rarity: 5, image: "https://www.prydwen.gg/static/8b4af672cd0b39da9882c9aedab02893/b26e2/lupa_card.webp" },
-        {name: "Mortefi", rarity: 4, image: "https://www.prydwen.gg/static/afa511d7b0c173247db7478c15e7e8d7/b26e2/mortefi_card.webp" },
-        {name: "Phoebe", rarity: 5, image: "https://www.prydwen.gg/static/5dc88527029d541ce29c09eb9e34944c/b26e2/card_phoebe.webp" },
-        {name: "Phrolova", rarity: 5, image: "https://www.prydwen.gg/static/36c6e5dae2dd77cd0b36bb0383ec28c6/b26e2/phr_card.webp" },
-        {name: "Qiuyuan", rarity: 5, image: "https://www.prydwen.gg/static/7fe009cd5b71e9ba70125318aece3ef9/b26e2/qiu_card.webp" },
-        {name: "Roccia", rarity: 5, image: "https://www.prydwen.gg/static/3cdda48d32ebb2b5185dfbb1f5fac561/b26e2/card_roccia.webp" },
-        {name: "Sanhua", rarity: 4, image: "https://www.prydwen.gg/static/f67966dd31af657ac8612d36006d5874/b26e2/senhua_card.webp" },
-        {name: "Shorekeeper", rarity: 5, image: "https://www.prydwen.gg/static/53a7609e743512dbf5f89bb78cc7bab4/b26e2/card_keeper.webp" },
-        {name: "Taoqi", rarity: 4, image: "https://www.prydwen.gg/static/9759a6ea13fefd1bc632650a0a657e8e/b26e2/taoqi_card.webp" },
-        {name: "Verina", rarity: 5, image: "https://www.prydwen.gg/static/dd5bdface07cef9b868fe8214b0988ed/b26e2/verina_card.webp" },
-        {name: "Xiangli Yao", rarity: 5, image: "https://www.prydwen.gg/static/698d0d5f2ba882de8f3d5494e622e940/b26e2/card_xiang.webp" },
-        {name: "Yangyang", rarity: 4, image: "https://wutheringwaves.gg/wp-content/uploads/sites/8/2024/05/Wuthering-Waves-Yangyang-Build-Guide.png" },
-        {name: "Yinlin", rarity: 5, image: "https://www.prydwen.gg/static/a2b0c34a81e57a52165da5b356be412c/b26e2/yinglin_card.webp" },
-        {name: "Youhu", rarity: 4, image: "https://www.prydwen.gg/static/c4b47996ef9c20aa6c2fc04c9bd7cfa3/b26e2/card_youhu.webp" },
-        {name: "Yuanwu", rarity: 4, image: "https://www.prydwen.gg/static/fb4fc64e05d0d40ef90adc4527dc93ea/b26e2/yuanwu_card.webp" },
-        {name: "Zani", rarity: 5, image: "https://www.prydwen.gg/static/505ab092ab4d706f757a89bac424b378/b26e2/card_zani.webp" },
-        {name: "Zhezhi", rarity: 5, image: "https://www.prydwen.gg/static/50c9470f533efed9b28076e92230308b/b26e2/card_zhe.webp" },
+        {"name": "Aalto", "rarity": 4,"img": "poze charactere/char 4/Aalto.png" },
+        {"name": "Aemeath", "rarity": 5,"img": "poze charactere/char 5/Aemeath.png" },
+        {"name": "Augusta", "rarity": 5,"img": "poze charactere/char 5/Augusta.png" },
+        {"name": "Baizhi", "rarity": 4,"img": "poze charactere/char 4/Baizhi.png" },
+        {"name": "Brant", "rarity": 5,"img": "poze charactere/char 5/Brant.png" },
+        {"name": "Buling", "rarity": 4,"img": "poze charactere/char 4/Buling.png" },
+        {"name": "Calcharo", "rarity": 5,"img": "poze charactere/char 5/Calcharo.png" },
+        {"name": "Camellya", "rarity": 5,"img": "poze charactere/char 5/Camellya.png" },
+        {"name": "Cantarella", "rarity": 5,"img": "poze charactere/char 5/Cantarella.png" },
+        {"name": "Carlotta", "rarity": 5,"img": "poze charactere/char 5/Carlotta.png" },
+        {"name": "Cartethyia", "rarity": 5,"img": "poze charactere/char 5/Cartethyia.png" },
+        {"name": "Changli", "rarity": 5,"img": "poze charactere/char 5/Changli.png" },
+        {"name": "Chisa", "rarity": 5,"img": "poze charactere/char 5/Chisa.png" },
+        {"name": "Chixia", "rarity": 4,"img": "poze charactere/char 4/Chixia.png" },
+        {"name": "Ciaccona", "rarity": 5,"img": "poze charactere/char 5/Ciaccona.png" },
+        {"name": "Danjin", "rarity": 4,"img": "poze charactere/char 4/Danjin.png" },
+        {"name": "Denia", "rarity": 5,"img": "poze charactere/char 5/Denia.png" },
+        {"name": "Encore", "rarity": 5, "img": "poze charactere/char 5/Encore.png" },
+        {"name": "Galbrena", "rarity": 5,"img": "poze charactere/char 5/Galbrena.png" },
+        {"name": "Hiyuki", "rarity": 5,"img": "poze charactere/char 5/Hiyuki.png" },
+        {"name": "Iuno", "rarity": 5,"img": "poze charactere/char 5/Iuno.png" },
+        {"name": "Jianxin", "rarity": 5,"img": "poze charactere/char 5/Jianxin.png" },
+        {"name": "Jinshi", "rarity": 5,"img": "poze charactere/char 5/Jinshi.png" },
+        {"name": "Jiyan", "rarity": 5,"img": "poze charactere/char 5/Jiyan.png" },
+        {"name": "Lingyang", "rarity": 5,"img": "poze charactere/char 5/Lingyang.png" },
+        {"name": "Lucilla", "rarity": 5,"img": "poze charactere/char 5/Lucilla.png" },
+        {"name": "Lucy", "rarity": 5,"img": "poze charactere/char 5/Lucy.png" },
+        {"name": "Lumi", "rarity": 4 ,"img": "poze charactere/char 4/Lumi.png" },
+        {"name": "Lupa", "rarity": 5,"img": "poze charactere/char 5/Lupa.png" },
+        {"name": "Luuk Hersen", "rarity": 5,"img": "poze charactere/char 5/Luuk.png" },
+        {"name": "Lynae", "rarity": 5,"img": "poze charactere/char 5/Lynae.png" },
+        {"name": "Mornye", "rarity": 5,"img": "poze charactere/char 5/Mornye.png" },
+        {"name": "Mortefi", "rarity": 4,"img": "poze charactere/char 4/Mortefi.png" },
+        {"name": "Phoebe", "rarity": 5,"img": "poze charactere/char 5/Phoebe.png" },
+        {"name": "Phrolova", "rarity": 5,"img": "poze charactere/char 5/Phrolova.png" },
+        {"name": "Qiuyuan", "rarity": 5,"img": "poze charactere/char 5/Qiuyuan.png" },
+        {"name": "Rebecca", "rarity": 5,"img": "poze charactere/char 5/Rebecca.png" },
+        {"name": "Roccia", "rarity": 5,"img": "poze charactere/char 5/Roccia.png" },
+        {"name": "Sanhua", "rarity": 4,"img": "poze charactere/char 4/Sanhua.png" },
+        {"name": "Shorekeeper", "rarity": 5,"img": "poze charactere/char 5/Shorekeeper.png" },
+        {"name": "Sigrika", "rarity": 5,"img": "poze charactere/char 5/Sigrika.png" },
+        {"name": "Suisui", "rarity": 5,"img": "poze charactere/char 5/Suisui.png" },
+        {"name": "Taoqi", "rarity": 4,"img": "poze charactere/char 4/Taoqi.png" },
+        {"name": "Verina", "rarity": 5,"img": "poze charactere/char 5/Verina.png" },
+        {"name": "Xiangli Yao", "rarity": 5,"img": "poze charactere/char 5/Xiangli Yao.png" },
+        {"name": "Yangyang", "rarity": 4,"img": "poze charactere/char 4/Yangyang.png" },
+        {"name": "Yangyang: Xuanling", "rarity": 5,"img": "poze charactere/char 5/Yangyang-Xuanling.png" },
+        {"name": "Yinlin", "rarity": 5,"img": "poze charactere/char 5/Yinlin.png" },
+        {"name": "Youhu", "rarity": 4,"img": "poze charactere/char 4/Youhu.png" },
+        {"name": "Yuanwu", "rarity": 4,"img": "poze charactere/char 4/Yuanwu.png" },
+        {"name": "Zani", "rarity": 5,"img": "poze charactere/char 5/Zani.png" },
+        {"name": "Zhezhi", "rarity": 5,"img": "poze charactere/char 5/Zhezhi.png" },
     ];
     const weapons = [
-       {name: "Beguiling Melody", rarity: 3, image: "https://www.prydwen.gg/static/e006b16c6bff6b997daa80cd666e608e/d8057/21010063.webp" },
-       {name: "Broadblade of Night", rarity: 3, image: "https://www.prydwen.gg/static/06704904c9b54f1f95a2384dbfa766a0/d8057/21010013.webp" },
-       {name: "Broadblade of Voyager", rarity: 3, image: "https://www.prydwen.gg/static/b4dd91a36c45c9b91210f48e1c6e0412/d8057/21010043.webp" },
-       {name: "Gauntlets of Night", rarity: 3, image: "https://www.prydwen.gg/static/6d5eb509855384a14310dae5eaed1b5c/d8057/21040013.webp" },
-       {name: "Gauntlets of Voyager", rarity: 3, image: "https://www.prydwen.gg/static/c548c2684186ab49e0c93d22552a52f7/d8057/21040043.webp" },
-       {name: "Guardian Broadblade", rarity: 3, image: "https://www.prydwen.gg/static/697650a8647ce95de4506d788e32a656/d8057/21010053.webp" },
-       {name: "Guardian Gauntlets", rarity: 3, image: "https://www.prydwen.gg/static/14c2bb71de9bed7ffb002f3443c9535b/d8057/21040053.webp" },
-       {name: "Guardian Pistols", rarity: 3, image: "https://www.prydwen.gg/static/cdcfd1ad35cd9b0dd9fc423923e5b6b1/d8057/21030053.webp" },
-       {name: "Guardian Rectifier",rarity: 3, image: "https://www.prydwen.gg/static/31c05da7e286f382e049ae690630e226/d8057/21050053.webp" },
-       {name: "Guardian Sword", rarity: 3, image: "https://www.prydwen.gg/static/12690208ea634a52cc3c1625bf807dc2/d8057/21020053.webp" },
-       {name: "Originite: Type I", rarity: 3, image: "https://www.prydwen.gg/static/08c31c2ee5d804bddba208020110e090/d8057/21010023.webp" },
-       {name: "Originite: Type II", rarity: 3, image: "originite2.png" },
-       {name: "Originite: Type III", rarity: 3, image: "originite3.webp" },
-       {name: "Originite: Type IV", rarity: 3, image: "originite4.webp" },
-       {name: "Originite: Type V", rarity: 3, image: "https://www.prydwen.gg/static/4fd54319bbca3cde057b4c3f0d873237/d8057/21050023.webp" },
-       {name: "Pistols of Night", rarity: 3, image: "https://static.wikia.nocookie.net/wutheringwaves/images/6/63/Weapon_Pistols_of_Night.png/revision/latest?cb=20240526011400" },
-       {name: "Pistols of Voyager", rarity: 3, image: "https://www.prydwen.gg/static/367ed9fc905e5a5648eed30710e7244e/d8057/21030043.webp" },
-       {name: "Rectifier of Night", rarity: 3, image: "https://www.prydwen.gg/static/03b6aebe9897a053b78c05b116f61d06/d8057/21050013.webp" },
-       {name: "Rectifier of Voyager", rarity: 3, image: "rectifierofvoyager.webp" },
-       {name: "Sword of Night", rarity: 3, image: "https://www.prydwen.gg/static/42a972faea539fc6c622218562054d5a/d8057/21020013.webp" },
-       {name: "Sword of Voyager", rarity: 3, image: "https://www.prydwen.gg/static/a54fbd2658dc0b17e57bfb1fb0186e6b/d8057/21020043.webp" },
-       {name: "Amity Accord", rarity: 4, image: "https://www.prydwen.gg/static/bd46a459b49550b3594a4a9f42e107fb/d8057/21040044.webp" },
-       {name: "Augment",rarity: 4, image: "https://www.prydwen.gg/static/98f0b950aa2740ae3612015d50786ee2/d8057/21050074.webp" },
-       {name: "Autumntrace", rarity: 4, image: "https://www.prydwen.gg/static/adc80fa7d937da837ced0d5161898ee6/d8057/21010074.webp" },
-       {name: "Broadblade#41", rarity: 4, image: "https://www.prydwen.gg/static/d92d1a7f1687f1f26b77fc4a567bf787/d8057/21010034.webp" },
-       {name: "Cadenza", rarity: 4, image: "https://www.prydwen.gg/static/3411e0520354d10c53ab75f9557b641a/d8057/21030024.webp" },
-       {name: "Call of the Abyss", rarity: 4, image: "https://www.prydwen.gg/static/d5b94442047d06ba570e6109d6d98226/d8057/21050017.webp" },
-       {name: "Celestial Spiral", rarity: 4, image: "https://www.prydwen.gg/static/6bf49490260e1bf6c29984f786eeb4db/d8057/21040084.webp" },
-       {name: "Comet Flare", rarity: 4, image: "https://www.prydwen.gg/static/2afa7da0f06e8360651d812f8e75eeec/d8057/21050064.webp" },
-       {name: "Commando of Conviction", rarity: 4, image: "https://www.prydwen.gg/static/fdd237561891d62b1a797f4abc373e59/d8057/21020044.webp" },
-       {name: "Dauntless Evernight", rarity: 4, image: "https://www.prydwen.gg/static/ff9b1b486e67e7133c92236b8a25b899/d8057/21010044.webp" },
-       {name: "Discord", rarity: 4, image: "https://www.prydwen.gg/static/188f761e3e5ca1b039df7959c0034929/d8057/21010024.webp" },
-       {name: "Fables of Wisdom", rarity:  4, image: "https://www.prydwen.gg/static/8cff04fe945ad669d9fdd96cf70bfbb0/d8057/21020094.webp" },
-       {name: "Fusion Accretion", rarity: 4, image: "https://www.prydwen.gg/static/ec64c738dc213ff8577c0e49ec0eabd4/d8057/21050084.webp" },
-       {name: "Gauntlets#21D", rarity: 4, image: "https://www.prydwen.gg/static/b4dfa7b4e2579ccf865d3715c08bb3a5/d8057/21040034.webp" },
-       {name: "Helios Cleaver", rarity: 4, image: "https://www.prydwen.gg/static/7e404c8965d96ba9485904887fa13c1d/d8057/21010064.webp" },
-       {name: "Hollow Mirage", rarity: 4, image: "https://www.prydwen.gg/static/f9d39aa09d3ac8c82f808e79ef20cee9/d8057/21040064.webp" },
-       {name: "Jinzhou Keeper", rarity: 4, image: "https://www.prydwen.gg/static/3df20f62a915724b1e00969db9049390/d8057/21050044.webp" },
-       {name: "Legend of Drunken Hero", rarity: 4, image: "https://www.prydwen.gg/static/db22af6d1117254126b02a55d4e3dde5/d8057/21040094.webp" },
-       {name: "Lumingloss", rarity: 4, image: "https://www.prydwen.gg/static/3c96fa22b3ec2f92dd1062fe4bd833cd/d8057/21020074.webp" },
-       {name: "Lunar Cutter", rarity: 4, image: "https://static.wikia.nocookie.net/wutheringwaves/images/c/ca/Weapon_Lunar_Cutter.png/revision/latest?cb=20240526011750" },
-       {name: "Marcato", rarity: 4, image: "https://www.prydwen.gg/static/a1a116a62c73e15ae365e73dbeba60e0/d8057/21040024.webp" },
-       {name: "Mediations on Mercy", rarity: 4, image: "https://www.prydwen.gg/static/17956cd3406249c8f12edbf5464ec1b5/d8057/21010094.webp" },
-       {name: "Novaburst", rarity: 4, image: "https://www.prydwen.gg/static/ff30d714609a1a96237c12dfcb0e248b/d8057/21030064.webp" },
-       {name: "Ocean's Gift", rarity: 4, image: "https://www.prydwen.gg/static/ac890a3f96908f1f0481185c222db19a/d8057/21050027.webp" },
-       {name: "Overture", rarity: 4, image: "https://www.prydwen.gg/static/c7245f70c6282909433bb73081571507/d8057/21020024.webp" },
-       {name: "Pistols#26", rarity: 4, image: "https://www.prydwen.gg/static/40200b1f5449a8cd8655aa7cd96b6714/d8057/21030034.webp" },
-       {name: "Rectifier#25", rarity: 4, image: "https://www.prydwen.gg/static/29e9a9de172784c2de4f0d76e371a60b/d8057/21050034.webp" },
-       {name: "Relativistic Jet", rarity: 4, image: "https://www.prydwen.gg/static/f7d0db605e6df4851bbc61329d788026/d8057/21030084.webp" },
-       {name: "Romance in Farewell", rarity: 4, image: "https://www.prydwen.gg/static/3d67322bfd1789fadedb23631aee70cd/d8057/21030094.webp" },
-       {name: "Somnoire Anchor", rarity: 4, image: "https://www.prydwen.gg/static/8096f34617104e3f4c69d70007e8e351/d8057/21020017.webp" },
-       {name: "Stonard", rarity: 4, image: "https://www.prydwen.gg/static/0ec71b53bda686cfa3da5c255c4e6014/d8057/21040074.webp" },
-       {name: "Sword#18", rarity: 4, image: "https://www.prydwen.gg/static/360e564b64befe84af30a0a2fa79c0b5/d8057/21020034.webp" },
-       {name: "Thunderbold", rarity: 4, image: "https://www.prydwen.gg/static/5cd96efa005e20f2a22f50a3fdf8dd0a/d8057/21030074.webp" },
-       {name: "Undying Flame", rarity: 4, image: "https://www.prydwen.gg/static/56b1822228eafd7b28de77acf9b3f871/d8057/21030044.webp" },
-       {name: "Variation", rarity: 4, image: "https://www.prydwen.gg/static/17b3ecd853dc96c67fbd61529e8f20cc/d8057/21050024.webp" },
-       {name: "Waltz in Masquerade", rarity: 4, image: "https://www.prydwen.gg/static/3f5985f963b9534560b68b09e15a3b61/d8057/21050094.webp" },
-       {name: "Waning Redshift", rarity: 4, image: "https://www.prydwen.gg/static/a9dec34478e09071ff40306d7bb43e30/d8057/21010084.webp" },
-       {name: "Abyss Surges", rarity: 5, image: "https://www.prydwen.gg/static/da96eff40570b44e7ad147a1f02fb010/d8057/21040015.webp" },
-       {name: "Age of Harvest", rarity: 5, image: "https://www.prydwen.gg/static/4618aff3766c7321a6ed5b90a5ba5233/d8057/21010026.webp" },
-       {name: "Blazing Brilliance", rarity: 5, image: "https://www.prydwen.gg/static/d10d36537a00df4dbb097bbf060882e5/d8057/21020016.webp" },
-       {name: "Blazing Justice", rarity: 5, image: "https://www.prydwen.gg/static/56209339a7d77fa2aba666782c5edd4d/d8057/21040036.webp" },
-       {name: "Bloodpact's Pledge", rarity: 5, image: "https://www.prydwen.gg/static/82e03cb3a85e7a7099208399d405dcb3/d8057/21020046.webp" },
-       {name: "Cosmic Ripples", rarity: 5, image: "https://www.prydwen.gg/static/39c57180711200564883c36983cc61bf/d8057/21050015.webp" },
-       {name: "Defier's Thorn", rarity: 5, image: "https://www.prydwen.gg/static/724513a7283abb524ffea4341e11cc81/d8057/21020056.webp" },
-       {name: "Emerald of Genesis", rarity: 5, image: "https://www.prydwen.gg/static/30143bcc97126ddc90c6f0a143d2f034/d8057/21020015.webp" },
-       {name: "Lethean Elegy", rarity: 5, image: "https://www.prydwen.gg/static/038c0171b512d8628d9a82a0ef2954c8/d8057/21050066.webp" },
-       {name: "Luminous Hymn", rarity: 5, image: "https://www.prydwen.gg/static/aa87373361d2f01d5e8664dd81f3e4bd/d8057/21050046.webp" },
-       {name: "Lustrous Razor", rarity: 5, image: "https://static.wikia.nocookie.net/wutheringwaves/images/c/c1/Weapon_Lustrous_Razor.png/revision/latest?cb=20240606152146" },
-       {name: "Red Spring", rarity: 5, image: "https://www.prydwen.gg/static/df316ecf3de0e6c72f51382c85266ed6/d8057/21020026.webp" },
-       {name: "Rime-Draped Sprouts", rarity: 5, image: "https://www.prydwen.gg/static/616d8054f1f14435f9d963e6f338f200/d8057/21050026.webp" },
-       {name: "Static Mist", rarity: 5, image: "https://www.prydwen.gg/static/7d6753ee032694bd071ccdd5d5ba5b3b/d8057/21030015.webp" },
-       {name: "Stellar Symphony", rarity: 5, image: "https://www.prydwen.gg/static/0c478cd8efeab343c930d70b32eb1fa6/d8057/21050036.webp" },
-       {name: "Stringmaster", rarity: 5, image: "https://www.prydwen.gg/static/8ff1fade69b3c0c324b49542bd182b06/d8057/21050016.webp" },
-       {name: "The Last Dance", rarity: 5, image: "https://www.prydwen.gg/static/e2a821935b5401e06fdedf5a0f053b1/d8057/21030016.webp" },
-       {name: "Tragicomedy", rarity: 5, image: "https://www.prydwen.gg/static/47ea08cce530ca69535b6a53e5d8a101/d8057/21040026.webp" },
-       {name: "Unflickering Valor", rarity: 5, image: "https://www.prydwen.gg/static/3f8e4381cb746d3db5d78a4f7b221979/d8057/21020036.webp" },
-       {name: "Verdant Summit", rarity: 5, image: "https://www.prydwen.gg/static/628bb28c1fe21823b30de4abe067ce5d/d8057/21010016.webp" },
-       {name: "Verity's Handle", rarity: 5, image: "https://www.prydwen.gg/static/725db1ce3c32dac3c843deeb9da9feec/d8057/21040016.webp" },
-       {name: "Whispers of Sirens", rarity: 5, image: "https://www.prydwen.gg/static/85e5622e263df3634be85a04d624343c/d8057/21050056.webp" },
-       {name: "Wildfire Mark", rarity: 5, image: "https://www.prydwen.gg/static/0d3e3193c82c0668a793c4cd0762a5d4/d8057/21010036.webp" },
-       {name: "Woodland Aria", rarity: 5, image: "https://www.prydwen.gg/static/4bd8e13dc74fe0db2936df08ecc86861/d8057/21030026.webp" },
-    ];
+        {"name": "Beguiling Melody", "rarity": 3,"img": "poze arme/arme 3/Beguiling Melody.png" },
+        {"name": "Broadblade of Night", "rarity": 3,"img": "poze arme/arme 3/Broadblade of Night.png" },
+        {"name": "Broadblade of Voyager", "rarity": 3,"img": "poze arme/arme 3/Broadblade of Voyager.png" },
+        {"name": "Gauntlets of Night", "rarity": 3,"img": "poze arme/arme 3/Gauntlets of Night.png" },
+        {"name": "Gauntlets of Voyager", "rarity": 3,"img": "poze arme/arme 3/Gauntlets of Voyager.png" },
+        {"name": "Guardian Broadblade", "rarity": 3,"img": "poze arme/arme 3/Guardian Broadblade.png" },
+        {"name": "Guardian Gauntlets", "rarity": 3,"img": "poze arme/arme 3/Guardian Gauntlets.png" },
+        {"name": "Guardian Pistols", "rarity": 3,"img": "poze arme/arme 3/Guardian Pistols.png" },
+        {"name": "Guardian Rectifier","rarity": 3,"img": "poze arme/arme 3/Guardian Rectifier.png" },
+        {"name": "Guardian Sword", "rarity": 3,"img": "poze arme/arme 3/Guardian Sword.png" },
+        {"name": "Originite: Type I", "rarity": 3,"img": "poze arme/arme 3/Originite Type I.png" },
+        {"name": "Originite: Type II", "rarity": 3,"img": "poze arme/arme 3/Originite Type II.png" },
+        {"name": "Originite: Type III", "rarity": 3,"img": "poze arme/arme 3/Originite Type III.png" },
+        {"name": "Originite: Type IV", "rarity": 3,"img": "poze arme/arme 3/Originite Type IV.png" },
+        {"name": "Originite: Type V", "rarity": 3,"img": "poze arme/arme 3/Originite Type V.png" },
+        {"name": "Pistols of Night", "rarity": 3,"img": "poze arme/arme 3/Pistols of Night.png" },
+        {"name": "Pistols of Voyager", "rarity": 3,"img": "poze arme/arme 3/Pistols of Voyager.png" },
+        {"name": "Rectifier of Night", "rarity": 3,"img": "poze arme/arme 3/Rectifier of Night.png" },
+        {"name": "Rectifier of Voyager", "rarity": 3,"img": "poze arme/arme 3/Rectifier of Voyager.png" },
+        {"name": "Sword of Night", "rarity": 3,"img": "poze arme/arme 3/Sword of Night.png" },
+        {"name": "Sword of Voyager", "rarity": 3,"img": "poze arme/arme 3/Sword of Voyager.png" },
+
+        {"name": "Aether Strike", "rarity": 4,"img": "poze arme/arme 4/Aether Strike.png" },
+        {"name": "Amity Accord", "rarity": 4,"img": "poze arme/arme 4/Amity Accord.png" },
+        {"name": "Augment","rarity": 4,"img": "poze arme/arme 4/Augment.png" },
+        {"name": "Aureate Zenith", "rarity": 4,"img": "poze arme/arme 4/Aureate Zenith.png" },
+        {"name": "Autumntrace", "rarity": 4,"img": "poze arme/arme 4/Autumntrace.png" },
+        {"name": "Broadblade#41", "rarity": 4,"img": "poze arme/arme 4/Broadblade#41.png" },
+        {"name": "Cadenza", "rarity": 4,"img": "poze arme/arme 4/Cadenza.png" },
+        {"name": "Call of the Abyss", "rarity": 4,"img": "poze arme/arme 4/Call of the Abyss.png" },
+        {"name": "Celestial Spiral", "rarity": 4,"img": "poze arme/arme 4/Celestial Spiral.png" },
+        {"name": "Comet Flare", "rarity": 4,"img": "poze arme/arme 4/Comet Flare.png" },
+        {"name": "Commando of Conviction", "rarity": 4,"img": "poze arme/arme 4/Commando of Conviction.png" },
+        {"name": "Dauntless Evernight", "rarity": 4,"img": "poze arme/arme 4/Dauntless Evernight.png" },
+        {"name": "Discord", "rarity": 4,"img": "poze arme/arme 4/Discord.png" },
+        {"name": "Endless Collapse", "rarity": 4,"img": "poze arme/arme 4/Endless Collapse.png" },
+        {"name": "Fables of Wisdom", "rarity": 4,"img": "poze arme/arme 4/Fables of Wisdom.png" },
+        {"name": "Feather Edge", "rarity": 4,"img": "poze arme/arme 4/Feather Edge.png" },
+        {"name": "Fusion Accretion", "rarity": 4,"img": "poze arme/arme 4/Fusion Accretion.png" },
+        {"name": "Gauntlets#21D", "rarity": 4,"img": "poze arme/arme 4/Gauntlets#21D.png" },
+        {"name": "Helios Cleaver", "rarity": 4,"img": "poze arme/arme 4/Helios Cleaver.png" },
+        {"name": "Hollow Mirage", "rarity": 4,"img": "poze arme/arme 4/Hollow Mirage.png" },
+        {"name": "Jinzhou Keeper", "rarity": 4,"img": "poze arme/arme 4/Jinzhou Keeper.png" },
+        {"name": "Legend of Drunken Hero", "rarity": 4,"img": "poze arme/arme 4/Legend of Drunken Hero.png" },
+        {"name": "Lumingloss", "rarity": 4,"img": "poze arme/arme 4/Lumingloss.png" },
+        {"name": "Lunar Cutter", "rarity": 4,"img": "poze arme/arme 4/Lunar Cutter.png" },
+        {"name": "Marcato", "rarity": 4,"img": "poze arme/arme 4/Marcato.png" },
+        {"name": "Meditations on Mercy", "rarity": 4,"img": "poze arme/arme 4/Meditations on Mercy.png" },
+        {"name": "Novaburst", "rarity": 4,"img": "poze arme/arme 4/Novaburst.png" },
+        {"name": "Ocean's Gift", "rarity": 4,"img": "poze arme/arme 4/Ocean's Gift.png" },
+        {"name": "Overture", "rarity": 4,"img": "poze arme/arme 4/Oveture.png" },
+        {"name": "Pistols#26", "rarity": 4,"img": "poze arme/arme 4/Pistols#26.png" },
+        {"name": "Radiant Dawn", "rarity": 4,"img": "poze arme/arme 4/Radiant Dawn.png" },
+        {"name": "Rectifier#25", "rarity": 4,"img": "poze arme/arme 4/Rectifier#25.png" },
+        {"name": "Relativistic Jet", "rarity": 4, "img": "poze arme/arme 4/Relativistic Jet.png" },
+        {"name": "Romance in Farewell", "rarity": 4,"img": "poze arme/arme 4/Romance in Farewell.png" },
+        {"name": "Solar Flame", "rarity": 4,"img": "poze arme/arme 4/Solar Flame.png" },
+        {"name": "Somnoire Anchor", "rarity": 4,"img": "poze arme/arme 4/Somnoire Anchor.png" },
+        {"name": "Stonard", "rarity": 4,"img": "poze arme/arme 4/Stonard.png" },
+        {"name": "Sword#18", "rarity": 4,"img": "poze arme/arme 4/Sword#18.png" },
+        {"name": "Thunderbolt", "rarity": 4,"img": "poze arme/arme 4/Thunderbolt.png" },
+        {"name": "Undying Flame", "rarity": 4, "img": "poze arme/arme 4/Undying Flame.png" },
+        {"name": "Variation", "rarity": 4,"img": "poze arme/arme 4/Variation.png" },
+        {"name": "Waltz in Masquerade", "rarity": 4,"img": "poze arme/arme 4/Waltz in Masquerade.png" },
+        {"name": "Waning Redshift", "rarity": 4,"img": "poze arme/arme 4/Waning Redshift.png" },
+
+        {"name": "Abyss Surges", "rarity": 5,"img": "poze arme/arme 5/Abyss Surges.png" },
+        {"name": "Ages of Harvest", "rarity": 5,"img": "poze arme/arme 5/Ages of Harvest.png" },
+        {"name": "Azure Oath", "rarity": 5,"img": "poze arme/arme 5/Azure Oath.png" },
+        {"name": "Blazing Brilliance", "rarity": 5,"img": "poze arme/arme 5/Blazing Brilliance.png" },
+        {"name": "Blazing Justice", "rarity": 5,"img": "poze arme/arme 5/Blazing Justice.png" },
+        {"name": "Bloodpact's Pledge", "rarity": 5,"img": "poze arme/arme 5/Bloodpact's Pledge.png" },
+        {"name": "Boson Astrolabe", "rarity": 5,"img": "poze arme/arme 5/Boson Astrolabe.png" },
+        {"name": "Cosmic Ripples", "rarity": 5,"img": "poze arme/arme 5/Cosmic Ripples.png" },
+        {"name": "Daybreaker's Spine", "rarity": 5,"img": "poze arme/arme 5/Daybreaker's spine.png" },
+        {"name": "Defier's Thorn", "rarity": 5,"img": "poze arme/arme 5/Defier's Thorn.png" },
+        {"name": "Emerald of Genesis", "rarity": 5,"img": "poze arme/arme 5/Emerald of Genesis.png" },
+        {"name": "Emerald Sentence", "rarity": 5,"img": "poze arme/arme 5/Emerald Sentence.png" },
+        {"name": "Everbright Polestar", "rarity": 5,"img": "poze arme/arme 5/Everbright Polestar.png" },
+        {"name": "Firstlight's Herald", "rarity": 5,"img": "poze arme/arme 5/Firstlight's Herald.png" },
+        {"name": "Forged Dwarf Star", "rarity": 5,"img": "poze arme/arme 5/Forged Dwarf Star.png" },
+        {"name": "Freeze Frame", "rarity": 5,"img": "poze arme/arme 5/Freeze Frame.png" },
+        {"name": "Frostburn", "rarity": 5,"img": "poze arme/arme 5/Frostburn.png" },
+        {"name": "Kumokiri", "rarity": 5,"img": "poze arme/arme 5/Kumokiri.png" },
+        {"name": "Laser Shearer", "rarity": 5,"img": "poze arme/arme 5/Laser Shearer.png" },
+        {"name": "Lethean Elegy", "rarity": 5,"img": "poze arme/arme 5/Lethean Elegy.png" },
+        {"name": "Luminous Hymn", "rarity": 5,"img": "poze arme/arme 5/Luminous Hymn.png" },
+        {"name": "Lustrous Razor", "rarity": 5,"img": "poze arme/arme 5/Lustrous Razor.png" },
+        {"name": "Lux & Umbra", "rarity": 5,"img": "poze arme/arme 5/Lux & Umbra.png" },
+        {"name": "Moongazer's Sigil", "rarity": 5,"img": "poze arme/arme 5/Moongazer's Sigil.png" },
+        {"name": "Phasic Homogenizer", "rarity": 5,"img": "poze arme/arme 5/Phasic Homogenizer.png" },
+        {"name": "Pulsation Bracer", "rarity": 5,"img": "poze arme/arme 5/Pulsation Bracer.png" },
+        {"name": "Radiance Cleaver", "rarity": 5,"img": "poze arme/arme 5/Radiance Cleaver.png" },
+        {"name": "Red String", "rarity": 5,"img": "poze arme/arme 5/Red String.png" },
+        {"name": "Rime-Draped Sprouts", "rarity": 5,"img": "poze arme/arme 5/Rime-Draped Sprouts.png" },
+        {"name": "Skull Thrasher", "rarity": 5,"img": "poze arme/arme 5/Skull Thrasher.png" },
+        {"name": "Solsworn Ciphers", "rarity": 5,"img": "poze arme/arme 5/Solsworn Ciphers.png" },
+        {"name": "Spectral Trigger", "rarity": 5,"img": "poze arme/arme 5/Spectral Trigger.png" },
+        {"name": "Spectrum Blaster", "rarity": 5,"img": "poze arme/arme 5/Spectrum Blaster.png" },
+        {"name": "Starfield Calibrator", "rarity": 5,"img": "poze arme/arme 5/Starfield Calibrator.png" },
+        {"name": "Static Mist", "rarity": 5,"img": "poze arme/arme 5/Static Mist.png" },
+        {"name": "Stellar Symphony", "rarity": 5,"img": "poze arme/arme 5/Stellar Symphony.png" },
+        {"name": "Stringmaster", "rarity": 5,"img": "poze arme/arme 5/Stringmaster.png" },
+        {"name": "The Last Dance", "rarity": 5,"img": "poze arme/arme 5/The Last Dance.png" },
+        {"name": "Thunderflare Dominion", "rarity": 5,"img": "poze arme/arme 5/Thunderflare Dominion.png" },
+        {"name": "Tragicomedy", "rarity": 5,"img": "poze arme/arme 5/Tragicomedy.png" },
+        {"name": "Unflickering Valor", "rarity": 5,"img": "poze arme/arme 5/Unflickering Valor.png" },
+        {"name": "Verdant Summit", "rarity": 5,"img": "poze arme/arme 5/Verdant Summit.png" },
+        {"name": "Verity's Handle", "rarity": 5,"img": "poze arme/arme 5/Verity's Handle.png" },
+        {"name": "Whispers of Sirens", "rarity": 5,"img": "poze arme/arme 5/Whispers of Sirens.png" },
+        {"name": "Wildfire Mark", "rarity": 5,"img": "poze arme/arme 5/Wildfire Mark.png" },
+        {"name": "Woodland Aria", "rarity": 5,"img": "poze arme/arme 5/Woodland Aria.png" },   ];
     
     const allItems = [...characters, ...weapons];
     
@@ -145,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const userInfo = document.getElementById('userInfo');
     const usernameSpan = document.getElementById('username');
     const welcomeMessage = document.getElementById('welcomeMessage');
+    const profileDropdownContainer = document.getElementById('profileDropdownContainer');
     
     // Language selector elements
     const languageButton = document.getElementById('languageButton');
@@ -158,8 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const wish10Button = document.getElementById('wish10');
     const wishResultsDiv = document.getElementById('wishResults');
     const totalWishesSpan = document.getElementById('totalWishes');
-    const pity5StarSpan = document.getElementById('pity5Star');
-    const pity4StarSpan = document.getElementById('pity4Star');
     const stat5Star = document.getElementById('stat5Star');
     const stat4Star = document.getElementById('stat4Star');
     const stat3Star = document.getElementById('stat3Star');
@@ -209,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let count3Star = 0;
     let currentFilter = 'all';
     let pityHistory = [];
+    let wishHistory = [];
     let obtainedCharacters = [];
     let obtainedWeapons = [];
     let last5StarWish = 0; // Tracks the total number of pulls at the last 5-star
@@ -216,6 +258,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const PITY_4_STAR_MAX = 10;
     const RATE_5_STAR = 0.025; // 2.5% for 5-star
     let shellCredits = 0;
+
+    if (totalWishesSpan) {
+        totalWishesSpan.textContent = totalWishes;
+    }
     
     // Translations
     const translations = {
@@ -257,8 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
             'wish-title': 'Wuthering Waves Wishing Simulator',
             'wish-description': 'Apasă pe butoane pentru a face o tragere!',
             'wish-total-wishes': 'Total Trageri: ',
-            'wish-pity-5': 'Pity 5-stele: ',
-            'wish-pity-4': 'Pity 4-stele: ',
             'wish-filter-all': 'Toate',
             'wish-filter-5': '5-stele',
             'wish-filter-4': '4-stele',
@@ -325,8 +369,6 @@ document.addEventListener('DOMContentLoaded', () => {
             'wish-title': 'Wuthering Waves Wishing Simulator',
             'wish-description': 'Press the buttons to make a pull!',
             'wish-total-wishes': 'Total Pulls: ',
-            'wish-pity-5': '5-star Pity: ',
-            'wish-pity-4': '4-star Pity: ',
             'wish-filter-all': 'All',
             'wish-filter-5': '5-star',
             'wish-filter-4': '4-star',
@@ -390,6 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
             count4Star,
             count3Star,
             pityHistory,
+            wishHistory,
             obtainedCharacters,
             obtainedWeapons,
             last5StarWish
@@ -484,38 +527,55 @@ document.addEventListener('DOMContentLoaded', () => {
     
     auth.onAuthStateChanged((user) => {
         if (user) {
-            // Încarcă datele și dacă nu există documentul, îl creezi
-            db.collection('users').doc(user.uid).get().then(doc => {
-                if (!doc.exists) {
-                    // Creează documentul cu valorile default
-                    createUserData(user).then(() => {
-                        loadUserCurrencies(user);
-                    });
-                } else {
-                    loadUserCurrencies(user);
-                }
-            });
-            // user.displayName, user.email etc.
-            // Actualizează UI-ul pentru utilizator logat
             currentUser = {
                 username: user.displayName || user.email,
                 email: user.email
             };
-            usernameSpan.textContent = currentUser.username;
-            userInfo.style.display = 'flex';
-            authButton.textContent = translations[currentLanguage]['auth-logout'];
-            authButton.classList.remove('pulse');
-            welcomeMessage.style.display = 'none';
+
+            if (usernameSpan) {
+                usernameSpan.textContent = currentUser.username;
+            }
+
+            if (profileDropdownContainer) {
+                profileDropdownContainer.style.display = 'flex';
+            }
+
+            if (authButton) {
+                authButton.style.display = 'none';
+                authButton.textContent = translations[currentLanguage]['auth-logout'];
+                authButton.classList.remove('pulse');
+            }
+
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
+
+            db.collection('users').doc(user.uid).get().then(doc => {
+                if (!doc.exists) {
+                    createUserData(user).then(() => loadUserCurrencies(user));
+                } else {
+                    loadUserCurrencies(user);
+                }
+            }).catch(error => console.error('User data load failed:', error));
+
             loadUserData();
+            loadUserCurrencies(user);
         } else {
-            // Actualizează UI-ul pentru utilizator delogat
-            userInfo.style.display = 'none';
-            authButton.textContent = translations[currentLanguage]['auth-login'];
-            authButton.classList.add('pulse');
-            welcomeMessage.style.display = 'block';
+            currentUser = null;
+            if (profileDropdownContainer) {
+                profileDropdownContainer.style.display = 'none';
+            }
+            if (authButton) {
+                authButton.style.display = 'block';
+                authButton.textContent = translations[currentLanguage]['auth-login'];
+                authButton.classList.add('pulse');
+            }
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'block';
+            }
             updateAstriteDisplay(0);
             updateShellCreditsDisplay(0);
-        }        
+        }
     });
     
     function createUserData(user) {
@@ -527,13 +587,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    function loadAstrite(user) {
+    function loadUserCurrencies(user) {
+        if (!user || !db) return;
         db.collection('users').doc(user.uid).get().then(doc => {
             if (doc.exists) {
-                updateAstriteDisplay(doc.data().astrite);
-                updateShellCreditsDisplay(doc.data().shellCredits);
+                const data = doc.data() || {};
+                updateAstriteDisplay(data.astrite || 0);
+                updateShellCreditsDisplay(data.shellCredits || 0);
+                updateProfileDropdown();
             }
-        });
+        }).catch(error => console.error('Could not load user currencies:', error));
     }
     
     function updateAstriteDisplay(value) {
@@ -544,6 +607,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('shellCreditsValue').textContent = value;
         // și în caseta de lângă username:
         document.getElementById('profileShellCredits').textContent = value;
+        // și în Domain, dacă există
+        const domainShell = document.getElementById('shellCreditsValueDomain');
+        if(domainShell) domainShell.textContent = value;
     }
     
     function changeAstrite(user, delta) {
@@ -578,6 +644,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    function syncCountersFromHistory() {
+        totalWishes = wishHistory.length;
+        pity5Star = 0;
+        pity4Star = 0;
+        count5Star = 0;
+        count4Star = 0;
+        count3Star = 0;
+        pityHistory = [];
+        last5StarWish = 0;
+
+        wishHistory.forEach((item, index) => {
+            if (item.rarity === 5) {
+                count5Star++;
+                const pityCount = index + 1 - last5StarWish;
+                pityHistory.push({ name: item.name, pity: pityCount });
+                last5StarWish = index + 1;
+                pity5Star = 0;
+                pity4Star = 0;
+            } else if (item.rarity === 4) {
+                count4Star++;
+                pity4Star = 0;
+                pity5Star++;
+            } else {
+                count3Star++;
+                pity5Star++;
+                pity4Star++;
+            }
+        });
+
+        const rate5Star = totalWishes > 0 ? ((count5Star / totalWishes) * 100).toFixed(2) : 0;
+        stat5Rate.textContent = `${rate5Star}%`;
+        if (totalWishesSpan) {
+            totalWishesSpan.textContent = totalWishes;
+        }
+        stat5Star.textContent = count5Star;
+        stat4Star.textContent = count4Star;
+        stat3Star.textContent = count3Star;
+    }
+
     function loadUserData() {
         if (!currentUser) return;
         const userData = getUserData(currentUser.username);
@@ -589,22 +694,14 @@ document.addEventListener('DOMContentLoaded', () => {
             count4Star = userData.count4Star || 0;
             count3Star = userData.count3Star || 0;
             pityHistory = userData.pityHistory || [];
+            wishHistory = userData.wishHistory || userData.wishResults || [];
             obtainedCharacters = userData.obtainedCharacters || [];
             obtainedWeapons = userData.obtainedWeapons || [];
             last5StarWish = userData.last5StarWish || 0;
             
-            // Update UI
-            totalWishesSpan.textContent = totalWishes;
-            pity5StarSpan.textContent = pity5Star;
-            pity4StarSpan.textContent = pity4Star;
-            stat5Star.textContent = count5Star;
-            stat4Star.textContent = count4Star;
-            stat3Star.textContent = count3Star;
-            
-            const rate5Star = totalWishes > 0 ? ((count5Star / totalWishes) * 100).toFixed(2) : 0;
-            stat5Rate.textContent = `${rate5Star}%`;
-            
+            syncCountersFromHistory();
             updatePityHistory();
+            renderWishHistory();
             
             // Update collections when user data is loaded
             updateCharactersCollection();
@@ -748,9 +845,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Main pull function ---
     function performWish() {
-        totalWishes++;
-        pity5Star++;
-        pity4Star++;
         let resultItem;
         const rand = Math.random();
         
@@ -763,8 +857,8 @@ document.addEventListener('DOMContentLoaded', () => {
             createSparkles();
             
             // Calculate pity for this 5-star
-            const pityCount = totalWishes - last5StarWish;
-            last5StarWish = totalWishes;
+            const pityCount = totalWishes + 1 - last5StarWish;
+            last5StarWish = totalWishes + 1;
             
             // Add to pity history
             pityHistory.push({
@@ -776,10 +870,15 @@ document.addEventListener('DOMContentLoaded', () => {
             resultItem = getRandomItemByRarity(4);
             pity4Star = 0;
             count4Star++;
+            pity5Star++;
         } else {
             resultItem = getRandomItemByRarity(3);
             count3Star++;
+            pity5Star++;
+            pity4Star++;
         }
+
+        totalWishes++;
         
         // Add to appropriate collection
         if (characters.some(c => c.name === resultItem.name)) {
@@ -792,33 +891,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
+        const resultData = {
+            name: resultItem.name,
+            img: resultItem.img,
+            rarity: resultItem.rarity
+        };
+
+        wishHistory.push(resultData);
+        syncCountersFromHistory();
+
         // Save user data
         if (currentUser) {
             saveCurrentUserData();
         }
         
-        // Update result display
-        const itemElement = document.createElement('div');
-        itemElement.className = `wish-item rarity-${resultItem.rarity}-item reveal-item-${resultItem.rarity}`; // Add reveal animation class
-        itemElement.dataset.rarity = resultItem.rarity;
-        
-        // Add rarity text in current language
-        const rarityText = translations[currentLanguage]['rarity-text'].replace('{rarity}', resultItem.rarity);
-        
-        itemElement.innerHTML = `
-            <img src="${resultItem.image}" alt="${resultItem.name}">
-            <div class="details">
-                <p class="name">${resultItem.name}</p>
-                <p class="rarity">${translations[currentLanguage]['wish-stat-' + resultItem.rarity]}: <span class="rarity-text-${resultItem.rarity}" data-rarity="${resultItem.rarity}">${rarityText}</span></p>
-            </div>
-        `;
-        
-        // Add special class for 5-star items
-        if (resultItem.rarity === 5) {
-            itemElement.classList.add('special-glow');
-        }
-        
-        return { element: itemElement, rarity: resultItem.rarity };
+        return { rarity: resultItem.rarity };
     }
     
     // --- Function to get a random item by rarity ---
@@ -828,13 +915,49 @@ document.addEventListener('DOMContentLoaded', () => {
         return filteredItems[randomIndex];
     }
     
+    function createWishResultElement(resultItem) {
+        const itemElement = document.createElement('div');
+        itemElement.className = `wish-item rarity-${resultItem.rarity}-item reveal-item-${resultItem.rarity}`;
+        itemElement.dataset.rarity = resultItem.rarity;
+
+        const rarityText = translations[currentLanguage]['rarity-text'].replace('{rarity}', resultItem.rarity);
+
+        itemElement.innerHTML = `
+            <img src="${resultItem.img}" alt="${resultItem.name}">
+            <div class="details">
+                <p class="name">${resultItem.name}</p>
+                <p class="rarity">${translations[currentLanguage]['wish-stat-' + resultItem.rarity]}: <span class="rarity-text-${resultItem.rarity}" data-rarity="${resultItem.rarity}">${rarityText}</span></p>
+            </div>
+        `;
+
+        if (resultItem.rarity === 5) {
+            itemElement.classList.add('special-glow');
+        }
+
+        return itemElement;
+    }
+
+    function renderWishHistory() {
+        wishResultsDiv.innerHTML = '';
+
+        if (wishHistory.length === 0) {
+            wishResultsDiv.innerHTML = `<h3 data-translate="wish-prompt">Trage pentru a vedea rezultatele!</h3>`;
+            return;
+        }
+
+        wishHistory.slice().reverse().forEach(item => {
+            wishResultsDiv.appendChild(createWishResultElement(item));
+        });
+
+        applyFilter();
+    }
+
     // --- UI update function ---
     function updateUI(results) {
-        // This function is now called *after* items are revealed
-        // Update counters
+        syncCountersFromHistory();
+        updatePityHistory();
+
         totalWishesSpan.textContent = totalWishes;
-        pity5StarSpan.textContent = pity5Star;
-        pity4StarSpan.textContent = pity4Star;
         
         // Update stats
         stat5Star.textContent = count5Star;
@@ -886,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const rarityText = translations[currentLanguage]['rarity-text'].replace('{rarity}', character.rarity);
             
             characterElement.innerHTML = `
-                <img src="${character.image}" alt="${character.name}">
+                <img src="${character.img}" alt="${character.name}">
                 <div class="info">
                     <h3 class="name">${character.name}</h3>
                     <p class="rarity rarity-text-${character.rarity}">${rarityText}</p>
@@ -916,7 +1039,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const rarityText = translations[currentLanguage]['rarity-text'].replace('{rarity}', weapon.rarity);
             
             weaponElement.innerHTML = `
-                <img src="${weapon.image}" alt="${weapon.name}">
+                <img src="${weapon.img}" alt="${weapon.name}">
                 <div class="info">
                     <h3 class="name">${weapon.name}</h3>
                     <p class="rarity rarity-text-${weapon.rarity}">${rarityText}</p>
@@ -1004,8 +1127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         wishAnimationOverlay.classList.remove('active');
         
-        // Display all results after the animation
-        results.reverse().forEach(res => wishResultsDiv.prepend(res.element));
+        renderWishHistory();
         updateUI(results);
         
         wish1Button.disabled = false;
@@ -1061,53 +1183,55 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hamburger menu toggle
     const menuToggle = document.getElementById('menuToggle');
     const navLinksList = document.getElementById('navLinks');
-    menuToggle.addEventListener('click', () => {
-        navLinksList.classList.toggle('open');
-    });
-    // Close menu on link click
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinksList.classList.remove('open');
+    if (menuToggle && navLinksList) {
+        menuToggle.addEventListener('click', () => {
+            navLinksList.classList.toggle('open');
         });
-    });
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksList.classList.remove('open');
+            });
+        });
+    }
     
-    const usernameProfile = document.getElementById('username');
-const profileDropdown = document.getElementById('profileDropdown');
+    const profileBtn = document.getElementById('profileBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
 
-// Toggle dropdown la click pe username
-usernameProfile.addEventListener('click', (e) => {
-    profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
-    if (profileDropdown.style.display === 'block') {
-        updateProfileDropdown();
+    if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (profileDropdown.style.display === 'block') {
+                profileDropdown.style.display = 'none';
+            } else {
+                profileDropdown.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!profileDropdown.contains(e.target) && e.target !== profileBtn) {
+                profileDropdown.style.display = 'none';
+            }
+        });
     }
-    e.stopPropagation();
-});
 
-// Închide dropdown dacă dai click în afara lui
-document.addEventListener('click', (e) => {
-    if (!profileDropdown.contains(e.target) && e.target !== usernameProfile) {
-        profileDropdown.style.display = 'none';
+    // Actualizează datele din profil
+    function updateProfileDropdown() {
+        // Astrite
+        const astrite = document.getElementById('astriteValue').textContent;
+        document.getElementById('profileAstrite').textContent = astrite;
+
+        // Caractere
+        const char5 = obtainedCharacters.filter(c => c.rarity == 5).length;
+        const char4 = obtainedCharacters.filter(c => c.rarity == 4).length;
+        document.getElementById('profileChar5').textContent = char5;
+        document.getElementById('profileChar4').textContent = char4;
+
+        // Arme
+        const weap5 = obtainedWeapons.filter(w => w.rarity == 5).length;
+        const weap4 = obtainedWeapons.filter(w => w.rarity == 4).length;
+        const weap3 = obtainedWeapons.filter(w => w.rarity == 3).length;
+        document.getElementById('profileWeap5').textContent = weap5;
+        document.getElementById('profileWeap4').textContent = weap4;
+        document.getElementById('profileWeap3').textContent = weap3;
     }
-});
-
-// Actualizează datele din profil
-function updateProfileDropdown() {
-    // Astrite
-    const astrite = document.getElementById('astriteValue').textContent;
-    document.getElementById('profileAstrite').textContent = astrite;
-
-    // Caractere
-    const char5 = obtainedCharacters.filter(c => c.rarity == 5).length;
-    const char4 = obtainedCharacters.filter(c => c.rarity == 4).length;
-    document.getElementById('profileChar5').textContent = char5;
-    document.getElementById('profileChar4').textContent = char4;
-
-    // Arme
-    const weap5 = obtainedWeapons.filter(w => w.rarity == 5).length;
-    const weap4 = obtainedWeapons.filter(w => w.rarity == 4).length;
-    const weap3 = obtainedWeapons.filter(w => w.rarity == 3).length;
-    document.getElementById('profileWeap5').textContent = weap5;
-    document.getElementById('profileWeap4').textContent = weap4;
-    document.getElementById('profileWeap3').textContent = weap3;
-}
 });
