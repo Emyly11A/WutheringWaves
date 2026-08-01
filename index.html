@@ -166,7 +166,7 @@
                 <p data-translate="wish-description">Apasă pe butoane pentru a face o tragere!<br></p>
                 
                 <div class="counters">
-                    <div class="counter-box" data-translate="wish-total-wishes">Total Trageri: <span id="totalWishes">0</span></div>
+                    <div class="counter-box"><span data-translate="wish-total-wishes">Total Trageri: </span><span id="totalWishes">0</span></div>
                 </div>
                 
                 <div class="filter-buttons">
@@ -250,18 +250,37 @@
         <!-- Pagina Domain -->
         <div class="page" id="domain">
             <div class="domain-container">
-                <h1 data-translate="domain-title">Domain - Joc pentru Astrite & Shell Credits</h1>
-                <p data-translate="domain-desc">Joacă mini-jocul pentru a câștiga Astrite sau Shell Credits!</p>
-                <br></br>
-                <!-- Aici vei adăuga joculețul și butoane pentru Shell Credits -->
-                <div class="domain-game-area" id="domainGameArea">
-                    <!-- Joculețul va fi aici -->
-                    <button id="playDomainGame" class="wish-button" data-translate="domain-play-btn">Joacă!</button>
-                    <div id="domainGameResult"></div>
+                <div class="domain-header">
+                    <div>
+                        <span class="domain-eyebrow" data-translate="domain-eyebrow">EXPEDIȚIE · DOMENIU</span>
+                        <h1 data-translate="domain-title">Domain - Joc pentru Astrite & Shell Credits</h1>
+                        <p data-translate="domain-desc">Joacă mini-jocul pentru a câștiga Astrite și Shell Credits!</p>
+                    </div>
                 </div>
-                <br></br>
-                <div class="domain-currency">
-                    <span class="shell-badge">Shell Credits: <span id="shellCreditsValueDomain">0</span></span>
+
+                <div class="domain-game-area" id="domainGameArea">
+                    <div class="domain-playfield" id="domainPlayfield">
+                        <div class="domain-game-hud">
+                            <span><small data-translate="domain-time-label">TIMP</small><strong id="domainTimer">60</strong></span>
+                            <span><small data-translate="domain-score-label">NUCLEE</small><strong id="domainScore">0</strong></span>
+                        </div>
+                        <div class="domain-playfield-hint" id="domainPlayfieldHint" data-translate="domain-game-hint">Apasă „Joacă!” pentru a începe.</div>
+                    </div>
+                    <div class="domain-game-content">
+                        <span class="domain-status" data-translate="domain-ready">PREGĂTIT PENTRU MISIUNE</span>
+                        <h2 data-translate="domain-challenge-title">Provocarea domeniului</h2>
+                        <p data-translate="domain-challenge-desc">Colectează nucleele de rezonanță înainte să dispară pentru a revendica resurse.</p>
+                        <div class="domain-rewards">
+                            <span class="domain-rewards-label" data-translate="domain-rewards-title">RECOMPENSE POSIBILE</span>
+                            <div>
+                                <span class="domain-reward astrite-reward">✦ <span data-translate="domain-reward-astrite">Astrite</span></span>
+                                <span class="domain-reward shell-reward">◉ <span data-translate="domain-reward-shell">Shell Credits</span></span>
+                            </div>
+                        </div>
+                        <p class="domain-game-settings"><span data-translate="domain-difficulty-label">Dificultate:</span> <strong data-translate="domain-difficulty-medium">Medie</strong> · <span id="domainGameLimit">Jocuri azi: 0/10</span></p>
+                        <button id="playDomainGame" class="wish-button domain-play-button" data-translate="domain-play-btn">Joacă!</button>
+                        <div id="domainGameResult" class="domain-game-result" aria-live="polite"></div>
+                    </div>
                 </div>
             </div>
         </div>
