@@ -1214,6 +1214,37 @@ nav {
     }
 }
 
+/* Accesibilitate: la prefers-reduced-motion, animațiile sunt dezactivate de browser,
+   deci itemele ar rămâne la opacity:0. Forțăm vizibilitatea și starea finală. */
+@media (prefers-reduced-motion: reduce) {
+    .wish-item,
+    .wish-item.reveal-item-3,
+    .wish-item.reveal-item-4,
+    .wish-item.reveal-item-5 {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .feature-card,
+    .collection-item,
+    .wish-item,
+    .counter-box,
+    .stats-box,
+    .filter-button,
+    .rarity-tab {
+        animation: none !important;
+    }
+
+    .page.active {
+        animation: none !important;
+    }
+
+    body::after {
+        animation: none !important;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .nav-links {
@@ -1517,6 +1548,34 @@ nav {
 
 .profile-dropdown-container:hover .profile-dropdown {
     display: block;
+}
+
+/* Buton de logout în dropdown-ul de profil */
+.profile-logout-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.65rem 1rem;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    color: #03111e;
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    box-shadow: 0 8px 20px rgba(124, 240, 255, 0.2);
+}
+
+.profile-logout-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 12px 26px rgba(124, 240, 255, 0.28);
+}
+
+.profile-logout-btn:active {
+    transform: translateY(0);
 }
 
 /* === TEMA NOUĂ: NEON AURORA === */
