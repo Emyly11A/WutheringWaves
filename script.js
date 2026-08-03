@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav-wish': 'Wish',
             'nav-characters': 'Caractere',
             'nav-weapons': 'Arme',
-            'nav-domain': 'Domeniu',
+            'nav-domain': 'Expediție',
             'auth-login': 'Autentificare',
             'auth-logout': 'Deconectare',
             'auth-title': 'Autentificare',
@@ -329,6 +329,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'weapons-tab-3': '3-stele',
             'weapons-empty': 'Nicio armă de {rarity}-stele obținută încă.',
             'rarity-text': '{rarity}-stele',
+            'profile-eyebrow': 'CONTUL MEU',
+            'profile-title': 'Profilul meu',
+            'profile-resources': 'Resurse',
+            'profile-shell': 'Shell Credits',
+            'profile-astrite': 'Astrite',
+            'profile-collection': 'Colecția mea',
+            'profile-char-5': 'Caractere 5★',
+            'profile-char-4': 'Caractere 4★',
+            'profile-weapon-5': 'Arme 5★',
+            'profile-weapon-4': 'Arme 4★',
+            'profile-weapon-3': 'Arme 3★',
             'domain-title': 'Domain - Joc pentru Astrite & Shell Credits',
             'domain-desc': 'Joacă mini-jocul pentru a câștiga Astrite și Shell Credits!',
             'domain-eyebrow': 'EXPEDIȚIE · DOMENIU',
@@ -344,6 +355,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'domain-difficulty-label': 'Dificultate:',
             'domain-difficulty-medium': 'Medie',
             'domain-game-limit': 'Jocuri azi: 0/10',
+            'domain-game-login': 'Autentifică-te pentru a începe o expediție.',
+            'domain-game-active': 'Colectează nucleele înainte să dispară!',
+            'domain-game-finished': 'Expediția s-a încheiat: +{shell} Shell Credits și +{astrite} Astrite.',
             'domain-play-btn': 'Joacă!',
         },
         // English
@@ -353,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav-wish': 'Wish',
             'nav-characters': 'Characters',
             'nav-weapons': 'Weapons',
-            'nav-domain': 'Domain',
+            'nav-domain': 'Expedition',
             'auth-login': 'Login',
             'auth-logout': 'Logout',
             'auth-title': 'Login',
@@ -408,6 +422,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'weapons-tab-3': '3-star',
             'weapons-empty': 'No {rarity}-star weapons obtained yet.',
             'rarity-text': '{rarity}-star',
+            'profile-eyebrow': 'MY ACCOUNT',
+            'profile-title': 'My profile',
+            'profile-resources': 'Resources',
+            'profile-shell': 'Shell Credits',
+            'profile-astrite': 'Astrite',
+            'profile-collection': 'My collection',
+            'profile-char-5': '5-star characters',
+            'profile-char-4': '4-star characters',
+            'profile-weapon-5': '5-star weapons',
+            'profile-weapon-4': '4-star weapons',
+            'profile-weapon-3': '3-star weapons',
             'domain-title': 'Domain - Game for Astrite & Shell Credits',
             'domain-desc': 'Play the mini-game to win Astrite or Shell Credits!',
             'domain-eyebrow': 'EXPEDITION · DOMAIN',
@@ -423,6 +448,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'domain-difficulty-label': 'Difficulty:',
             'domain-difficulty-medium': 'Medium',
             'domain-game-limit': 'Games today: 0/10',
+            'domain-game-login': 'Log in to start an expedition.',
+            'domain-game-active': 'Collect cores before they disappear!',
+            'domain-game-finished': 'Expedition complete: +{shell} Shell Credits and +{astrite} Astrite.',
             'domain-play-btn': 'Play',
         }
     };
@@ -714,6 +742,104 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // --- Domain mini-game ---
+    const domainPlayButton = document.getElementById('playDomainGame');
+    const domainPlayfield = document.getElementById('domainPlayfield');
+    const domainPlayfieldHint = document.getElementById('domainPlayfieldHint');
+    const domainTimer = document.getElementById('domainTimer');
+    const domainScore = document.getElementById('domainScore');
+    const domainGameResult = document.getElementById('domainGameResult');
+    let domainGameActive = false;
+    let domainSecondsLeft = 60;
+    let domainRoundScore = 0;
+    let domainRoundShellCredits = 0;
+    let domainRoundAstrite = 0;
+    let domainCountdown = null;
+    let domainTargetTimeout = null;
+
+    function clearDomainTarget() {
+        if (domainTargetTimeout) {
+            clearTimeout(domainTargetTimeout);
+            domainTargetTimeout = null;
+        }
+        domainPlayfield.querySelector('.resonance-core')?.remove();
+    }
+
+    function spawnDomainCore() {
+        if (!domainGameActive) return;
+        clearDomainTarget();
+
+        const isAstriteCore = Math.random() < 0.03;
+        const core = document.createElement('button');
+        core.type = 'button';
+        core.className = `resonance-core${isAstriteCore ? ' astrite-core' : ''}`;
+        core.setAttribute('aria-label', isAstriteCore ? 'Astrite' : 'Shell Credits');
+        core.style.left = `${12 + Math.random() * 72}%`;
+        core.style.top = `${25 + Math.random() * 58}%`;
+
+        core.addEventListener('click', () => {
+            if (!domainGameActive) return;
+            if (domainTargetTimeout) {
+                clearTimeout(domainTargetTimeout);
+                domainTargetTimeout = null;
+            }
+            domainRoundScore++;
+            domainRoundShellCredits += isAstriteCore ? 1 : 2 + Math.floor(Math.random() * 3);
+            if (isAstriteCore) domainRoundAstrite++;
+            domainScore.textContent = domainRoundScore;
+            core.remove();
+            domainTargetTimeout = setTimeout(spawnDomainCore, 250);
+        }, { once: true });
+
+        domainPlayfield.appendChild(core);
+        domainTargetTimeout = setTimeout(spawnDomainCore, 2200);
+    }
+
+    function finishDomainGame() {
+        domainGameActive = false;
+        clearInterval(domainCountdown);
+        domainCountdown = null;
+        clearDomainTarget();
+        domainPlayButton.disabled = false;
+        domainPlayfieldHint.textContent = translations[currentLanguage]['domain-game-hint'];
+
+        changeShellCredits(currentUser, domainRoundShellCredits);
+        changeAstrite(currentUser, domainRoundAstrite);
+        domainGameResult.textContent = translations[currentLanguage]['domain-game-finished']
+            .replace('{shell}', domainRoundShellCredits)
+            .replace('{astrite}', domainRoundAstrite);
+    }
+
+    function startDomainGame() {
+        if (!currentUser) {
+            domainGameResult.textContent = translations[currentLanguage]['domain-game-login'];
+            return;
+        }
+        if (domainGameActive) return;
+
+        domainGameActive = true;
+        domainSecondsLeft = 60;
+        domainRoundScore = 0;
+        domainRoundShellCredits = 0;
+        domainRoundAstrite = 0;
+        domainTimer.textContent = domainSecondsLeft;
+        domainScore.textContent = 0;
+        domainPlayfieldHint.textContent = '';
+        domainGameResult.textContent = translations[currentLanguage]['domain-game-active'];
+        domainPlayButton.disabled = true;
+        spawnDomainCore();
+
+        domainCountdown = setInterval(() => {
+            domainSecondsLeft--;
+            domainTimer.textContent = domainSecondsLeft;
+            if (domainSecondsLeft <= 0) finishDomainGame();
+        }, 1000);
+    }
+
+    if (domainPlayButton && domainPlayfield) {
+        domainPlayButton.addEventListener('click', startDomainGame);
+    }
+
     // --- Authentication modal handling ---
     authButton.addEventListener('click', () => {
         if (currentUser) {
@@ -1204,22 +1330,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     const profileBtn = document.getElementById('profileBtn');
-    const profileDropdown = document.getElementById('profileDropdown');
 
-    if (profileBtn && profileDropdown) {
-        profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (profileDropdown.style.display === 'block') {
-                profileDropdown.style.display = 'none';
-            } else {
-                profileDropdown.style.display = 'block';
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!profileDropdown.contains(e.target) && e.target !== profileBtn) {
-                profileDropdown.style.display = 'none';
-            }
+    if (profileBtn) {
+        profileBtn.addEventListener('click', () => {
+            pages.forEach(page => page.classList.toggle('active', page.id === 'profile'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            updateProfileDropdown();
         });
     }
 
@@ -1228,6 +1344,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Astrite
         const astrite = document.getElementById('astriteValue').textContent;
         document.getElementById('profileAstrite').textContent = astrite;
+        const profileEmail = document.getElementById('profileEmail');
+        if (profileEmail) profileEmail.textContent = currentUser ? currentUser.email : '';
 
         // Caractere
         const char5 = obtainedCharacters.filter(c => c.rarity == 5).length;
