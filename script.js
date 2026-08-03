@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const usernameSpan = document.getElementById('username');
     const welcomeMessage = document.getElementById('welcomeMessage');
     const profileDropdownContainer = document.getElementById('profileDropdownContainer');
+    const logoutButton = document.getElementById('logoutButton');
     
     // Language selector elements
     const languageButton = document.getElementById('languageButton');
@@ -258,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const PITY_4_STAR_MAX = 10;
     const RATE_5_STAR = 0.025; // 2.5% for 5-star
     let shellCredits = 0;
+    let astrite = 0;
 
     if (totalWishesSpan) {
         totalWishesSpan.textContent = totalWishes;
@@ -329,6 +331,19 @@ document.addEventListener('DOMContentLoaded', () => {
             'rarity-text': '{rarity}-stele',
             'domain-title': 'Domain - Joc pentru Astrite & Shell Credits',
             'domain-desc': 'Joacă mini-jocul pentru a câștiga Astrite și Shell Credits!',
+            'domain-eyebrow': 'EXPEDIȚIE · DOMENIU',
+            'domain-time-label': 'TIMP',
+            'domain-score-label': 'NUCLEE',
+            'domain-game-hint': 'Apasă „Joacă!” pentru a începe.',
+            'domain-ready': 'PREGĂTIT PENTRU MISIUNE',
+            'domain-challenge-title': 'Provocarea domeniului',
+            'domain-challenge-desc': 'Colectează nucleele de rezonanță înainte să dispară pentru a revendica resurse.',
+            'domain-rewards-title': 'RECOMPENSE POSIBILE',
+            'domain-reward-astrite': 'Astrite',
+            'domain-reward-shell': 'Shell Credits',
+            'domain-difficulty-label': 'Dificultate:',
+            'domain-difficulty-medium': 'Medie',
+            'domain-game-limit': 'Jocuri azi: 0/10',
             'domain-play-btn': 'Joacă!',
         },
         // English
@@ -395,6 +410,19 @@ document.addEventListener('DOMContentLoaded', () => {
             'rarity-text': '{rarity}-star',
             'domain-title': 'Domain - Game for Astrite & Shell Credits',
             'domain-desc': 'Play the mini-game to win Astrite or Shell Credits!',
+            'domain-eyebrow': 'EXPEDITION · DOMAIN',
+            'domain-time-label': 'TIME',
+            'domain-score-label': 'CORES',
+            'domain-game-hint': 'Press “Play!” to begin.',
+            'domain-ready': 'MISSION READY',
+            'domain-challenge-title': 'Domain challenge',
+            'domain-challenge-desc': 'Collect resonance cores before they disappear to claim resources.',
+            'domain-rewards-title': 'POSSIBLE REWARDS',
+            'domain-reward-astrite': 'Astrite',
+            'domain-reward-shell': 'Shell Credits',
+            'domain-difficulty-label': 'Difficulty:',
+            'domain-difficulty-medium': 'Medium',
+            'domain-game-limit': 'Games today: 0/10',
             'domain-play-btn': 'Play',
         }
     };
@@ -435,7 +463,9 @@ document.addEventListener('DOMContentLoaded', () => {
             wishHistory,
             obtainedCharacters,
             obtainedWeapons,
-            last5StarWish
+            last5StarWish,
+            astrite,
+            shellCredits
         };
         
         saveUserDataToLocalStorage(currentUser.username, userData);
@@ -510,93 +540,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --- User state change listener ---
-    const firebaseConfig = {
-        apiKey: "AIzaSyBIJcN5IUCZSaxO6AWiCYDHB-Kxrk1UEz4",
-        authDomain: "wuwaemy.firebaseapp.com",
-        projectId: "wuwaemy",
-        storageBucket: "wuwaemy.appspot.com ",
-        messagingSenderId: "959818398485",
-        appId: "1:959818398485:web:2691ee4f42c8336d1d071c",
-        measurementId: "G-MSYL1JZ0QG"
-    };
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            currentUser = {
-                username: user.displayName || user.email,
-                email: user.email
-            };
-
-            if (usernameSpan) {
-                usernameSpan.textContent = currentUser.username;
-            }
-
-            if (profileDropdownContainer) {
-                profileDropdownContainer.style.display = 'flex';
-            }
-
-            if (authButton) {
-                authButton.style.display = 'none';
-                authButton.textContent = translations[currentLanguage]['auth-logout'];
-                authButton.classList.remove('pulse');
-            }
-
-            if (welcomeMessage) {
-                welcomeMessage.style.display = 'none';
-            }
-
-            db.collection('users').doc(user.uid).get().then(doc => {
-                if (!doc.exists) {
-                    createUserData(user).then(() => loadUserCurrencies(user));
-                } else {
-                    loadUserCurrencies(user);
-                }
-            }).catch(error => console.error('User data load failed:', error));
-
-            loadUserData();
-            loadUserCurrencies(user);
-        } else {
-            currentUser = null;
-            if (profileDropdownContainer) {
-                profileDropdownContainer.style.display = 'none';
-            }
-            if (authButton) {
-                authButton.style.display = 'block';
-                authButton.textContent = translations[currentLanguage]['auth-login'];
-                authButton.classList.add('pulse');
-            }
-            if (welcomeMessage) {
-                welcomeMessage.style.display = 'block';
-            }
-            updateAstriteDisplay(0);
-            updateShellCreditsDisplay(0);
+    function updateAccountUI() {
+        const isLoggedIn = Boolean(currentUser);
+        if (usernameSpan) usernameSpan.textContent = isLoggedIn ? currentUser.username : '';
+        if (profileDropdownContainer) profileDropdownContainer.style.display = isLoggedIn ? 'flex' : 'none';
+        if (authButton) {
+            authButton.style.display = isLoggedIn ? 'none' : 'block';
+            authButton.textContent = translations[currentLanguage][isLoggedIn ? 'auth-logout' : 'auth-login'];
+            authButton.classList.toggle('pulse', !isLoggedIn);
         }
-    });
+        if (logoutButton) logoutButton.style.display = isLoggedIn ? 'block' : 'none';
+        if (welcomeMessage) welcomeMessage.style.display = isLoggedIn ? 'none' : 'block';
+    }
+
+    function startLocalSession(user) {
+        currentUser = { username: user.username, email: user.email };
+        localStorage.setItem('wwCurrentUser', JSON.stringify(currentUser));
+        loadUserData();
+        updateAccountUI();
+        updateProfileDropdown();
+    }
+
+    function endLocalSession() {
+        currentUser = null;
+        localStorage.removeItem('wwCurrentUser');
+        astrite = 0;
+        shellCredits = 0;
+        updateAstriteDisplay(0);
+        updateShellCreditsDisplay(0);
+        updateAccountUI();
+    }
+
+    function restoreLocalSession() {
+        const savedUser = localStorage.getItem('wwCurrentUser');
+        if (!savedUser) return endLocalSession();
+        try {
+            const user = JSON.parse(savedUser);
+            const exists = getUsers().some(item => item.email === user.email && item.username === user.username);
+            if (exists) startLocalSession(user);
+            else endLocalSession();
+        } catch {
+            endLocalSession();
+        }
+    }
     
     function createUserData(user) {
-        return db.collection('users').doc(user.uid).set({
-            email: user.email,
-            username: user.displayName || "",
-            astrite: 100, // astrite inițiale
-            shellCredits: 100 // shell credits inițiale
+        if (getUserData(user.username)) return;
+        saveUserDataToLocalStorage(user.username, {
+            totalWishes: 0,
+            pity5Star: 0,
+            pity4Star: 0,
+            count5Star: 0,
+            count4Star: 0,
+            count3Star: 0,
+            pityHistory: [],
+            wishHistory: [],
+            obtainedCharacters: [],
+            obtainedWeapons: [],
+            last5StarWish: 0,
+            astrite: 100,
+            shellCredits: 100
         });
     }
     
     function loadUserCurrencies(user) {
-        if (!user || !db) return;
-        db.collection('users').doc(user.uid).get().then(doc => {
-            if (doc.exists) {
-                const data = doc.data() || {};
-                updateAstriteDisplay(data.astrite || 0);
-                updateShellCreditsDisplay(data.shellCredits || 0);
-                updateProfileDropdown();
-            }
-        }).catch(error => console.error('Could not load user currencies:', error));
+        if (!user) return;
+        const userData = getUserData(user.username);
+        astrite = userData?.astrite || 0;
+        shellCredits = userData?.shellCredits || 0;
+        updateAstriteDisplay(astrite);
+        updateShellCreditsDisplay(shellCredits);
+        updateProfileDropdown();
     }
     
     function updateAstriteDisplay(value) {
@@ -613,35 +627,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function changeAstrite(user, delta) {
-        const userRef = db.collection('users').doc(user.uid);
-        return db.runTransaction(transaction => {
-            return transaction.get(userRef).then(doc => {
-                if (!doc.exists) throw "User data not found!";
-                let newAstrite = (doc.data().astrite || 0) + delta;
-                if (newAstrite < 0) newAstrite = 0;
-                transaction.update(userRef, { astrite: newAstrite });
-                return newAstrite;
-            });
-        }).then(newAstrite => {
-            updateAstriteDisplay(newAstrite);
-            return newAstrite;
-        });
+        if (!user) return 0;
+        astrite = Math.max(0, astrite + delta);
+        updateAstriteDisplay(astrite);
+        saveCurrentUserData();
+        updateProfileDropdown();
+        return astrite;
     }
     
     function changeShellCredits(user, delta) {
-        const userRef = db.collection('users').doc(user.uid);
-        return db.runTransaction(transaction => {
-            return transaction.get(userRef).then(doc => {
-                if (!doc.exists) throw "User data not found!";
-                let newShell = (doc.data().shellCredits || 0) + delta;
-                if (newShell < 0) newShell = 0;
-                transaction.update(userRef, { shellCredits: newShell });
-                return newShell;
-            });
-        }).then(newShell => {
-            updateShellCreditsDisplay(newShell);
-            return newShell;
-        });
+        if (!user) return 0;
+        shellCredits = Math.max(0, shellCredits + delta);
+        updateShellCreditsDisplay(shellCredits);
+        saveCurrentUserData();
+        updateProfileDropdown();
+        return shellCredits;
     }
     
     function syncCountersFromHistory() {
@@ -698,24 +698,27 @@ document.addEventListener('DOMContentLoaded', () => {
             obtainedCharacters = userData.obtainedCharacters || [];
             obtainedWeapons = userData.obtainedWeapons || [];
             last5StarWish = userData.last5StarWish || 0;
+            astrite = userData.astrite || 0;
+            shellCredits = userData.shellCredits || 0;
             
             syncCountersFromHistory();
             updatePityHistory();
             renderWishHistory();
+            updateAstriteDisplay(astrite);
+            updateShellCreditsDisplay(shellCredits);
             
             // Update collections when user data is loaded
             updateCharactersCollection();
             updateWeaponsCollection();
+            updateProfileDropdown();
         }
     }
     
     // --- Authentication modal handling ---
     authButton.addEventListener('click', () => {
-        if (auth.currentUser) {
-            auth.signOut();
-            // Resetează UI-ul
+        if (currentUser) {
+            endLocalSession();
         } else {
-            // Deschide modalul de autentificare
             authModal.classList.add('active');
             loginForm.reset();
             registerForm.reset();
@@ -723,6 +726,8 @@ document.addEventListener('DOMContentLoaded', () => {
             registerMessage.className = 'form-message';
         }
     });
+
+    logoutButton.addEventListener('click', endLocalSession);
     
     closeModal.addEventListener('click', () => {
         authModal.classList.remove('active');
@@ -753,22 +758,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Process login form
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = document.getElementById('loginEmail').value; // Folosește emailul!
+        const email = document.getElementById('loginEmail').value.trim().toLowerCase();
         const password = document.getElementById('loginPassword').value;
-        auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                authModal.classList.remove('active');
-            })
-            .catch((error) => {
-                loginMessage.textContent = error.message;
-                loginMessage.className = 'form-message error';
-            });
+        const user = getUsers().find(item => item.email === email && item.password === password);
+        if (!user) {
+            loginMessage.textContent = translations[currentLanguage]['auth-error-login'];
+            loginMessage.className = 'form-message error';
+            return;
+        }
+        startLocalSession(user);
+        authModal.classList.remove('active');
+        loginForm.reset();
     });
     
     // Process registration form
     registerForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = document.getElementById('registerEmail').value;
+        const email = document.getElementById('registerEmail').value.trim().toLowerCase();
         const password = document.getElementById('registerPassword').value;
         const username = document.getElementById('registerUsername').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
@@ -777,22 +783,24 @@ document.addEventListener('DOMContentLoaded', () => {
             registerMessage.className = 'form-message error';
             return;
         }
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // Set displayName (opțional)
-                return userCredential.user.updateProfile({ displayName: username })
-                .then(() => createUserData(userCredential.user)); // <-- APEL NOU
-            })
-            .then(() => {
-                registerMessage.textContent = "Înregistrare reușită! Acum te poți autentifica.";
-                registerMessage.className = 'form-message success';
-                registerForm.reset();
-                setTimeout(() => { authTabs[0].click(); }, 1500);
-            })
-            .catch((error) => {
-                registerMessage.textContent = error.message;
-                registerMessage.className = 'form-message error';
-            });
+        const users = getUsers();
+        if (users.some(user => user.email === email)) {
+            registerMessage.textContent = translations[currentLanguage]['auth-error-email'];
+            registerMessage.className = 'form-message error';
+            return;
+        }
+        if (users.some(user => user.username.toLowerCase() === username.toLowerCase())) {
+            registerMessage.textContent = translations[currentLanguage]['auth-error-username'];
+            registerMessage.className = 'form-message error';
+            return;
+        }
+        const user = { email, username, password };
+        users.push(user);
+        saveUsers(users);
+        createUserData(user);
+        startLocalSession(user);
+        authModal.classList.remove('active');
+        registerForm.reset();
     });
     
     // --- Language selector handling ---
@@ -1179,6 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize language on page load
     setLanguage(currentLanguage);
+    restoreLocalSession();
     
     // Hamburger menu toggle
     const menuToggle = document.getElementById('menuToggle');
