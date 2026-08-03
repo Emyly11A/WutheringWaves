@@ -260,6 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const RATE_5_STAR = 0.025; // 2.5% for 5-star
     let shellCredits = 0;
     let astrite = 0;
+    let unionExp = 0;
+    let claimedUnionLevelRewards = [];
+    let profileAvatarName = null;
+    let wishExpGranted = 0;
+    let totalExpeditionsCompleted = 0;
+    let expeditionExpGranted = 0;
 
     if (totalWishesSpan) {
         totalWishesSpan.textContent = totalWishes;
@@ -331,6 +337,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'rarity-text': '{rarity}-stele',
             'profile-eyebrow': 'CONTUL MEU',
             'profile-title': 'Profilul meu',
+            'profile-union-exp': 'Union EXP',
+            'profile-level': 'Nivel',
+            'profile-exp-to-level': 'EXP până la următorul nivel',
+            'profile-next-reward': 'Recompensă nivel {level}: +{shell} Shell Credits · +{astrite} Astrite',
+            'profile-level-rewards': 'Recompense de nivel',
+            'profile-reward-level': 'Nivel {level}',
+            'profile-claim': 'Revendică',
+            'profile-claimed': 'Revendicată',
+            'profile-no-rewards': 'Atinge nivelul 2 pentru prima recompensă.',
+            'profile-avatar-title': 'Alege personajul pentru avatar',
+            'profile-avatar-empty': 'Obține un personaj din Wish pentru a-l putea alege ca avatar.',
             'profile-resources': 'Resurse',
             'profile-shell': 'Shell Credits',
             'profile-astrite': 'Astrite',
@@ -354,7 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'domain-reward-shell': 'Shell Credits',
             'domain-difficulty-label': 'Dificultate:',
             'domain-difficulty-medium': 'Medie',
-            'domain-game-limit': 'Jocuri azi: 0/10',
+            'domain-game-limit': 'Jocuri azi: {played}/{limit}',
+            'domain-game-cooldown': 'Următoarea expediție este disponibilă în {time}.',
+            'domain-game-limit-reached': 'Ai atins limita de 10 expediții pentru astăzi.',
             'domain-game-login': 'Autentifică-te pentru a începe o expediție.',
             'domain-game-active': 'Colectează nucleele înainte să dispară!',
             'domain-game-finished': 'Expediția s-a încheiat: +{shell} Shell Credits și +{astrite} Astrite.',
@@ -424,6 +443,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'rarity-text': '{rarity}-star',
             'profile-eyebrow': 'MY ACCOUNT',
             'profile-title': 'My profile',
+            'profile-union-exp': 'Union EXP',
+            'profile-level': 'Level',
+            'profile-exp-to-level': 'EXP to the next level',
+            'profile-next-reward': 'Level {level} reward: +{shell} Shell Credits · +{astrite} Astrite',
+            'profile-level-rewards': 'Level rewards',
+            'profile-reward-level': 'Level {level}',
+            'profile-claim': 'Claim',
+            'profile-claimed': 'Claimed',
+            'profile-no-rewards': 'Reach level 2 for your first reward.',
+            'profile-avatar-title': 'Choose a character for your avatar',
+            'profile-avatar-empty': 'Get a character from Wish to use it as your avatar.',
             'profile-resources': 'Resources',
             'profile-shell': 'Shell Credits',
             'profile-astrite': 'Astrite',
@@ -447,7 +477,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'domain-reward-shell': 'Shell Credits',
             'domain-difficulty-label': 'Difficulty:',
             'domain-difficulty-medium': 'Medium',
-            'domain-game-limit': 'Games today: 0/10',
+            'domain-game-limit': 'Games today: {played}/{limit}',
+            'domain-game-cooldown': 'Next expedition is available in {time}.',
+            'domain-game-limit-reached': 'You have reached today’s limit of 10 expeditions.',
             'domain-game-login': 'Log in to start an expedition.',
             'domain-game-active': 'Collect cores before they disappear!',
             'domain-game-finished': 'Expedition complete: +{shell} Shell Credits and +{astrite} Astrite.',
@@ -493,7 +525,14 @@ document.addEventListener('DOMContentLoaded', () => {
             obtainedWeapons,
             last5StarWish,
             astrite,
-            shellCredits
+            shellCredits,
+            unionExp,
+            claimedUnionLevelRewards,
+            profileAvatarName,
+            wishExpGranted,
+            totalExpeditionsCompleted,
+            expeditionExpGranted,
+            domainProgress
         };
         
         saveUserDataToLocalStorage(currentUser.username, userData);
@@ -565,6 +604,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 element.innerHTML = `${translations[lang]['wish-stat-' + rarity]}: <span class="rarity-text-${rarity}" data-rarity="${rarity}">${rarityText}</span>`;
             }
         });
+
+        if (document.getElementById('domainGameLimit')) {
+            updateDomainAvailability();
+        }
+        if (document.getElementById('charactersGrid')) updateCharactersCollection();
+        if (document.getElementById('weaponsGrid')) updateWeaponsCollection();
+        if (document.getElementById('profileEmail')) updateProfileDropdown();
     }
     
     // --- User state change listener ---
@@ -594,8 +640,15 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('wwCurrentUser');
         astrite = 0;
         shellCredits = 0;
+        unionExp = 0;
+        claimedUnionLevelRewards = [];
+        profileAvatarName = null;
+        wishExpGranted = 0;
+        totalExpeditionsCompleted = 0;
+        expeditionExpGranted = 0;
         updateAstriteDisplay(0);
         updateShellCreditsDisplay(0);
+        updateUnionExpDisplay();
         updateAccountUI();
     }
 
@@ -625,9 +678,15 @@ document.addEventListener('DOMContentLoaded', () => {
             wishHistory: [],
             obtainedCharacters: [],
             obtainedWeapons: [],
-            last5StarWish: 0,
-            astrite: 100,
-            shellCredits: 100
+                last5StarWish: 0,
+                astrite: 100,
+                shellCredits: 100,
+                unionExp: 0,
+                claimedUnionLevelRewards: [],
+                profileAvatarName: null,
+                wishExpGranted: 0,
+                totalExpeditionsCompleted: 0,
+                expeditionExpGranted: 0
         });
     }
     
@@ -671,6 +730,136 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProfileDropdown();
         return shellCredits;
     }
+
+    function getUnionLevelInfo(totalExp) {
+        let level = 1;
+        let expInLevel = totalExp;
+        let expRequired = 100;
+
+        while (expInLevel >= expRequired) {
+            expInLevel -= expRequired;
+            level++;
+            expRequired = 100 + (level - 1) * 25;
+        }
+        return { level, expInLevel, expRequired };
+    }
+
+    function getUnionLevelReward(level) {
+        return {
+            shellCredits: 100 + (level - 2) * 50,
+            astrite: 5 + Math.floor((level - 2) / 5)
+        };
+    }
+
+    function renderUnionLevelRewards() {
+        const rewardsList = document.getElementById('unionRewardsList');
+        if (!rewardsList) return;
+
+        const currentLevel = getUnionLevelInfo(unionExp).level;
+        if (currentLevel < 2) {
+            rewardsList.innerHTML = `<p class="empty-collection">${translations[currentLanguage]['profile-no-rewards']}</p>`;
+            return;
+        }
+
+        rewardsList.innerHTML = '';
+        for (let level = 2; level <= currentLevel; level++) {
+            const reward = getUnionLevelReward(level);
+            const claimed = claimedUnionLevelRewards.includes(level);
+            const rewardCard = document.createElement('article');
+            rewardCard.className = `union-reward-card${claimed ? ' claimed' : ''}`;
+            rewardCard.innerHTML = `
+                <div>
+                    <strong>${translations[currentLanguage]['profile-reward-level'].replace('{level}', level)}</strong>
+                    <p>+${reward.shellCredits} Shell Credits · +${reward.astrite} Astrite</p>
+                </div>
+                <button class="union-claim-button" type="button" data-level="${level}" ${claimed ? 'disabled' : ''}>${translations[currentLanguage][claimed ? 'profile-claimed' : 'profile-claim']}</button>
+            `;
+            rewardsList.appendChild(rewardCard);
+        }
+    }
+
+    function claimUnionLevelReward(level) {
+        const currentLevel = getUnionLevelInfo(unionExp).level;
+        if (!currentUser || level < 2 || level > currentLevel || claimedUnionLevelRewards.includes(level)) return;
+
+        const reward = getUnionLevelReward(level);
+        claimedUnionLevelRewards.push(level);
+        shellCredits += reward.shellCredits;
+        astrite += reward.astrite;
+        updateShellCreditsDisplay(shellCredits);
+        updateAstriteDisplay(astrite);
+        saveCurrentUserData();
+        updateProfileDropdown();
+    }
+
+    function updateUnionExpDisplay() {
+        const info = getUnionLevelInfo(unionExp);
+        const level = document.getElementById('unionLevel');
+        const current = document.getElementById('unionExpCurrent');
+        const required = document.getElementById('unionExpRequired');
+        const bar = document.getElementById('unionExpBar');
+        const rewardSummary = document.getElementById('unionRewardSummary');
+        const sidebarLevel = document.getElementById('sidebarUnionLevel');
+        const sidebarBar = document.getElementById('sidebarUnionExpBar');
+
+        if (level) level.textContent = info.level;
+        if (current) current.textContent = info.expInLevel;
+        if (required) required.textContent = info.expRequired;
+        if (bar) bar.style.width = `${(info.expInLevel / info.expRequired) * 100}%`;
+        if (sidebarLevel) sidebarLevel.textContent = info.level;
+        if (sidebarBar) sidebarBar.style.width = `${(info.expInLevel / info.expRequired) * 100}%`;
+        if (rewardSummary) {
+            const reward = getUnionLevelReward(info.level + 1);
+            rewardSummary.textContent = translations[currentLanguage]['profile-next-reward']
+                .replace('{level}', info.level + 1)
+                .replace('{shell}', reward.shellCredits)
+                .replace('{astrite}', reward.astrite);
+        }
+        renderUnionLevelRewards();
+    }
+
+    function addUnionExp(amount) {
+        if (!currentUser || amount <= 0) return;
+        unionExp += amount;
+        saveCurrentUserData();
+        updateUnionExpDisplay();
+        updateProfileDropdown();
+    }
+
+    function syncWishExperienceFromHistory() {
+        const expectedWishExp = wishHistory.length * 5;
+        const missingWishExp = Math.max(0, expectedWishExp - wishExpGranted);
+        if (missingWishExp === 0) return;
+
+        wishExpGranted += missingWishExp;
+        unionExp += missingWishExp;
+        saveCurrentUserData();
+        updateUnionExpDisplay();
+    }
+
+    function syncExpeditionExperience() {
+        const expectedExpeditionExp = totalExpeditionsCompleted * 25;
+        const missingExpeditionExp = Math.max(0, expectedExpeditionExp - expeditionExpGranted);
+        if (missingExpeditionExp === 0) return;
+
+        expeditionExpGranted += missingExpeditionExp;
+        unionExp += missingExpeditionExp;
+        saveCurrentUserData();
+        updateUnionExpDisplay();
+    }
+
+    document.getElementById('unionRewardsList')?.addEventListener('click', (event) => {
+        const claimButton = event.target.closest('.union-claim-button');
+        if (!claimButton) return;
+        claimUnionLevelReward(Number(claimButton.dataset.level));
+    });
+
+    document.getElementById('unionRewardsToggle')?.addEventListener('click', (event) => {
+        const section = event.currentTarget.closest('.union-rewards-section');
+        const isOpen = section.classList.toggle('is-open');
+        event.currentTarget.setAttribute('aria-expanded', String(isOpen));
+        document.getElementById('unionRewardsList').setAttribute('aria-hidden', String(!isOpen));
+    });
     
     function syncCountersFromHistory() {
         totalWishes = wishHistory.length;
@@ -728,6 +917,15 @@ document.addEventListener('DOMContentLoaded', () => {
             last5StarWish = userData.last5StarWish || 0;
             astrite = userData.astrite || 0;
             shellCredits = userData.shellCredits || 0;
+            unionExp = userData.unionExp || 0;
+            claimedUnionLevelRewards = userData.claimedUnionLevelRewards || [];
+            profileAvatarName = userData.profileAvatarName || null;
+            wishExpGranted = userData.wishExpGranted || 0;
+            domainProgress = userData.domainProgress || createEmptyDomainProgress();
+            totalExpeditionsCompleted = userData.totalExpeditionsCompleted ?? domainProgress.gamesPlayed ?? 0;
+            expeditionExpGranted = userData.expeditionExpGranted || 0;
+            syncWishExperienceFromHistory();
+            syncExpeditionExperience();
             
             syncCountersFromHistory();
             updatePityHistory();
@@ -739,6 +937,10 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCharactersCollection();
             updateWeaponsCollection();
             updateProfileDropdown();
+            updateDomainAvailability();
+            if (domainProgress.lastRoundCompletedAt + DOMAIN_COOLDOWN_MS > Date.now()) {
+                startDomainCooldownTicker();
+            }
         }
     }
     
@@ -749,6 +951,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const domainTimer = document.getElementById('domainTimer');
     const domainScore = document.getElementById('domainScore');
     const domainGameResult = document.getElementById('domainGameResult');
+    const domainGameLimit = document.getElementById('domainGameLimit');
+    const DOMAIN_DAILY_LIMIT = 10;
+    const DOMAIN_COOLDOWN_MS = 5 * 60 * 1000;
     let domainGameActive = false;
     let domainSecondsLeft = 60;
     let domainRoundScore = 0;
@@ -756,6 +961,60 @@ document.addEventListener('DOMContentLoaded', () => {
     let domainRoundAstrite = 0;
     let domainCountdown = null;
     let domainTargetTimeout = null;
+    let domainCooldownTicker = null;
+    let domainProgress = createEmptyDomainProgress();
+
+    function getLocalDateKey() {
+        const date = new Date();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${date.getFullYear()}-${month}-${day}`;
+    }
+
+    function createEmptyDomainProgress() {
+        return { date: getLocalDateKey(), gamesPlayed: 0, lastRoundCompletedAt: 0 };
+    }
+
+    function normalizeDomainProgress() {
+        if (domainProgress.date !== getLocalDateKey()) {
+            domainProgress = createEmptyDomainProgress();
+            if (currentUser) saveCurrentUserData();
+        }
+        return domainProgress;
+    }
+
+    function formatCooldown(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainder = seconds % 60;
+        return `${minutes}:${String(remainder).padStart(2, '0')}`;
+    }
+
+    function updateDomainAvailability() {
+        const progress = normalizeDomainProgress();
+        const cooldownSeconds = Math.max(0, Math.ceil((progress.lastRoundCompletedAt + DOMAIN_COOLDOWN_MS - Date.now()) / 1000));
+
+        if (domainGameLimit) {
+            domainGameLimit.textContent = translations[currentLanguage]['domain-game-limit']
+                .replace('{played}', progress.gamesPlayed)
+                .replace('{limit}', DOMAIN_DAILY_LIMIT);
+            if (cooldownSeconds > 0) domainGameLimit.textContent += ` · ${formatCooldown(cooldownSeconds)}`;
+        }
+
+        if (!domainGameActive && domainPlayButton) {
+            domainPlayButton.disabled = progress.gamesPlayed >= DOMAIN_DAILY_LIMIT || cooldownSeconds > 0;
+        }
+
+        if (cooldownSeconds === 0 && domainCooldownTicker) {
+            clearInterval(domainCooldownTicker);
+            domainCooldownTicker = null;
+        }
+        return { progress, cooldownSeconds };
+    }
+
+    function startDomainCooldownTicker() {
+        if (domainCooldownTicker) clearInterval(domainCooldownTicker);
+        domainCooldownTicker = setInterval(updateDomainAvailability, 1000);
+    }
 
     function clearDomainTarget() {
         if (domainTargetTimeout) {
@@ -774,6 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
         core.type = 'button';
         core.className = `resonance-core${isAstriteCore ? ' astrite-core' : ''}`;
         core.setAttribute('aria-label', isAstriteCore ? 'Astrite' : 'Shell Credits');
+        core.innerHTML = `<img src="${isAstriteCore ? 'Extra/Astrite.png' : 'Extra/Shell%20Credit.png'}" alt="">`;
         core.style.left = `${12 + Math.random() * 72}%`;
         core.style.top = `${25 + Math.random() * 58}%`;
 
@@ -800,11 +1060,20 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(domainCountdown);
         domainCountdown = null;
         clearDomainTarget();
-        domainPlayButton.disabled = false;
         domainPlayfieldHint.textContent = translations[currentLanguage]['domain-game-hint'];
+
+        const progress = normalizeDomainProgress();
+        progress.gamesPlayed++;
+        progress.lastRoundCompletedAt = Date.now();
+        saveCurrentUserData();
+        updateDomainAvailability();
+        startDomainCooldownTicker();
 
         changeShellCredits(currentUser, domainRoundShellCredits);
         changeAstrite(currentUser, domainRoundAstrite);
+        totalExpeditionsCompleted++;
+        expeditionExpGranted += 25;
+        addUnionExp(25);
         domainGameResult.textContent = translations[currentLanguage]['domain-game-finished']
             .replace('{shell}', domainRoundShellCredits)
             .replace('{astrite}', domainRoundAstrite);
@@ -816,6 +1085,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (domainGameActive) return;
+
+        const availability = updateDomainAvailability();
+        if (availability.progress.gamesPlayed >= DOMAIN_DAILY_LIMIT) {
+            domainGameResult.textContent = translations[currentLanguage]['domain-game-limit-reached'];
+            return;
+        }
+        if (availability.cooldownSeconds > 0) {
+            domainGameResult.textContent = translations[currentLanguage]['domain-game-cooldown']
+                .replace('{time}', formatCooldown(availability.cooldownSeconds));
+            return;
+        }
 
         domainGameActive = true;
         domainSecondsLeft = 60;
@@ -983,7 +1263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const rand = Math.random();
         
         // Pity System Logic
-        if (pity5Star >= PITY_5_STAR_MAX || (rand < RATE_5_STAR && pity5Star < PITY_5_STAR_MAX)) {
+        if (pity5Star >= PITY_5_STAR_MAX - 1 || (rand < RATE_5_STAR && pity5Star < PITY_5_STAR_MAX)) {
             resultItem = getRandomItemByRarity(5);
             pity5Star = 0;
             pity4Star = 0;
@@ -1000,7 +1280,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pity: pityCount
             });
             updatePityHistory();
-        } else if (pity4Star >= PITY_4_STAR_MAX || (rand < 0.051 + RATE_5_STAR && pity4Star < PITY_4_STAR_MAX)) {
+        } else if (pity4Star >= PITY_4_STAR_MAX - 1 || (rand < 0.051 + RATE_5_STAR && pity4Star < PITY_4_STAR_MAX)) {
             resultItem = getRandomItemByRarity(4);
             pity4Star = 0;
             count4Star++;
@@ -1036,7 +1316,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Save user data
         if (currentUser) {
-            saveCurrentUserData();
+            wishExpGranted += 5;
+            addUnionExp(5);
         }
         
         return { rarity: resultItem.rarity };
@@ -1123,6 +1404,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    function getItemCopyCount(itemName) {
+        const copies = wishHistory.filter(item => item.name === itemName).length;
+        return Math.max(1, copies);
+    }
+
     // --- Function to update character collection ---
     function updateCharactersCollection() {
         const activeRarity = document.querySelector('#characters .rarity-tab.active').getAttribute('data-rarity');
@@ -1145,7 +1431,7 @@ document.addEventListener('DOMContentLoaded', () => {
             characterElement.innerHTML = `
                 <img src="${character.img}" alt="${character.name}">
                 <div class="info">
-                    <h3 class="name">${character.name}</h3>
+                    <div class="collection-name-row"><h3 class="name">${character.name}</h3><span class="copy-count">x${getItemCopyCount(character.name)}</span></div>
                     <p class="rarity rarity-text-${character.rarity}">${rarityText}</p>
                 </div>
             `;
@@ -1175,7 +1461,7 @@ document.addEventListener('DOMContentLoaded', () => {
             weaponElement.innerHTML = `
                 <img src="${weapon.img}" alt="${weapon.name}">
                 <div class="info">
-                    <h3 class="name">${weapon.name}</h3>
+                    <div class="collection-name-row"><h3 class="name">${weapon.name}</h3><span class="copy-count">x${getItemCopyCount(weapon.name)}</span></div>
                     <p class="rarity rarity-text-${weapon.rarity}">${rarityText}</p>
                 </div>
             `;
@@ -1339,8 +1625,71 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function updateProfileAvatar() {
+        const avatarImage = document.getElementById('profileAvatarImage');
+        const avatarIcon = document.getElementById('profileAvatarIcon');
+        const selectedCharacter = obtainedCharacters.find(character => character.name === profileAvatarName);
+
+        if (selectedCharacter) {
+            avatarImage.src = selectedCharacter.img;
+            avatarImage.alt = selectedCharacter.name;
+            avatarImage.hidden = false;
+            avatarIcon.hidden = true;
+        } else {
+            profileAvatarName = null;
+            avatarImage.hidden = true;
+            avatarIcon.hidden = false;
+        }
+    }
+
+    function renderProfileAvatarPicker() {
+        const picker = document.getElementById('profileAvatarPicker');
+        if (!picker) return;
+
+        if (obtainedCharacters.length === 0) {
+            picker.innerHTML = `<p class="empty-collection">${translations[currentLanguage]['profile-avatar-empty']}</p>`;
+            return;
+        }
+
+        picker.innerHTML = `
+            <p class="profile-avatar-picker-title">${translations[currentLanguage]['profile-avatar-title']}</p>
+            <div class="profile-avatar-options">
+                ${obtainedCharacters.map(character => `
+                    <button class="profile-avatar-option${character.name === profileAvatarName ? ' selected' : ''}" type="button" data-character-name="${character.name}">
+                        <img src="${character.img}" alt="${character.name}">
+                        <span>${character.name}</span>
+                    </button>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    const profileAvatarButton = document.getElementById('profileAvatarButton');
+    const profileAvatarPicker = document.getElementById('profileAvatarPicker');
+
+    profileAvatarButton?.addEventListener('click', () => {
+        const willOpen = profileAvatarPicker.hidden;
+        renderProfileAvatarPicker();
+        profileAvatarPicker.hidden = !willOpen;
+        profileAvatarButton.setAttribute('aria-expanded', String(willOpen));
+    });
+
+    profileAvatarPicker?.addEventListener('click', (event) => {
+        const option = event.target.closest('.profile-avatar-option');
+        if (!option) return;
+        profileAvatarName = option.dataset.characterName;
+        saveCurrentUserData();
+        updateProfileAvatar();
+        renderProfileAvatarPicker();
+        profileAvatarPicker.hidden = true;
+        profileAvatarButton.setAttribute('aria-expanded', 'false');
+    });
+
     // Actualizează datele din profil
     function updateProfileDropdown() {
+        updateUnionExpDisplay();
+        updateProfileAvatar();
+        renderProfileAvatarPicker();
         // Astrite
         const astrite = document.getElementById('astriteValue').textContent;
         document.getElementById('profileAstrite').textContent = astrite;
