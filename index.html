@@ -12,24 +12,13 @@
     <nav>
         <div class="nav-container vertical-nav">
             <div class="logo" data-translate="logo">Wuthering Waves Collection</div>
-            <!-- Mută aici blocul pentru user logat -->
-            <div class="profile-dropdown-container" id="profileDropdownContainer" style="display:none;">
-                <button class="profile-btn" id="profileBtn">
+            <div class="profile-entry" id="profileDropdownContainer" style="display:none;">
+                <button class="profile-btn" id="profileBtn" type="button">
                     <svg class="user-icon" viewBox="0 0 24 24">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                     <span class="username" id="username"></span>
                 </button>
-                <div class="profile-dropdown" id="profileDropdown">
-                    <div class="profile-title">Profilul meu</div>
-                    <div class="profile-row"><span>Shell Credits</span> <span id="profileShellCredits">0</span></div>
-                    <div class="profile-row"><span>Astrite:</span> <span id="profileAstrite">0</span></div>
-                    <div class="profile-row"><span>Caractere 5★:</span> <span id="profileChar5">0</span></div>
-                    <div class="profile-row"><span>Caractere 4★:</span> <span id="profileChar4">0</span></div>
-                    <div class="profile-row"><span>Arme 5★:</span> <span id="profileWeap5">0</span></div>
-                    <div class="profile-row"><span>Arme 4★:</span> <span id="profileWeap4">0</span></div>
-                    <div class="profile-row"><span>Arme 3★:</span> <span id="profileWeap3">0</span></div>
-                </div>
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="nav-link active" data-page="main" data-translate="nav-main">Meniu Principal</a></li>
@@ -247,6 +236,47 @@
             </div>
         </div>
         
+        <!-- Pagina Profil -->
+        <div class="page" id="profile">
+            <div class="profile-page">
+                <div class="profile-page-header">
+                    <div class="profile-avatar" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div>
+                        <span class="profile-page-eyebrow" data-translate="profile-eyebrow">CONTUL MEU</span>
+                        <h1 data-translate="profile-title">Profilul meu</h1>
+                        <p id="profileEmail" class="profile-email"></p>
+                    </div>
+                </div>
+
+                <section class="profile-section">
+                    <h2 data-translate="profile-resources">Resurse</h2>
+                    <div class="profile-resource-grid">
+                        <article class="profile-resource-card shell-resource-card">
+                            <span data-translate="profile-shell">Shell Credits</span>
+                            <strong id="profileShellCredits">0</strong>
+                        </article>
+                        <article class="profile-resource-card astrite-resource-card">
+                            <span data-translate="profile-astrite">Astrite</span>
+                            <strong id="profileAstrite">0</strong>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="profile-section">
+                    <h2 data-translate="profile-collection">Colecția mea</h2>
+                    <div class="profile-stats-grid">
+                        <article class="profile-stat-card"><span data-translate="profile-char-5">Caractere 5★</span><strong id="profileChar5">0</strong></article>
+                        <article class="profile-stat-card"><span data-translate="profile-char-4">Caractere 4★</span><strong id="profileChar4">0</strong></article>
+                        <article class="profile-stat-card"><span data-translate="profile-weapon-5">Arme 5★</span><strong id="profileWeap5">0</strong></article>
+                        <article class="profile-stat-card"><span data-translate="profile-weapon-4">Arme 4★</span><strong id="profileWeap4">0</strong></article>
+                        <article class="profile-stat-card"><span data-translate="profile-weapon-3">Arme 3★</span><strong id="profileWeap3">0</strong></article>
+                    </div>
+                </section>
+            </div>
+        </div>
+
         <!-- Pagina Domain -->
         <div class="page" id="domain">
             <div class="domain-container">
