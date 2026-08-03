@@ -11,7 +11,6 @@
     <!-- Navigație -->
     <nav>
         <div class="nav-container vertical-nav">
-            <button class="menu-toggle" id="menuToggle" aria-label="Deschide meniul" aria-expanded="false">&#9776;</button>
             <div class="logo" data-translate="logo">Wuthering Waves Collection</div>
             <!-- Mută aici blocul pentru user logat -->
             <div class="profile-dropdown-container" id="profileDropdownContainer" style="display:none;">
@@ -30,7 +29,6 @@
                     <div class="profile-row"><span>Arme 5★:</span> <span id="profileWeap5">0</span></div>
                     <div class="profile-row"><span>Arme 4★:</span> <span id="profileWeap4">0</span></div>
                     <div class="profile-row"><span>Arme 3★:</span> <span id="profileWeap3">0</span></div>
-                    <button class="profile-logout-btn" id="profileLogoutBtn" data-translate="auth-logout">Deconectare</button>
                 </div>
             </div>
             <ul class="nav-links" id="navLinks">
@@ -41,8 +39,8 @@
                 <li><a href="#" class="nav-link" data-page="domain" data-translate="nav-domain">Domain</a></li>
             </ul>
             <div class="menu-user-block">
-                <!-- Bloc pentru user nelogat -->
                 <button class="auth-button pulse" id="authButton" data-translate="auth-login" style="display:block;">Autentificare</button>
+                <button class="auth-button logout-button" id="logoutButton" data-translate="auth-logout" style="display:none;">Deconectare</button>
                 <div class="language-selector">
                     <div class="language-button" id="languageButton">
                         <img src="https://flagcdn.com/24x18/ro.png" alt="Română" class="flag-icon" id="currentFlag">
@@ -279,7 +277,7 @@
                                 <span class="domain-reward shell-reward">◉ <span data-translate="domain-reward-shell">Shell Credits</span></span>
                             </div>
                         </div>
-                        <p class="domain-game-settings"><span data-translate="domain-difficulty-label">Dificultate:</span> <strong data-translate="domain-difficulty-medium">Medie</strong> · <span id="domainGameLimit">Jocuri azi: 0/10</span></p>
+                        <p class="domain-game-settings"><span data-translate="domain-difficulty-label">Dificultate:</span> <strong data-translate="domain-difficulty-medium">Medie</strong> · <span id="domainGameLimit" data-translate="domain-game-limit">Jocuri azi: 0/10</span></p>
                         <button id="playDomainGame" class="wish-button domain-play-button" data-translate="domain-play-btn">Joacă!</button>
                         <div id="domainGameResult" class="domain-game-result" aria-live="polite"></div>
                     </div>
@@ -288,11 +286,6 @@
         </div>
     </div>
 
-    <!-- Firebase App (core) -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <!-- Firebase Auth -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
