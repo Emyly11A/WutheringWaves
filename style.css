@@ -1027,6 +1027,29 @@ nav {
     color: #d8d8d8;
 }
 
+.collection-name-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.collection-name-row .name {
+    min-width: 0;
+}
+
+.collection-item .copy-count {
+    flex: 0 0 auto;
+    padding: 0.2rem 0.48rem;
+    border: 1px solid rgba(124, 240, 255, 0.28);
+    border-radius: 999px;
+    background: rgba(124, 240, 255, 0.1);
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
 /* Pagina Arme - Imagini mai mici */
 #weapons .collection-item img {
     width: 100%;
@@ -1356,6 +1379,14 @@ nav {
     min-width: 20px;
     min-height: 20px;
     filter: drop-shadow(0 0 3px #fff8);
+}
+
+.currency-icon {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.42));
 }
 .shell-label, .astrite-label {
     font-family: 'Orbitron', sans-serif;
@@ -2037,6 +2068,42 @@ nav {
     background: rgba(124, 240, 255, 0.1);
 }
 
+.sidebar-union-exp {
+    padding: 0.45rem 0.7rem 0.1rem;
+    color: var(--muted);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.sidebar-union-exp > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+}
+
+.sidebar-union-exp strong {
+    color: var(--accent-3);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+}
+
+.sidebar-union-track {
+    height: 5px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-union-fill {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width 0.35s ease;
+}
+
 .profile-page {
     width: min(940px, 100%);
     margin: 0 auto;
@@ -2066,11 +2133,88 @@ nav {
     border-radius: 22px;
     background: linear-gradient(135deg, rgba(124, 240, 255, 0.22), rgba(255, 122, 217, 0.18));
     box-shadow: 0 0 28px rgba(124, 240, 255, 0.18);
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .profile-avatar svg {
     width: 42px;
     fill: var(--text);
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-avatar:hover {
+    border-color: var(--accent-3);
+    box-shadow: 0 0 32px rgba(255, 209, 102, 0.28);
+}
+
+.profile-avatar-picker {
+    margin: -0.75rem 0 1.75rem;
+    padding: 1rem;
+    border: 1px solid rgba(124, 240, 255, 0.2);
+    border-radius: 16px;
+    background: rgba(2, 10, 24, 0.42);
+}
+
+.profile-avatar-picker[hidden] {
+    display: none;
+}
+
+.profile-avatar-picker-title {
+    margin-bottom: 0.8rem;
+    color: var(--accent);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.profile-avatar-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+    gap: 0.65rem;
+    max-height: 270px;
+    overflow-y: auto;
+    padding-right: 0.3rem;
+}
+
+.profile-avatar-option {
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+}
+
+.profile-avatar-option img {
+    display: block;
+    width: 100%;
+    height: 92px;
+    object-fit: cover;
+}
+
+.profile-avatar-option span {
+    display: block;
+    overflow: hidden;
+    padding: 0.35rem 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-avatar-option:hover,
+.profile-avatar-option.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px rgba(124, 240, 255, 0.22);
 }
 
 .profile-page-eyebrow {
@@ -2090,6 +2234,157 @@ nav {
 }
 
 .profile-email {
+    color: var(--muted);
+}
+
+.union-exp-panel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.15rem 1.25rem;
+    border: 1px solid rgba(124, 240, 255, 0.3);
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(124, 240, 255, 0.13), rgba(255, 122, 217, 0.08));
+}
+
+.union-exp-icon {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(124, 240, 255, 0.38));
+}
+
+.union-exp-content {
+    width: 100%;
+}
+
+.union-exp-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+    color: var(--text);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+}
+
+.union-exp-heading > span { color: var(--accent); }
+.union-exp-heading strong { color: var(--accent-3); }
+
+.union-exp-track {
+    height: 11px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(3, 11, 26, 0.64);
+}
+
+.union-exp-fill {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 16px rgba(124, 240, 255, 0.45);
+    transition: width 0.35s ease;
+}
+
+.union-exp-content p {
+    margin-top: 0.55rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+.union-exp-content .union-reward-summary {
+    margin-top: 0.35rem;
+    color: var(--accent-3);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.union-rewards-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.union-rewards-heading h2 {
+    margin-bottom: 0;
+}
+
+.union-rewards-toggle {
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(124, 240, 255, 0.1);
+    color: var(--accent);
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.union-rewards-toggle:hover {
+    background: rgba(124, 240, 255, 0.2);
+}
+
+.union-rewards-section.is-open .union-rewards-toggle {
+    transform: rotate(180deg);
+}
+
+.union-rewards-list {
+    display: none;
+    margin-top: 0.8rem;
+}
+
+.union-rewards-section.is-open .union-rewards-list {
+    display: block;
+}
+
+.union-reward-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+    padding: 0.75rem 0.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+}
+
+.union-reward-card strong {
+    color: var(--text);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+}
+
+.union-reward-card p {
+    margin-top: 0.2rem;
+    color: var(--accent-3);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.union-claim-button {
+    flex: 0 0 auto;
+    padding: 0.55rem 0.75rem;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #03111e;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.union-reward-card.claimed {
+    opacity: 0.7;
+}
+
+.union-claim-button:disabled {
+    cursor: default;
+    background: rgba(255, 255, 255, 0.12);
     color: var(--muted);
 }
 
@@ -2155,6 +2450,10 @@ nav {
     }
 
     .profile-avatar svg { width: 32px; }
+
+    .union-exp-panel {
+        align-items: flex-start;
+    }
 }
 
 @media (max-width: 900px) {
@@ -2333,8 +2632,24 @@ nav {
 
 .resonance-core.astrite-core {
     border-color: var(--accent-3);
-    background: radial-gradient(circle at 35% 30%, #fff8d8, var(--accent-3) 28%, #87600c 70%);
+    padding: 1px;
+    background: rgba(24, 17, 4, 0.78);
     box-shadow: 0 0 14px var(--accent-3), 0 0 32px rgba(255, 209, 102, 0.42);
+}
+
+.resonance-core {
+    width: 58px;
+    height: 58px;
+    padding: 4px;
+    background: rgba(3, 11, 26, 0.64);
+}
+
+.resonance-core img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
 }
 
 .domain-game-content {
@@ -2393,6 +2708,12 @@ nav {
     border-radius: 999px;
     font-size: 0.88rem;
     font-weight: 700;
+}
+
+.reward-currency-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
 }
 
 .astrite-reward { color: #ffe08a; background: rgba(255, 209, 102, 0.1); }
