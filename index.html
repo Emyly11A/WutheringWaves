@@ -19,6 +19,10 @@
                     </svg>
                     <span class="username" id="username"></span>
                 </button>
+                <div class="sidebar-union-exp" aria-label="Union EXP">
+                    <div><span data-translate="profile-level">Nivel</span> <strong id="sidebarUnionLevel">1</strong></div>
+                    <div class="sidebar-union-track"><div id="sidebarUnionExpBar" class="sidebar-union-fill"></div></div>
+                </div>
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="nav-link active" data-page="main" data-translate="nav-main">Meniu Principal</a></li>
@@ -53,19 +57,12 @@
     <!-- Badge-urile sus-dreapta -->
     <div class="top-badges">
         <span id="shellCreditsDisplay" class="shell-badge">
-            <svg class="shell-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-                <circle cx="12" cy="12" r="10" fill="#b8e0ff" stroke="#4a90e2" stroke-width="2"/>
-                <path d="M8 12c1.5-2 6.5-2 8 0" stroke="#4a90e2" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <img class="currency-icon" src="Extra/Shell%20Credit.png" alt="">
             <span class="shell-label">Shell Credits:</span>
             <span class="shell-value" id="shellCreditsValue">0</span>
         </span>
         <span id="astriteDisplay" class="astrite-badge">
-            <svg class="astrite-icon" viewBox="0 0 24 24" width="20" height="20" fill="none">
-                <circle cx="12" cy="12" r="10" fill="#ffe066" stroke="#bfa800" stroke-width="2"/>
-                <path d="M7 15c2-2 8-2 10 0" stroke="#bfa800" stroke-width="2" stroke-linecap="round"/>
-                <path d="M9 10c1-1 5-1 6 0" stroke="#bfa800" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <img class="currency-icon" src="Extra/Astrite.png" alt="">
             <span class="astrite-label">Astrite:</span>
             <span class="astrite-value" id="astriteValue">0</span>
         </span>
@@ -240,15 +237,39 @@
         <div class="page" id="profile">
             <div class="profile-page">
                 <div class="profile-page-header">
-                    <div class="profile-avatar" aria-hidden="true">
-                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                    </div>
+                    <button id="profileAvatarButton" class="profile-avatar" type="button" aria-expanded="false" aria-controls="profileAvatarPicker">
+                        <svg id="profileAvatarIcon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <img id="profileAvatarImage" alt="" hidden>
+                    </button>
                     <div>
                         <span class="profile-page-eyebrow" data-translate="profile-eyebrow">CONTUL MEU</span>
                         <h1 data-translate="profile-title">Profilul meu</h1>
                         <p id="profileEmail" class="profile-email"></p>
                     </div>
                 </div>
+
+                <div id="profileAvatarPicker" class="profile-avatar-picker" hidden></div>
+
+                <section class="union-exp-panel">
+                    <img class="union-exp-icon" src="Extra/Union%20EXP.png" alt="">
+                    <div class="union-exp-content">
+                        <div class="union-exp-heading">
+                            <span data-translate="profile-union-exp">Union EXP</span>
+                            <strong><span data-translate="profile-level">Nivel</span> <span id="unionLevel">1</span></strong>
+                        </div>
+                        <div class="union-exp-track"><div id="unionExpBar" class="union-exp-fill"></div></div>
+                        <p><span id="unionExpCurrent">0</span> / <span id="unionExpRequired">100</span> <span data-translate="profile-exp-to-level">EXP până la următorul nivel</span></p>
+                        <p id="unionRewardSummary" class="union-reward-summary"></p>
+                    </div>
+                </section>
+
+                <section class="profile-section union-rewards-section">
+                    <div class="union-rewards-heading">
+                        <h2 data-translate="profile-level-rewards">Recompense de nivel</h2>
+                        <button id="unionRewardsToggle" class="union-rewards-toggle" type="button" aria-expanded="false" aria-controls="unionRewardsList">⌄</button>
+                    </div>
+                    <div id="unionRewardsList" class="union-rewards-list" aria-hidden="true"></div>
+                </section>
 
                 <section class="profile-section">
                     <h2 data-translate="profile-resources">Resurse</h2>
@@ -303,8 +324,8 @@
                         <div class="domain-rewards">
                             <span class="domain-rewards-label" data-translate="domain-rewards-title">RECOMPENSE POSIBILE</span>
                             <div>
-                                <span class="domain-reward astrite-reward">✦ <span data-translate="domain-reward-astrite">Astrite</span></span>
-                                <span class="domain-reward shell-reward">◉ <span data-translate="domain-reward-shell">Shell Credits</span></span>
+                                <span class="domain-reward astrite-reward"><img class="reward-currency-icon" src="Extra/Astrite.png" alt=""> <span data-translate="domain-reward-astrite">Astrite</span></span>
+                                <span class="domain-reward shell-reward"><img class="reward-currency-icon" src="Extra/Shell%20Credit.png" alt=""> <span data-translate="domain-reward-shell">Shell Credits</span></span>
                             </div>
                         </div>
                         <p class="domain-game-settings"><span data-translate="domain-difficulty-label">Dificultate:</span> <strong data-translate="domain-difficulty-medium">Medie</strong> · <span id="domainGameLimit" data-translate="domain-game-limit">Jocuri azi: 0/10</span></p>
