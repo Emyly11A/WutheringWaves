@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@400;700;900&display=swap');
 :root {
+    /* Tema clasică */
     --bg-color: #0c0f18;
     --primary-color: #4a638c;
     --secondary-color: #2e435e;
@@ -11,12 +12,48 @@
     --purple-color: #845cb0;
     --blue-color: #5b8def;
     --wave-gradient: linear-gradient(135deg, rgba(30, 20, 60, 0.9), rgba(50, 30, 90, 0.85), rgba(70, 40, 120, 0.8));
+    /* Tema Neon Aurora */
+    --bg-1: #040816;
+    --bg-2: #0d1428;
+    --panel: rgba(9, 16, 31, 0.86);
+    --panel-2: rgba(21, 32, 57, 0.92);
+    --line: rgba(255, 255, 255, 0.12);
+    --line-strong: rgba(124, 240, 255, 0.28);
+    --text: #f7fbff;
+    --muted: #8ea2c4;
+    --accent: #7cf0ff;
+    --accent-2: #ff7ad9;
+    --accent-3: #ffd166;
+    --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #58ddea rgba(124, 240, 255, 0.08);
+}
+
+*::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgba(3, 10, 25, 0.52);
+    border: 1px solid rgba(124, 240, 255, 0.1);
+    border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+    border: 2px solid rgba(3, 10, 25, 0.52);
+    border-radius: 999px;
+    background: linear-gradient(180deg, #8af5ff 0%, #4ab8dd 55%, #8c72dc 100%);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #c2fbff 0%, #63d9ee 52%, #bc8cff 100%);
 }
 
 body {
@@ -984,6 +1021,42 @@ nav {
     gap: 1.2rem;
 }
 
+.character-controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin: 0 0 1.35rem;
+}
+
+.character-controls label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--muted);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+}
+
+.character-controls select {
+    min-width: 175px;
+    padding: 0.62rem 2.1rem 0.62rem 0.75rem;
+    border: 1px solid rgba(124, 240, 255, 0.25);
+    border-radius: 10px;
+    outline: none;
+    background: rgba(7, 17, 36, 0.92);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+
+.character-controls select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124, 240, 255, 0.12);
+}
+
 .collection-item {
     background-color: rgba(74, 99, 140, 0.6);
     border-radius: 10px;
@@ -999,6 +1072,10 @@ nav {
     transform: translateY(-5px);
 }
 
+.collection-character-visual {
+    position: relative;
+}
+
 .collection-item img {
     width: 100%;
     height: 130px;
@@ -1006,6 +1083,36 @@ nav {
     object-position: center;
     background-color: rgba(255, 255, 255, 0.06);
     padding: 0.4rem;
+}
+
+.collection-item .character-element-icon,
+.training-character-option .character-element-icon,
+.training-character-showcase .character-element-icon {
+    position: absolute;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    min-height: 0;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 50%;
+    background: rgba(4, 12, 29, 0.78);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.35);
+    object-fit: contain;
+}
+
+.collection-item .character-element-icon,
+.training-character-option .character-element-icon {
+    top: 7px;
+    right: 7px;
+}
+
+.training-character-showcase .character-element-icon {
+    top: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    padding: 6px;
 }
 
 .collection-item .info {
@@ -1025,6 +1132,12 @@ nav {
 .collection-item .rarity {
     font-size: 0.8rem;
     color: #d8d8d8;
+}
+
+.collection-item .weapon-type {
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.74rem;
 }
 
 .collection-name-row {
@@ -1551,20 +1664,7 @@ nav {
 }
 
 /* === TEMA NOUĂ: NEON AURORA === */
-:root {
-    --bg-1: #040816;
-    --bg-2: #0d1428;
-    --panel: rgba(9, 16, 31, 0.86);
-    --panel-2: rgba(21, 32, 57, 0.92);
-    --line: rgba(255, 255, 255, 0.12);
-    --line-strong: rgba(124, 240, 255, 0.28);
-    --text: #f7fbff;
-    --muted: #8ea2c4;
-    --accent: #7cf0ff;
-    --accent-2: #ff7ad9;
-    --accent-3: #ffd166;
-    --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-}
+/* Variabilele --bg-1..--shadow au fost contopite în :root-ul de la începutul fișierului. */
 
 body {
     background:
@@ -1955,22 +2055,6 @@ nav::before {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 420px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent) rgba(255, 255, 255, 0.08);
-}
-
-.wish-results::-webkit-scrollbar {
-    width: 10px;
-}
-
-.wish-results::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 999px;
-}
-
-.wish-results::-webkit-scrollbar-thumb {
-    background: linear-gradient(var(--accent), var(--accent-2));
-    border-radius: 999px;
 }
 
 /* Meniu lateral compact, cu acțiunile utilizatorului la bază. */
@@ -2215,6 +2299,353 @@ nav {
 .profile-avatar-option.selected {
     border-color: var(--accent);
     box-shadow: 0 0 16px rgba(124, 240, 255, 0.22);
+}
+
+.training-page {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+    box-shadow: var(--shadow);
+}
+
+.training-eyebrow {
+    display: block;
+    margin-bottom: 0.65rem;
+    color: var(--accent);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.training-header h1 {
+    margin-bottom: 0.6rem;
+    color: var(--text);
+    font-family: 'Orbitron', sans-serif;
+}
+
+.training-header p {
+    max-width: 680px;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.training-content {
+    margin-top: 1.8rem;
+}
+
+.training-mode-switch {
+    display: inline-flex;
+    overflow: hidden;
+    border: 1px solid rgba(124, 240, 255, 0.25);
+    border-radius: 10px;
+    background: rgba(3, 11, 26, 0.78);
+}
+
+.training-character-showcase .training-mode-switch {
+    position: absolute;
+    z-index: 3;
+    top: 16px;
+    left: 16px;
+}
+
+.training-mode-switch button {
+    padding: 0.55rem 0.75rem;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.training-mode-switch button.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #03111e;
+}
+
+.training-character-picker h2,
+.training-level-panel h3 {
+    margin-bottom: 0.85rem;
+    color: var(--accent);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.95rem;
+}
+
+.training-character-list {
+    display: flex;
+    gap: 0.7rem;
+    overflow-x: auto;
+    padding-bottom: 0.55rem;
+}
+
+.training-character-option {
+    position: relative;
+    flex: 0 0 88px;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+}
+
+.training-character-option img {
+    display: block;
+    width: 100%;
+    height: 92px;
+    object-fit: cover;
+}
+
+.training-character-option span {
+    display: block;
+    overflow: hidden;
+    padding: 0.38rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.training-character-option:hover,
+.training-character-option.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px rgba(124, 240, 255, 0.24);
+}
+
+.training-detail-panel {
+    display: grid;
+    grid-template-columns: minmax(230px, 0.9fr) minmax(0, 1.35fr);
+    gap: 1.4rem;
+    margin-top: 1.3rem;
+    overflow: hidden;
+    border: 1px solid rgba(124, 240, 255, 0.18);
+    border-radius: 20px;
+    background: radial-gradient(circle at 16% 35%, rgba(124, 240, 255, 0.16), transparent 44%), rgba(3, 11, 26, 0.42);
+}
+
+.training-character-showcase {
+    position: relative;
+    min-height: 370px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.training-character-showcase img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.training-weapon-showcase > img:not(.character-element-icon) {
+    object-fit: contain;
+    padding: 1.5rem;
+}
+
+.training-character-showcase h2 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 2.25rem 1rem 1rem;
+    margin: 0;
+    background: linear-gradient(transparent, rgba(3, 11, 26, 0.92));
+    color: var(--text);
+    font-family: 'Orbitron', sans-serif;
+}
+
+.training-level-panel {
+    padding: clamp(1.2rem, 3vw, 2rem);
+}
+
+.training-level-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+    color: var(--text);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+}
+
+.training-level-heading strong { color: var(--accent-3); }
+
+.training-exp-track {
+    height: 13px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(3, 11, 26, 0.65);
+}
+
+.training-exp-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 14px rgba(124, 240, 255, 0.45);
+    transition: width 0.28s ease;
+}
+
+.training-level-panel > p {
+    margin: 0.5rem 0 1.5rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+.training-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin: 0 0 1.4rem;
+}
+
+.training-stat-grid > div {
+    padding: 0.75rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.training-stat-grid span {
+    display: block;
+    color: var(--muted);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.training-stat-grid strong {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--accent-3);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.35rem;
+}
+
+.training-equipment-slot {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 0.65rem 0.8rem;
+    align-items: center;
+    margin: -0.25rem 0 1.35rem;
+    padding: 0.7rem;
+    border: 1px solid rgba(124, 240, 255, 0.16);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.training-equipment-slot img {
+    width: 48px;
+    height: 48px;
+    padding: 0.2rem;
+    border-radius: 10px;
+    background: rgba(3, 11, 26, 0.5);
+    object-fit: contain;
+}
+
+.training-equipment-slot strong {
+    min-width: 0;
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.training-equipment-slot span {
+    grid-column: 2;
+    color: var(--accent-3);
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.training-weapon-options {
+    max-height: 215px;
+    margin: -0.65rem 0 1.35rem;
+}
+
+.training-weapon-options .profile-avatar-option {
+    min-height: 120px;
+}
+
+.training-weapon-options .profile-avatar-option img {
+    object-fit: contain;
+    background: rgba(3, 11, 26, 0.42);
+}
+
+.training-weapon-options .profile-avatar-option:not(:has(img)) {
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.training-potions {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.training-potion-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.training-potion-card img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+}
+
+.training-potion-card strong,
+.training-potion-card span {
+    display: block;
+}
+
+.training-potion-card strong {
+    color: var(--text);
+    font-size: 0.84rem;
+}
+
+.training-potion-card span {
+    margin-top: 0.18rem;
+    color: var(--muted);
+    font-size: 0.74rem;
+}
+
+.training-potion-card button {
+    padding: 0.48rem 0.65rem;
+    border: 0;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #03111e;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.training-potion-card button:disabled {
+    cursor: default;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--muted);
+}
+
+@media (max-width: 700px) {
+    .training-detail-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .training-character-showcase {
+        min-height: 260px;
+    }
 }
 
 .profile-page-eyebrow {
@@ -2769,5 +3200,41 @@ nav {
         height: 95px;
         top: calc(50% - 47px);
         left: calc(50% - 47px);
+    }
+}
+
+/* Accesibilitate: la prefers-reduced-motion browserele pot opri animațiile,
+   deci itemele care pornesc de la opacity:0 ar rămâne invizibile.
+   Forțăm vizibilitatea și starea finală. */
+@media (prefers-reduced-motion: reduce) {
+    .wish-item,
+    .wish-item.reveal-item-3,
+    .wish-item.reveal-item-4,
+    .wish-item.reveal-item-5 {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .page.active {
+        animation: none !important;
+    }
+
+    body::after {
+        animation: none !important;
+    }
+
+    .feature-card,
+    .collection-item,
+    .wish-item,
+    .counter-box,
+    .stats-box,
+    .filter-button,
+    .rarity-tab,
+    .training-potion-card,
+    .profile-resource-card,
+    .profile-stat-card,
+    .union-reward-card {
+        animation: none !important;
     }
 }
