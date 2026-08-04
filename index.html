@@ -29,7 +29,9 @@
                 <li><a href="#" class="nav-link" data-page="wish" data-translate="nav-wish">Wish</a></li>
                 <li><a href="#" class="nav-link" data-page="characters" data-translate="nav-characters">Caractere</a></li>
                 <li><a href="#" class="nav-link" data-page="weapons" data-translate="nav-weapons">Arme</a></li>
+                <li><a href="#" class="nav-link" data-page="training" data-translate="nav-training">Antrenament</a></li>
                 <li><a href="#" class="nav-link" data-page="domain" data-translate="nav-domain">Domain</a></li>
+                <li><a href="#" class="nav-link" data-page="shop" data-translate="nav-shop">Shop</a></li>
             </ul>
             <div class="menu-user-block">
                 <button class="auth-button pulse" id="authButton" data-translate="auth-login" style="display:block;">Autentificare</button>
@@ -205,9 +207,28 @@
             <div class="collection-container">
                 <h1 data-translate="characters-title">Colecția de Caractere</h1>
                 
-                <div class="rarity-tabs">
-                    <div class="rarity-tab active" data-rarity="5" data-translate="characters-tab-5">5-stele</div>
-                    <div class="rarity-tab" data-rarity="4" data-translate="characters-tab-4">4-stele</div>
+                <div class="character-controls">
+                    <label>
+                        <span data-translate="character-filter-label">Filtru</span>
+                        <select id="charactersFilter">
+                            <option value="all" data-translate="character-filter-all">Toate caracterele</option>
+                            <option value="rarity-4" data-translate="character-filter-4">Caractere de 4 stele</option>
+                            <option value="rarity-5" data-translate="character-filter-5">Caractere de 5 stele</option>
+                            <option value="Aero">Aero</option>
+                            <option value="Spectro">Spectro</option>
+                            <option value="Electro">Electro</option>
+                            <option value="Havoc">Havoc</option>
+                            <option value="Fusion">Fusion</option>
+                            <option value="Glacio">Glacio</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span data-translate="character-sort-label">Sorteaza</span>
+                        <select id="charactersSort">
+                            <option value="level-desc" data-translate="character-sort-level">Nivel: mare la mic</option>
+                            <option value="alphabetical" data-translate="character-sort-alpha">Alfabetic</option>
+                        </select>
+                    </label>
                 </div>
                 
                 <div class="collection-grid" id="charactersGrid">
@@ -221,10 +242,28 @@
             <div class="collection-container">
                 <h1 data-translate="weapons-title">Colecția de Arme</h1>
                 
-                <div class="rarity-tabs">
-                    <div class="rarity-tab active" data-rarity="5" data-translate="weapons-tab-5">5-stele</div>
-                    <div class="rarity-tab" data-rarity="4" data-translate="weapons-tab-4">4-stele</div>
-                    <div class="rarity-tab" data-rarity="3" data-translate="weapons-tab-3">3-stele</div>
+                <div class="character-controls">
+                    <label>
+                        <span data-translate="character-filter-label">Filtru</span>
+                        <select id="weaponsFilter">
+                            <option value="all" data-translate="weapons-filter-all">Toate armele</option>
+                            <option value="rarity-5" data-translate="weapons-filter-5">Arme de 5 stele</option>
+                            <option value="rarity-4" data-translate="weapons-filter-4">Arme de 4 stele</option>
+                            <option value="rarity-3" data-translate="weapons-filter-3">Arme de 3 stele</option>
+                            <option value="Sword">Sword</option>
+                            <option value="Broadblade">Broadblade</option>
+                            <option value="Rectifier">Rectifier</option>
+                            <option value="Gauntlets">Gauntlets</option>
+                            <option value="Pistols">Pistols</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span data-translate="character-sort-label">Sorteaza</span>
+                        <select id="weaponsSort">
+                            <option value="level-desc" data-translate="character-sort-level">Nivel: mare la mic</option>
+                            <option value="alphabetical" data-translate="character-sort-alpha">Alfabetic</option>
+                        </select>
+                    </label>
                 </div>
                 
                 <div class="collection-grid" id="weaponsGrid">
@@ -233,6 +272,20 @@
             </div>
         </div>
         
+        <!-- Pagina Antrenament -->
+        <div class="page" id="training">
+            <div class="training-page">
+                <div class="training-header">
+                    <div>
+                        <span class="training-eyebrow" data-translate="training-eyebrow">DEZVOLTARE PERSONAJ</span>
+                        <h1 data-translate="training-title">Antrenament</h1>
+                        <p data-translate="training-description">Alege un personaj obținut și folosește Resonance Potions pentru a-i crește nivelul.</p>
+                    </div>
+                </div>
+                <div id="trainingContent" class="training-content"></div>
+            </div>
+        </div>
+
         <!-- Pagina Profil -->
         <div class="page" id="profile">
             <div class="profile-page">
