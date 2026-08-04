@@ -2,58 +2,58 @@ document.addEventListener('DOMContentLoaded', () => {
     // Game data
    const characters = [
         // 5-star
-        {"name": "Aalto", "rarity": 4,"img": "poze charactere/char 4/Aalto.png" },
-        {"name": "Aemeath", "rarity": 5,"img": "poze charactere/char 5/Aemeath.png" },
-        {"name": "Augusta", "rarity": 5,"img": "poze charactere/char 5/Augusta.png" },
-        {"name": "Baizhi", "rarity": 4,"img": "poze charactere/char 4/Baizhi.png" },
-        {"name": "Brant", "rarity": 5,"img": "poze charactere/char 5/Brant.png" },
-        {"name": "Buling", "rarity": 4,"img": "poze charactere/char 4/Buling.png" },
-        {"name": "Calcharo", "rarity": 5,"img": "poze charactere/char 5/Calcharo.png" },
-        {"name": "Camellya", "rarity": 5,"img": "poze charactere/char 5/Camellya.png" },
-        {"name": "Cantarella", "rarity": 5,"img": "poze charactere/char 5/Cantarella.png" },
-        {"name": "Carlotta", "rarity": 5,"img": "poze charactere/char 5/Carlotta.png" },
-        {"name": "Cartethyia", "rarity": 5,"img": "poze charactere/char 5/Cartethyia.png" },
-        {"name": "Changli", "rarity": 5,"img": "poze charactere/char 5/Changli.png" },
-        {"name": "Chisa", "rarity": 5,"img": "poze charactere/char 5/Chisa.png" },
-        {"name": "Chixia", "rarity": 4,"img": "poze charactere/char 4/Chixia.png" },
-        {"name": "Ciaccona", "rarity": 5,"img": "poze charactere/char 5/Ciaccona.png" },
-        {"name": "Danjin", "rarity": 4,"img": "poze charactere/char 4/Danjin.png" },
-        {"name": "Denia", "rarity": 5,"img": "poze charactere/char 5/Denia.png" },
-        {"name": "Encore", "rarity": 5, "img": "poze charactere/char 5/Encore.png" },
-        {"name": "Galbrena", "rarity": 5,"img": "poze charactere/char 5/Galbrena.png" },
-        {"name": "Hiyuki", "rarity": 5,"img": "poze charactere/char 5/Hiyuki.png" },
-        {"name": "Iuno", "rarity": 5,"img": "poze charactere/char 5/Iuno.png" },
-        {"name": "Jianxin", "rarity": 5,"img": "poze charactere/char 5/Jianxin.png" },
-        {"name": "Jinshi", "rarity": 5,"img": "poze charactere/char 5/Jinshi.png" },
-        {"name": "Jiyan", "rarity": 5,"img": "poze charactere/char 5/Jiyan.png" },
-        {"name": "Lingyang", "rarity": 5,"img": "poze charactere/char 5/Lingyang.png" },
-        {"name": "Lucilla", "rarity": 5,"img": "poze charactere/char 5/Lucilla.png" },
-        {"name": "Lucy", "rarity": 5,"img": "poze charactere/char 5/Lucy.png" },
-        {"name": "Lumi", "rarity": 4 ,"img": "poze charactere/char 4/Lumi.png" },
-        {"name": "Lupa", "rarity": 5,"img": "poze charactere/char 5/Lupa.png" },
-        {"name": "Luuk Hersen", "rarity": 5,"img": "poze charactere/char 5/Luuk.png" },
-        {"name": "Lynae", "rarity": 5,"img": "poze charactere/char 5/Lynae.png" },
-        {"name": "Mornye", "rarity": 5,"img": "poze charactere/char 5/Mornye.png" },
-        {"name": "Mortefi", "rarity": 4,"img": "poze charactere/char 4/Mortefi.png" },
-        {"name": "Phoebe", "rarity": 5,"img": "poze charactere/char 5/Phoebe.png" },
-        {"name": "Phrolova", "rarity": 5,"img": "poze charactere/char 5/Phrolova.png" },
-        {"name": "Qiuyuan", "rarity": 5,"img": "poze charactere/char 5/Qiuyuan.png" },
-        {"name": "Rebecca", "rarity": 5,"img": "poze charactere/char 5/Rebecca.png" },
-        {"name": "Roccia", "rarity": 5,"img": "poze charactere/char 5/Roccia.png" },
-        {"name": "Sanhua", "rarity": 4,"img": "poze charactere/char 4/Sanhua.png" },
-        {"name": "Shorekeeper", "rarity": 5,"img": "poze charactere/char 5/Shorekeeper.png" },
-        {"name": "Sigrika", "rarity": 5,"img": "poze charactere/char 5/Sigrika.png" },
-        {"name": "Suisui", "rarity": 5,"img": "poze charactere/char 5/Suisui.png" },
-        {"name": "Taoqi", "rarity": 4,"img": "poze charactere/char 4/Taoqi.png" },
-        {"name": "Verina", "rarity": 5,"img": "poze charactere/char 5/Verina.png" },
-        {"name": "Xiangli Yao", "rarity": 5,"img": "poze charactere/char 5/Xiangli Yao.png" },
-        {"name": "Yangyang", "rarity": 4,"img": "poze charactere/char 4/Yangyang.png" },
-        {"name": "Yangyang: Xuanling", "rarity": 5,"img": "poze charactere/char 5/Yangyang-Xuanling.png" },
-        {"name": "Yinlin", "rarity": 5,"img": "poze charactere/char 5/Yinlin.png" },
-        {"name": "Youhu", "rarity": 4,"img": "poze charactere/char 4/Youhu.png" },
-        {"name": "Yuanwu", "rarity": 4,"img": "poze charactere/char 4/Yuanwu.png" },
-        {"name": "Zani", "rarity": 5,"img": "poze charactere/char 5/Zani.png" },
-        {"name": "Zhezhi", "rarity": 5,"img": "poze charactere/char 5/Zhezhi.png" },
+        {"name": "Aalto", "rarity": 4, "element": "Aero", "img": "poze charactere/char 4/Aalto.png" },
+        {"name": "Aemeath", "rarity": 5, "element": "Fusion", "img": "poze charactere/char 5/Aemeath.png" },
+        {"name": "Augusta", "rarity": 5, "element": "Electro", "img": "poze charactere/char 5/Augusta.png" },
+        {"name": "Baizhi", "rarity": 4, "element": "Glacio", "img": "poze charactere/char 4/Baizhi.png" },
+        {"name": "Brant", "rarity": 5, "element": "Fusion", "img": "poze charactere/char 5/Brant.png" },
+        {"name": "Buling", "rarity": 4, "element": "Electro", "img": "poze charactere/char 4/Buling.png" },
+        {"name": "Calcharo", "rarity": 5, "element": "Electro", "img": "poze charactere/char 5/Calcharo.png" },
+        {"name": "Camellya", "rarity": 5, "element": "Havoc", "img": "poze charactere/char 5/Camellya.png" },
+        {"name": "Cantarella", "rarity": 5, "element": "Havoc", "img": "poze charactere/char 5/Cantarella.png" },
+        {"name": "Carlotta", "rarity": 5, "element": "Glacio", "img": "poze charactere/char 5/Carlotta.png" },
+        {"name": "Cartethyia", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Cartethyia.png" },
+        {"name": "Changli", "rarity": 5, "element": "Fusion", "img": "poze charactere/char 5/Changli.png" },
+        {"name": "Chisa", "rarity": 5, "element": "Havoc", "img": "poze charactere/char 5/Chisa.png" },
+        {"name": "Chixia", "rarity": 4, "element": "Fusion", "img": "poze charactere/char 4/Chixia.png" },
+        {"name": "Ciaccona", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Ciaccona.png" },
+        {"name": "Danjin", "rarity": 4, "element": "Havoc", "img": "poze charactere/char 4/Danjin.png" },
+        {"name": "Denia", "rarity": 5, "element": "Fusion", "img": "poze charactere/char 5/Denia.png" },
+        {"name": "Encore", "rarity": 5, "element": "Fusion",  "img": "poze charactere/char 5/Encore.png" },
+        {"name": "Galbrena", "rarity": 5, "element": "Fusion", "img": "poze charactere/char 5/Galbrena.png" },
+        {"name": "Hiyuki", "rarity": 5, "element": "Glacio", "img": "poze charactere/char 5/Hiyuki.png" },
+        {"name": "Iuno", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Iuno.png" },
+        {"name": "Jianxin", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Jianxin.png" },
+        {"name": "Jinshi", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Jinshi.png" },
+        {"name": "Jiyan", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Jiyan.png" },
+        {"name": "Lingyang", "rarity": 5, "element": "Glacio", "img": "poze charactere/char 5/Lingyang.png" },
+        {"name": "Lucilla", "rarity": 5, "element": "Glacio", "img": "poze charactere/char 5/Lucilla.png" },
+        {"name": "Lucy", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Lucy.png" },
+        {"name": "Lumi", "rarity": 4 , "element": "Electro", "img": "poze charactere/char 4/Lumi.png" },
+        {"name": "Lupa", "rarity": 5, "element": "Fusion", "img": "poze charactere/char 5/Lupa.png" },
+        {"name": "Luuk Hersen", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Luuk.png" },
+        {"name": "Lynae", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Lynae.png" },
+        {"name": "Mornye", "rarity": 5, "element": "Fusion", "img": "poze charactere/char 5/Mornye.png" },
+        {"name": "Mortefi", "rarity": 4, "element": "Fusion", "img": "poze charactere/char 4/Mortefi.png" },
+        {"name": "Phoebe", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Phoebe.png" },
+        {"name": "Phrolova", "rarity": 5, "element": "Havoc", "img": "poze charactere/char 5/Phrolova.png" },
+        {"name": "Qiuyuan", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Qiuyuan.png" },
+        {"name": "Rebecca", "rarity": 5, "element": "Electro", "img": "poze charactere/char 5/Rebecca.png" },
+        {"name": "Roccia", "rarity": 5, "element": "Havoc", "img": "poze charactere/char 5/Roccia.png" },
+        {"name": "Sanhua", "rarity": 4, "element": "Glacio", "img": "poze charactere/char 4/Sanhua.png" },
+        {"name": "Shorekeeper", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Shorekeeper.png" },
+        {"name": "Sigrika", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Sigrika.png" },
+        {"name": "Suisui", "rarity": 5, "element": "Glacio", "img": "poze charactere/char 5/Suisui.png" },
+        {"name": "Taoqi", "rarity": 4, "element": "Havoc", "img": "poze charactere/char 4/Taoqi.png" },
+        {"name": "Verina", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Verina.png" },
+        {"name": "Xiangli Yao", "rarity": 5, "element": "Electro", "img": "poze charactere/char 5/Xiangli Yao.png" },
+        {"name": "Yangyang", "rarity": 4, "element": "Aero", "img": "poze charactere/char 4/Yangyang.png" },
+        {"name": "Yangyang: Xuanling", "rarity": 5, "element": "Havoc", "img": "poze charactere/char 5/Yangyang-Xuanling.png" },
+        {"name": "Yinlin", "rarity": 5, "element": "Electro", "img": "poze charactere/char 5/Yinlin.png" },
+        {"name": "Youhu", "rarity": 4, "element": "Glacio", "img": "poze charactere/char 4/Youhu.png" },
+        {"name": "Yuanwu", "rarity": 4, "element": "Electro", "img": "poze charactere/char 4/Yuanwu.png" },
+        {"name": "Zani", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Zani.png" },
+        {"name": "Zhezhi", "rarity": 5, "element": "Glacio", "img": "poze charactere/char 5/Zhezhi.png" },
     ];
     const weapons = [
         {"name": "Beguiling Melody", "rarity": 3,"img": "poze arme/arme 3/Beguiling Melody.png" },
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {"name": "Phasic Homogenizer", "rarity": 5,"img": "poze arme/arme 5/Phasic Homogenizer.png" },
         {"name": "Pulsation Bracer", "rarity": 5,"img": "poze arme/arme 5/Pulsation Bracer.png" },
         {"name": "Radiance Cleaver", "rarity": 5,"img": "poze arme/arme 5/Radiance Cleaver.png" },
-        {"name": "Red String", "rarity": 5,"img": "poze arme/arme 5/Red String.png" },
+        {"name": "Red Spring", "rarity": 5,"img": "poze arme/arme 5/Red String.png" },
         {"name": "Rime-Draped Sprouts", "rarity": 5,"img": "poze arme/arme 5/Rime-Draped Sprouts.png" },
         {"name": "Skull Thrasher", "rarity": 5,"img": "poze arme/arme 5/Skull Thrasher.png" },
         {"name": "Solsworn Ciphers", "rarity": 5,"img": "poze arme/arme 5/Solsworn Ciphers.png" },
@@ -170,6 +170,17 @@ document.addEventListener('DOMContentLoaded', () => {
         {"name": "Woodland Aria", "rarity": 5,"img": "poze arme/arme 5/Woodland Aria.png" },   ];
     
     const allItems = [...characters, ...weapons];
+    const weaponTypeGroups = {
+        Sword: ["Emerald of Genesis", "Blazing Brilliance", "Red Spring", "Unflickering Valor", "Bloodpact's Pledge", "Defier's Thorn", "Emerald Sentence", "Laser Shearer", "Everbright Polestar", "Frostburn", "Azure Oath", "Lumingloss", "Overture", "Sword#18", "Commando of Conviction", "Lunar Cutter", "Endless Collapse", "Somnoire Anchor", "Fables of Wisdom", "Feather Edge", "Sword of Night", "Originite: Type II", "Sword of Voyager", "Guardian Sword"],
+        Broadblade: ["Lustrous Razor", "Verdant Summit", "Ages of Harvest", "Wildfire Mark", "Thunderflare Dominion", "Kumokiri", "Starfield Calibrator", "Radiance Cleaver", "Autumntrace", "Discord", "Broadblade#41", "Dauntless Evernight", "Helios Cleaver", "Waning Redshift", "Meditations on Mercy", "Aureate Zenith", "Broadblade of Night", "Originite: Type I", "Broadblade of Voyager", "Guardian Broadblade", "Beguiling Melody"],
+        Pistols: ["Static Mist", "The Last Dance", "Woodland Aria", "Lux & Umbra", "Spectrum Blaster", "Phasic Homogenizer", "Spectral Trigger", "Skull Thrasher", "Thunderbolt", "Cadenza", "Pistols#26", "Undying Flame", "Novaburst", "Relativistic Jet", "Romance in Farewell", "Solar Flame", "Pistols of Night", "Originite: Type III", "Pistols of Voyager", "Guardian Pistols"],
+        Gauntlets: ["Abyss Surges", "Verity's Handle", "Tragicomedy", "Blazing Justice", "Moongazer's Sigil", "Pulsation Bracer", "Daybreaker's Spine", "Solsworn Ciphers", "Stonard", "Marcato", "Gauntlets#21D", "Amity Accord", "Hollow Mirage", "Celestial Spiral", "Legend of Drunken Hero", "Aether Strike", "Gauntlets of Night", "Originite: Type IV", "Gauntlets of Voyager", "Guardian Gauntlets"],
+        Rectifier: ["Cosmic Ripples", "Stringmaster", "Rime-Draped Sprouts", "Stellar Symphony", "Luminous Hymn", "Whispers of Sirens", "Lethean Elegy", "Boson Astrolabe", "Forged Dwarf Star", "Freeze Frame", "Firstlight's Herald", "Augment", "Variation", "Rectifier#25", "Jinzhou Keeper", "Comet Flare", "Fusion Accretion", "Call of the Abyss", "Waltz in Masquerade", "Ocean's Gift", "Radiant Dawn", "Rectifier of Night", "Originite: Type V", "Rectifier of Voyager", "Guardian Rectifier"]
+    };
+
+    function getWeaponType(weapon) {
+        return Object.keys(weaponTypeGroups).find(type => weaponTypeGroups[type].includes(weapon.name)) || 'Unknown';
+    }
     
     // DOM Elements
     const navLinks = document.querySelectorAll('.nav-link');
@@ -212,10 +223,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Characters page elements
     const charactersGrid = document.getElementById('charactersGrid');
     const charactersRarityTabs = document.querySelectorAll('#characters .rarity-tab');
+    const charactersFilterSelect = document.getElementById('charactersFilter');
+    const charactersSortSelect = document.getElementById('charactersSort');
     
     // Weapons page elements
     const weaponsGrid = document.getElementById('weaponsGrid');
     const weaponsRarityTabs = document.querySelectorAll('#weapons .rarity-tab');
+    const weaponsFilterSelect = document.getElementById('weaponsFilter');
+    const weaponsSortSelect = document.getElementById('weaponsSort');
     
     // ANIMATION OVERLAY - Video Effect
     const wishAnimationOverlay = document.createElement('div');
@@ -266,6 +281,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let wishExpGranted = 0;
     let totalExpeditionsCompleted = 0;
     let expeditionExpGranted = 0;
+    let characterProgress = {};
+    let selectedTrainingCharacterName = null;
+    let resonancePotions = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+    let resonancePotionStarterPackRemoved = true;
+    let weaponProgress = {};
+    let selectedTrainingWeaponName = null;
+    let equippedWeapons = {};
+    let energyCores = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+    let trainingMode = 'character';
+    let characterCollectionFilter = 'all';
+    let characterCollectionSort = 'level-desc';
+    let trainingCharacterFilter = 'all';
+    let trainingCharacterSort = 'level-desc';
+    let weaponCollectionFilter = 'all';
+    let weaponCollectionSort = 'level-desc';
+    let trainingWeaponFilter = 'all';
+    let trainingWeaponSort = 'level-desc';
+    let equipmentWeaponFilter = 'all';
 
     if (totalWishesSpan) {
         totalWishesSpan.textContent = totalWishes;
@@ -280,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav-wish': 'Wish',
             'nav-characters': 'Caractere',
             'nav-weapons': 'Arme',
+            'nav-training': 'Antrenament',
             'nav-domain': 'Expediție',
             'auth-login': 'Autentificare',
             'auth-logout': 'Deconectare',
@@ -328,11 +362,23 @@ document.addEventListener('DOMContentLoaded', () => {
             'characters-title': 'Colecția de Caractere',
             'characters-tab-5': '5-stele',
             'characters-tab-4': '4-stele',
+            'character-filter-label': 'Filtru',
+            'character-filter-all': 'Toate caracterele',
+            'character-filter-4': 'Caractere de 4 stele',
+            'character-filter-5': 'Caractere de 5 stele',
+            'character-sort-label': 'Sortează',
+            'character-sort-level': 'Nivel: mare la mic',
+            'character-sort-alpha': 'Alfabetic',
+            'character-filter-empty': 'Niciun personaj nu corespunde filtrului ales.',
             'characters-empty': 'Niciun personaj de {rarity}-stele obținut încă.',
             'weapons-title': 'Colecția de Arme',
             'weapons-tab-5': '5-stele',
             'weapons-tab-4': '4-stele',
             'weapons-tab-3': '3-stele',
+            'weapons-filter-all': 'Toate armele',
+            'weapons-filter-5': 'Arme de 5 stele',
+            'weapons-filter-4': 'Arme de 4 stele',
+            'weapons-filter-3': 'Arme de 3 stele',
             'weapons-empty': 'Nicio armă de {rarity}-stele obținută încă.',
             'rarity-text': '{rarity}-stele',
             'profile-eyebrow': 'CONTUL MEU',
@@ -357,6 +403,30 @@ document.addEventListener('DOMContentLoaded', () => {
             'profile-weapon-5': 'Arme 5★',
             'profile-weapon-4': 'Arme 4★',
             'profile-weapon-3': 'Arme 3★',
+            'training-eyebrow': 'DEZVOLTARE PERSONAJ',
+            'training-title': 'Antrenament',
+            'training-description': 'Dezvoltă personajele și armele obținute folosind resursele dedicate.',
+            'training-select': 'Alege un personaj',
+            'training-level': 'Nivel',
+            'training-hp': 'HP',
+            'training-dmg': 'DMG',
+            'training-max-level': 'Nivel maxim atins',
+            'training-potions': 'Resonance Potions',
+            'training-use': 'Folosește',
+            'training-empty': 'Obține un personaj din Wish pentru a începe antrenamentul.',
+            'training-mode-character': 'Caracter',
+            'training-mode-weapon': 'Armă',
+            'training-weapon-select': 'Alege o armă',
+            'training-weapon-empty': 'Obține o armă din Wish pentru a o putea crește.',
+            'training-weapon-equipped': 'Armă echipată',
+            'training-weapon-none': 'Fără armă echipată',
+            'training-weapon-dmg': 'DMG armă',
+            'training-total-dmg': 'DMG total',
+            'training-base-dmg': 'DMG fără sinergie',
+            'training-synergy-dmg': 'DMG cu sinergie',
+            'training-synergy-active': 'Sinergie activă',
+            'training-synergy-inactive': 'Fără sinergie',
+            'training-energy-cores': 'Energy Cores',
             'domain-title': 'Domain - Joc pentru Astrite & Shell Credits',
             'domain-desc': 'Joacă mini-jocul pentru a câștiga Astrite și Shell Credits!',
             'domain-eyebrow': 'EXPEDIȚIE · DOMENIU',
@@ -378,6 +448,21 @@ document.addEventListener('DOMContentLoaded', () => {
             'domain-game-active': 'Colectează nucleele înainte să dispară!',
             'domain-game-finished': 'Expediția s-a încheiat: +{shell} Shell Credits și +{astrite} Astrite.',
             'domain-play-btn': 'Joacă!',
+            'nav-shop': 'Magazin',
+            'shop-eyebrow': 'BURSA DE RESURSE',
+            'shop-title': 'Magazin',
+            'shop-description': 'Schimbă Shell Credits pe Astrite. 1 Astrite costă 20 Shell Credits.',
+            'shop-rate-label': 'Curs valutar',
+            'shop-rate-value': '1 Astrite = 20 Shell Credits',
+            'shop-buy-amount-label': 'Cantitate Astrite',
+            'shop-cost-label': 'Cost',
+            'shop-buy-btn': 'Cumpără',
+            'shop-buy-max': 'Max',
+            'shop-login': 'Autentifică-te pentru a folosi magazinul.',
+            'shop-success': 'Ai cumpărat {astrite} Astrite pentru {shell} Shell Credits.',
+            'shop-error-funds': 'Nu ai suficiente Shell Credits.',
+            'shop-error-amount': 'Introdu o cantitate validă (mai mare ca 0).',
+            'shop-balance': 'Sold curent',
         },
         // English
         en: {
@@ -386,6 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav-wish': 'Wish',
             'nav-characters': 'Characters',
             'nav-weapons': 'Weapons',
+            'nav-training': 'Training',
             'nav-domain': 'Expedition',
             'auth-login': 'Login',
             'auth-logout': 'Logout',
@@ -434,11 +520,23 @@ document.addEventListener('DOMContentLoaded', () => {
             'characters-title': 'Character Collection',
             'characters-tab-5': '5-star',
             'characters-tab-4': '4-star',
+            'character-filter-label': 'Filter',
+            'character-filter-all': 'All characters',
+            'character-filter-4': '4-star characters',
+            'character-filter-5': '5-star characters',
+            'character-sort-label': 'Sort',
+            'character-sort-level': 'Level: high to low',
+            'character-sort-alpha': 'Alphabetical',
+            'character-filter-empty': 'No characters match the selected filter.',
             'characters-empty': 'No {rarity}-star characters obtained yet.',
             'weapons-title': 'Weapon Collection',
             'weapons-tab-5': '5-star',
             'weapons-tab-4': '4-star',
             'weapons-tab-3': '3-star',
+            'weapons-filter-all': 'All weapons',
+            'weapons-filter-5': '5-star weapons',
+            'weapons-filter-4': '4-star weapons',
+            'weapons-filter-3': '3-star weapons',
             'weapons-empty': 'No {rarity}-star weapons obtained yet.',
             'rarity-text': '{rarity}-star',
             'profile-eyebrow': 'MY ACCOUNT',
@@ -463,6 +561,30 @@ document.addEventListener('DOMContentLoaded', () => {
             'profile-weapon-5': '5-star weapons',
             'profile-weapon-4': '4-star weapons',
             'profile-weapon-3': '3-star weapons',
+            'training-eyebrow': 'CHARACTER DEVELOPMENT',
+            'training-title': 'Training',
+            'training-description': 'Develop obtained characters and weapons using their dedicated resources.',
+            'training-select': 'Choose a character',
+            'training-level': 'Level',
+            'training-hp': 'HP',
+            'training-dmg': 'DMG',
+            'training-max-level': 'Maximum level reached',
+            'training-potions': 'Resonance Potions',
+            'training-use': 'Use',
+            'training-empty': 'Get a character from Wish to begin training.',
+            'training-mode-character': 'Character',
+            'training-mode-weapon': 'Weapon',
+            'training-weapon-select': 'Choose a weapon',
+            'training-weapon-empty': 'Get a weapon from Wish to level it up.',
+            'training-weapon-equipped': 'Equipped weapon',
+            'training-weapon-none': 'No weapon equipped',
+            'training-weapon-dmg': 'Weapon DMG',
+            'training-total-dmg': 'Total DMG',
+            'training-base-dmg': 'DMG without synergy',
+            'training-synergy-dmg': 'DMG with synergy',
+            'training-synergy-active': 'Synergy active',
+            'training-synergy-inactive': 'No synergy',
+            'training-energy-cores': 'Energy Cores',
             'domain-title': 'Domain - Game for Astrite & Shell Credits',
             'domain-desc': 'Play the mini-game to win Astrite or Shell Credits!',
             'domain-eyebrow': 'EXPEDITION · DOMAIN',
@@ -532,6 +654,14 @@ document.addEventListener('DOMContentLoaded', () => {
             wishExpGranted,
             totalExpeditionsCompleted,
             expeditionExpGranted,
+            characterProgress,
+            selectedTrainingCharacterName,
+            resonancePotions,
+            resonancePotionStarterPackRemoved,
+            weaponProgress,
+            selectedTrainingWeaponName,
+            equippedWeapons,
+            energyCores,
             domainProgress
         };
         
@@ -585,14 +715,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update texts for empty collections
         const emptyCharacters = document.querySelector('#characters .empty-collection');
         if (emptyCharacters) {
-            const rarity = document.querySelector('#characters .rarity-tab.active').dataset.rarity;
-            emptyCharacters.textContent = translations[lang]['characters-empty'].replace('{rarity}', rarity);
+            updateCharactersCollection();
         }
         
         const emptyWeapons = document.querySelector('#weapons .empty-collection');
         if (emptyWeapons) {
-            const rarity = document.querySelector('#weapons .rarity-tab.active').dataset.rarity;
-            emptyWeapons.textContent = translations[lang]['weapons-empty'].replace('{rarity}', rarity);
+            updateWeaponsCollection();
         }
         
         // Update rarity texts
@@ -610,6 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (document.getElementById('charactersGrid')) updateCharactersCollection();
         if (document.getElementById('weaponsGrid')) updateWeaponsCollection();
+        if (document.getElementById('trainingContent')) renderTrainingPage();
         if (document.getElementById('profileEmail')) updateProfileDropdown();
     }
     
@@ -646,6 +775,15 @@ document.addEventListener('DOMContentLoaded', () => {
         wishExpGranted = 0;
         totalExpeditionsCompleted = 0;
         expeditionExpGranted = 0;
+        characterProgress = {};
+        selectedTrainingCharacterName = null;
+        resonancePotions = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+        resonancePotionStarterPackRemoved = true;
+        weaponProgress = {};
+        selectedTrainingWeaponName = null;
+        equippedWeapons = {};
+        energyCores = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+        trainingMode = 'character';
         updateAstriteDisplay(0);
         updateShellCreditsDisplay(0);
         updateUnionExpDisplay();
@@ -686,7 +824,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 profileAvatarName: null,
                 wishExpGranted: 0,
                 totalExpeditionsCompleted: 0,
-                expeditionExpGranted: 0
+                expeditionExpGranted: 0,
+                characterProgress: {},
+                selectedTrainingCharacterName: null,
+                resonancePotions: { basic: 0, medium: 0, advanced: 0, premium: 0 },
+                resonancePotionStarterPackRemoved: true,
+                weaponProgress: {},
+                selectedTrainingWeaponName: null,
+                equippedWeapons: {},
+                energyCores: { basic: 0, medium: 0, advanced: 0, premium: 0 }
         });
     }
     
@@ -904,6 +1050,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentUser) return;
         const userData = getUserData(currentUser.username);
         if (userData) {
+            let needsPotionInventoryResetSave = false;
+            let needsWeaponNameMigrationSave = false;
             totalWishes = userData.totalWishes || 0;
             pity5Star = userData.pity5Star || 0;                    
             pity4Star = userData.pity4Star || 0;
@@ -911,9 +1059,17 @@ document.addEventListener('DOMContentLoaded', () => {
             count4Star = userData.count4Star || 0;
             count3Star = userData.count3Star || 0;
             pityHistory = userData.pityHistory || [];
-            wishHistory = userData.wishHistory || userData.wishResults || [];
-            obtainedCharacters = userData.obtainedCharacters || [];
-            obtainedWeapons = userData.obtainedWeapons || [];
+            wishHistory = (userData.wishHistory || userData.wishResults || []).map(item => item.name === 'Red String' ? { ...item, name: 'Red Spring' } : item);
+            obtainedCharacters = (userData.obtainedCharacters || []).map(character => {
+                const catalogCharacter = characters.find(item => item.name === character.name);
+                return {
+                    ...character,
+                    rarity: character.rarity ?? catalogCharacter?.rarity,
+                    img: character.img || catalogCharacter?.img,
+                    element: character.element || catalogCharacter?.element
+                };
+            });
+            obtainedWeapons = (userData.obtainedWeapons || []).map(weapon => weapon.name === 'Red String' ? { ...weapon, name: 'Red Spring' } : weapon);
             last5StarWish = userData.last5StarWish || 0;
             astrite = userData.astrite || 0;
             shellCredits = userData.shellCredits || 0;
@@ -924,6 +1080,37 @@ document.addEventListener('DOMContentLoaded', () => {
             domainProgress = userData.domainProgress || createEmptyDomainProgress();
             totalExpeditionsCompleted = userData.totalExpeditionsCompleted ?? domainProgress.gamesPlayed ?? 0;
             expeditionExpGranted = userData.expeditionExpGranted || 0;
+            characterProgress = userData.characterProgress || {};
+            selectedTrainingCharacterName = userData.selectedTrainingCharacterName || null;
+            resonancePotionStarterPackRemoved = userData.resonancePotionStarterPackRemoved === true;
+            resonancePotions = userData.resonancePotions || { basic: 0, medium: 0, advanced: 0, premium: 0 };
+            weaponProgress = userData.weaponProgress || {};
+            selectedTrainingWeaponName = userData.selectedTrainingWeaponName || null;
+            equippedWeapons = userData.equippedWeapons || {};
+            energyCores = userData.energyCores || { basic: 0, medium: 0, advanced: 0, premium: 0 };
+            if (weaponProgress['Red String']) {
+                weaponProgress['Red Spring'] = weaponProgress['Red Spring'] || weaponProgress['Red String'];
+                delete weaponProgress['Red String'];
+                needsWeaponNameMigrationSave = true;
+            }
+            if (selectedTrainingWeaponName === 'Red String') {
+                selectedTrainingWeaponName = 'Red Spring';
+                needsWeaponNameMigrationSave = true;
+            }
+            Object.keys(equippedWeapons).forEach(characterName => {
+                if (equippedWeapons[characterName] === 'Red String') {
+                    equippedWeapons[characterName] = 'Red Spring';
+                    needsWeaponNameMigrationSave = true;
+                }
+            });
+            if (wishHistory.some(item => item.name === 'Red Spring') || obtainedWeapons.some(weapon => weapon.name === 'Red Spring')) {
+                needsWeaponNameMigrationSave = needsWeaponNameMigrationSave || (userData.wishHistory || userData.wishResults || []).some(item => item.name === 'Red String') || (userData.obtainedWeapons || []).some(weapon => weapon.name === 'Red String');
+            }
+            if (!resonancePotionStarterPackRemoved) {
+                resonancePotions = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+                resonancePotionStarterPackRemoved = true;
+                needsPotionInventoryResetSave = true;
+            }
             syncWishExperienceFromHistory();
             syncExpeditionExperience();
             
@@ -941,9 +1128,447 @@ document.addEventListener('DOMContentLoaded', () => {
             if (domainProgress.lastRoundCompletedAt + DOMAIN_COOLDOWN_MS > Date.now()) {
                 startDomainCooldownTicker();
             }
+            if (needsPotionInventoryResetSave || needsWeaponNameMigrationSave) saveCurrentUserData();
         }
     }
     
+    // --- Character training ---
+    const CHARACTER_MAX_LEVEL = 100;
+    const potionDefinitions = {
+        basic: { name: 'Basic Resonance Potion', exp: 100, image: 'Extra/Basic%20Resonance%20Potion.png' },
+        medium: { name: 'Medium Resonance Potion', exp: 500, image: 'Extra/Medium%20Resonance%20Potion.png' },
+        advanced: { name: 'Advanced Resonance Potion', exp: 2500, image: 'Extra/Advanced%20Resonance%20Potion.png' },
+        premium: { name: 'Premium Resonance Potion', exp: 10000, image: 'Extra/Premium%20Resonance%20Potion.png' }
+    };
+    const WEAPON_MAX_LEVEL = 100;
+    const energyCoreDefinitions = {
+        basic: { name: 'Basic Energy Core', exp: 100, image: 'Extra/Basic%20Energy%20Core.png' },
+        medium: { name: 'Medium Energy Core', exp: 500, image: 'Extra/Medium%20Energy%20Core.png' },
+        advanced: { name: 'Advanced Energy Core', exp: 2500, image: 'Extra/Advanced%20Energy%20Core.png' },
+        premium: { name: 'Premium Energy Core', exp: 10000, image: 'Extra/Premium%20Energy%20Core.png' }
+    };
+    const weaponSynergies = {
+        'Lingyang': 'Abyss Surges', 'Zhezhi': 'Rime-Draped Sprouts', 'Carlotta': 'The Last Dance',
+        'Lucilla': 'Freeze Frame', 'Hiyuki': 'Frostburn', 'Suisui': "Firstlight's Herald",
+        'Encore': 'Cosmic Ripples', 'Changli': 'Blazing Brilliance', 'Brant': 'Unflickering Valor',
+        'Lupa': 'Wildfire Mark', 'Galbrena': 'Lux & Umbra', 'Mornye': 'Starfield Calibrator',
+        'Aemeath': 'Everbright Polestar', 'Denia': 'Forged Dwarf Star', 'Calcharo': 'Lustrous Razor',
+        'Yinlin': 'Stringmaster', 'Xiangli Yao': "Verity's Handle", 'Augusta': 'Thunderflare Dominion',
+        'Rebecca': 'Skull Thrasher', 'Jiyan': 'Verdant Summit', 'Jianxin': 'Abyss Surges',
+        'Ciaccona': 'Woodland Aria', 'Cartethyia': "Defier's Thorn", 'Iuno': "Moongazer's Sigil",
+        'Qiuyuan': 'Emerald Sentence', 'Sigrika': 'Solsworn Ciphers', 'Verina': 'Cosmic Ripples',
+        'Jinshi': 'Ages of Harvest', 'Shorekeeper': 'Stellar Symphony', 'Phoebe': 'Luminous Hymn',
+        'Zani': 'Blazing Justice', 'Lynae': 'Spectrum Blaster', 'Luuk Hersen': "Daybreaker's Spine",
+        'Lucy': 'Spectral Trigger', 'Camellya': 'Red Spring', 'Roccia': 'Tragicomedy',
+        'Cantarella': 'Whispers of Sirens', 'Phrolova': 'Lethean Elegy', 'Chisa': 'Kumokiri',
+        'Yangyang: Xuanling': 'Azure Oath'
+    };
+
+    function getCharacterTrainingState(characterName) {
+        if (!characterProgress[characterName]) {
+            characterProgress[characterName] = { level: 1, exp: 0 };
+        }
+        return characterProgress[characterName];
+    }
+
+    function getCharacterLevelInfo(state) {
+        const expRequired = 100 + (state.level - 1) * 50;
+        return { expRequired, expInLevel: state.exp };
+    }
+
+    function getTrainingCharacterImage(character) {
+        const specialFileNames = {
+            'Jinshi': 'Jinhsi',
+            'Luuk Hersen': 'Luuk',
+            'Yangyang: Xuanling': 'Yangyang-Xuanling'
+        };
+        const fileName = specialFileNames[character.name] || character.name;
+        return `poze charactere/char ${character.rarity} full/${fileName}.png`;
+    }
+
+    function getTrainingWeaponImage(weapon) {
+        return `poze%20arme/arme%20${weapon.rarity}%20full/${encodeURIComponent(weapon.name)}.png`;
+    }
+
+    function getWeaponTrainingState(weaponName) {
+        if (!weaponProgress[weaponName]) weaponProgress[weaponName] = { level: 1, exp: 0 };
+        return weaponProgress[weaponName];
+    }
+
+    function getWeaponDamage(weaponName, characterName = null) {
+        if (!weaponName) return { base: 0, synergy: 0, active: 0, hasSynergy: false };
+        const level = getWeaponTrainingState(weaponName).level;
+        const base = 50 + (level - 1) * 2;
+        const synergy = 100 + (level - 1) * 5;
+        const hasSynergy = Boolean(characterName && weaponSynergies[characterName] === weaponName);
+        return { base, synergy, active: hasSynergy ? synergy : base, hasSynergy };
+    }
+
+    function getTrainingModeMarkup() {
+        return `<div class="training-mode-switch">
+            <button type="button" data-training-mode="character" class="${trainingMode === 'character' ? 'active' : ''}">${translations[currentLanguage]['training-mode-character']}</button>
+            <button type="button" data-training-mode="weapon" class="${trainingMode === 'weapon' ? 'active' : ''}">${translations[currentLanguage]['training-mode-weapon']}</button>
+        </div>`;
+    }
+
+    function bindTrainingModeControls(container) {
+        container.querySelectorAll('[data-training-mode]').forEach(button => {
+            button.addEventListener('click', () => {
+                trainingMode = button.dataset.trainingMode;
+                renderTrainingPage();
+            });
+        });
+    }
+
+    function renderTrainingPage() {
+        if (trainingMode === 'weapon') return renderWeaponTrainingPage();
+        renderCharacterTrainingPage();
+    }
+
+    function getCharacterElement(character) {
+        return character.element || characters.find(item => item.name === character.name)?.element || null;
+    }
+
+    function getCharacterElementIconMarkup(character) {
+        const element = getCharacterElement(character);
+        return element ? `<img class="character-element-icon" src="poze elemente/${element.toLowerCase()}.png" alt="${element}">` : '';
+    }
+
+    function getFilteredAndSortedCharacters(characterList, filter, sort) {
+        return characterList
+            .filter(character => filter === 'all' || (filter.startsWith('rarity-')
+                ? character.rarity === Number(filter.replace('rarity-', ''))
+                : getCharacterElement(character) === filter))
+            .sort((first, second) => {
+                if (sort === 'alphabetical') return first.name.localeCompare(second.name);
+                const firstLevel = characterProgress[first.name]?.level || 1;
+                const secondLevel = characterProgress[second.name]?.level || 1;
+                return secondLevel - firstLevel || first.name.localeCompare(second.name);
+            });
+    }
+
+    function getCharacterControlsMarkup(filterId, sortId, filter, sort) {
+        const option = (value, label) => `<option value="${value}"${filter === value ? ' selected' : ''}>${label}</option>`;
+        const sortOption = (value, label) => `<option value="${value}"${sort === value ? ' selected' : ''}>${label}</option>`;
+        return `
+            <div class="character-controls">
+                <label><span>${translations[currentLanguage]['character-filter-label']}</span>
+                    <select id="${filterId}">
+                        ${option('all', translations[currentLanguage]['character-filter-all'])}
+                        ${option('rarity-4', translations[currentLanguage]['character-filter-4'])}
+                        ${option('rarity-5', translations[currentLanguage]['character-filter-5'])}
+                        ${option('Aero', 'Aero')}${option('Spectro', 'Spectro')}${option('Electro', 'Electro')}
+                        ${option('Havoc', 'Havoc')}${option('Fusion', 'Fusion')}${option('Glacio', 'Glacio')}
+                    </select>
+                </label>
+                <label><span>${translations[currentLanguage]['character-sort-label']}</span>
+                    <select id="${sortId}">
+                        ${sortOption('level-desc', translations[currentLanguage]['character-sort-level'])}
+                        ${sortOption('alphabetical', translations[currentLanguage]['character-sort-alpha'])}
+                    </select>
+                </label>
+            </div>`;
+    }
+
+    function getFilteredAndSortedWeapons(weaponList, filter, sort = 'alphabetical') {
+        return weaponList
+            .filter(weapon => filter === 'all' || (filter.startsWith('rarity-')
+                ? weapon.rarity === Number(filter.replace('rarity-', ''))
+                : getWeaponType(weapon) === filter))
+            .sort((first, second) => sort === 'alphabetical'
+                ? first.name.localeCompare(second.name)
+                : (weaponProgress[second.name]?.level || 1) - (weaponProgress[first.name]?.level || 1) || first.name.localeCompare(second.name));
+    }
+
+    function getWeaponControlsMarkup(filterId, sortId, filter, sort, includeSort = true) {
+        const option = (value, label) => `<option value="${value}"${filter === value ? ' selected' : ''}>${label}</option>`;
+        const sortOption = (value, label) => `<option value="${value}"${sort === value ? ' selected' : ''}>${label}</option>`;
+        return `<div class="character-controls">
+            <label><span>${translations[currentLanguage]['character-filter-label']}</span>
+                <select id="${filterId}">
+                    ${option('all', translations[currentLanguage]['weapons-filter-all'])}
+                    ${option('rarity-5', translations[currentLanguage]['weapons-filter-5'])}
+                    ${option('rarity-4', translations[currentLanguage]['weapons-filter-4'])}
+                    ${option('rarity-3', translations[currentLanguage]['weapons-filter-3'])}
+                    ${option('Sword', 'Sword')}${option('Broadblade', 'Broadblade')}${option('Rectifier', 'Rectifier')}
+                    ${option('Gauntlets', 'Gauntlets')}${option('Pistols', 'Pistols')}
+                </select>
+            </label>
+            ${includeSort ? `<label><span>${translations[currentLanguage]['character-sort-label']}</span>
+                <select id="${sortId}">${sortOption('level-desc', translations[currentLanguage]['character-sort-level'])}${sortOption('alphabetical', translations[currentLanguage]['character-sort-alpha'])}</select>
+            </label>` : ''}
+        </div>`;
+    }
+
+    function renderCharacterTrainingPage() {
+        const container = document.getElementById('trainingContent');
+        if (!container) return;
+
+        if (obtainedCharacters.length === 0) {
+            container.innerHTML = `${getTrainingModeMarkup()}<p class="empty-collection">${translations[currentLanguage]['training-empty']}</p>`;
+            bindTrainingModeControls(container);
+            return;
+        }
+
+        const trainingCharacters = getFilteredAndSortedCharacters(obtainedCharacters, trainingCharacterFilter, trainingCharacterSort);
+        if (trainingCharacters.length === 0) {
+            container.innerHTML = `${getTrainingModeMarkup()}${getCharacterControlsMarkup('trainingCharactersFilter', 'trainingCharactersSort', trainingCharacterFilter, trainingCharacterSort)}<p class="empty-collection">${translations[currentLanguage]['character-filter-empty']}</p>`;
+            bindTrainingModeControls(container);
+            bindTrainingCharacterControls(container);
+            return;
+        }
+
+        if (!trainingCharacters.some(character => character.name === selectedTrainingCharacterName)) {
+            selectedTrainingCharacterName = trainingCharacters[0].name;
+        }
+        const selectedCharacter = obtainedCharacters.find(character => character.name === selectedTrainingCharacterName);
+        const state = getCharacterTrainingState(selectedCharacter.name);
+        const levelInfo = getCharacterLevelInfo(state);
+        const progress = state.level >= CHARACTER_MAX_LEVEL ? 100 : Math.min(100, (levelInfo.expInLevel / levelInfo.expRequired) * 100);
+        const characterHp = 600 + (state.level - 1) * 50;
+        const characterDmg = 200 + (state.level - 1) * 10;
+        const equippedWeaponName = equippedWeapons[selectedCharacter.name] || '';
+        const equippedWeapon = obtainedWeapons.find(weapon => weapon.name === equippedWeaponName);
+        const weaponDamage = getWeaponDamage(equippedWeaponName, selectedCharacter.name);
+        const equippableWeapons = getFilteredAndSortedWeapons(obtainedWeapons, equipmentWeaponFilter);
+
+        container.innerHTML = `
+            <section class="training-character-picker">
+                <h2>${translations[currentLanguage]['training-select']}</h2>
+                ${getCharacterControlsMarkup('trainingCharactersFilter', 'trainingCharactersSort', trainingCharacterFilter, trainingCharacterSort)}
+                <div class="training-character-list">
+                    ${trainingCharacters.map(character => `
+                        <button class="training-character-option${character.name === selectedCharacter.name ? ' selected' : ''}" type="button" data-training-character="${character.name}">
+                            <img src="${character.img}" alt="${character.name}">
+                            ${getCharacterElementIconMarkup(character)}
+                            <span>${character.name}</span>
+                        </button>
+                    `).join('')}
+                </div>
+            </section>
+            <section class="training-detail-panel">
+                <div class="training-character-showcase">
+                    ${getTrainingModeMarkup()}
+                    <img src="${getTrainingCharacterImage(selectedCharacter)}" alt="${selectedCharacter.name}" onerror="this.onerror=null; this.src='${selectedCharacter.img}'">
+                    ${getCharacterElementIconMarkup(selectedCharacter)}
+                    <h2>${selectedCharacter.name}</h2>
+                </div>
+                <div class="training-level-panel">
+                    <div class="training-level-heading"><span>${translations[currentLanguage]['training-level']}</span><strong>${state.level} / ${CHARACTER_MAX_LEVEL}</strong></div>
+                    <div class="training-exp-track"><div class="training-exp-fill" style="width:${progress}%"></div></div>
+                    <p>${state.level >= CHARACTER_MAX_LEVEL ? translations[currentLanguage]['training-max-level'] : `${levelInfo.expInLevel} / ${levelInfo.expRequired} EXP`}</p>
+                    <div class="training-stat-grid">
+                        <div><span>${translations[currentLanguage]['training-hp']}</span><strong>${characterHp}</strong></div>
+                        <div><span>${translations[currentLanguage]['training-dmg']}</span><strong>${characterDmg}</strong></div>
+                        <div><span>${translations[currentLanguage]['training-weapon-dmg']}</span><strong>${weaponDamage.active}</strong></div>
+                        <div><span>${translations[currentLanguage]['training-total-dmg']}</span><strong>${characterDmg + weaponDamage.active}</strong></div>
+                    </div>
+                    <h3>${translations[currentLanguage]['training-weapon-equipped']}</h3>
+                    <div class="training-equipment-slot">
+                        <img src="${equippedWeapon?.img || 'Extra/Basic%20Energy%20Core.png'}" alt="${equippedWeapon?.name || translations[currentLanguage]['training-weapon-none']}">
+                        <strong>${equippedWeapon?.name || translations[currentLanguage]['training-weapon-none']}</strong>
+                        <span>${weaponDamage.hasSynergy ? translations[currentLanguage]['training-synergy-active'] : translations[currentLanguage]['training-synergy-inactive']}</span>
+                    </div>
+                    ${getWeaponControlsMarkup('equipmentWeaponsFilter', '', equipmentWeaponFilter, 'alphabetical', false)}
+                    <div class="profile-avatar-options training-weapon-options">
+                        <button class="profile-avatar-option${!equippedWeaponName ? ' selected' : ''}" type="button" data-equip-weapon="">
+                            <span>${translations[currentLanguage]['training-weapon-none']}</span>
+                        </button>
+                        ${equippableWeapons.map(weapon => `
+                            <button class="profile-avatar-option${weapon.name === equippedWeaponName ? ' selected' : ''}" type="button" data-equip-weapon="${weapon.name}">
+                                <img src="${weapon.img}" alt="${weapon.name}"><span>${weapon.name}</span>
+                            </button>`).join('')}
+                    </div>
+                    <h3>${translations[currentLanguage]['training-potions']}</h3>
+                    <div class="training-potions">
+                        ${Object.entries(potionDefinitions).map(([key, potion]) => `
+                            <article class="training-potion-card">
+                                <img src="${potion.image}" alt="${potion.name}">
+                                <div><strong>${potion.name}</strong><span>+${potion.exp} EXP · x${resonancePotions[key] || 0}</span></div>
+                                <button type="button" data-potion="${key}" ${state.level >= CHARACTER_MAX_LEVEL || !(resonancePotions[key] > 0) ? 'disabled' : ''}>${translations[currentLanguage]['training-use']}</button>
+                            </article>
+                        `).join('')}
+                    </div>
+                </div>
+            </section>
+        `;
+
+        bindTrainingCharacterControls(container);
+        bindTrainingModeControls(container);
+        container.querySelector('#equipmentWeaponsFilter')?.addEventListener('change', event => {
+            equipmentWeaponFilter = event.target.value;
+            renderTrainingPage();
+        });
+        container.querySelectorAll('[data-equip-weapon]').forEach(button => {
+            button.addEventListener('click', () => {
+                const weaponName = button.dataset.equipWeapon;
+                if (weaponName) equippedWeapons[selectedCharacter.name] = weaponName;
+                else delete equippedWeapons[selectedCharacter.name];
+                saveCurrentUserData();
+                renderTrainingPage();
+            });
+        });
+        container.querySelectorAll('[data-training-character]').forEach(button => {
+            button.addEventListener('click', () => {
+                selectedTrainingCharacterName = button.dataset.trainingCharacter;
+                saveCurrentUserData();
+                renderTrainingPage();
+            });
+        });
+        container.querySelectorAll('[data-potion]').forEach(button => {
+            button.addEventListener('click', () => applyResonancePotion(button.dataset.potion));
+        });
+    }
+
+    function bindTrainingCharacterControls(container) {
+        const filterSelect = container.querySelector('#trainingCharactersFilter');
+        const sortSelect = container.querySelector('#trainingCharactersSort');
+        filterSelect?.addEventListener('change', () => {
+            trainingCharacterFilter = filterSelect.value;
+            renderTrainingPage();
+        });
+        sortSelect?.addEventListener('change', () => {
+            trainingCharacterSort = sortSelect.value;
+            renderTrainingPage();
+        });
+    }
+
+    function renderWeaponTrainingPage() {
+        const container = document.getElementById('trainingContent');
+        if (!container) return;
+
+        if (obtainedWeapons.length === 0) {
+            container.innerHTML = `${getTrainingModeMarkup()}<p class="empty-collection">${translations[currentLanguage]['training-weapon-empty']}</p>`;
+            bindTrainingModeControls(container);
+            return;
+        }
+
+        const trainingWeapons = getFilteredAndSortedWeapons(obtainedWeapons, trainingWeaponFilter, trainingWeaponSort);
+        if (trainingWeapons.length === 0) {
+            container.innerHTML = `${getTrainingModeMarkup()}${getWeaponControlsMarkup('trainingWeaponsFilter', 'trainingWeaponsSort', trainingWeaponFilter, trainingWeaponSort)}<p class="empty-collection">${translations[currentLanguage]['character-filter-empty']}</p>`;
+            bindTrainingModeControls(container);
+            bindTrainingWeaponControls(container);
+            return;
+        }
+        if (!trainingWeapons.some(weapon => weapon.name === selectedTrainingWeaponName)) {
+            selectedTrainingWeaponName = trainingWeapons[0].name;
+        }
+        const selectedWeapon = trainingWeapons.find(weapon => weapon.name === selectedTrainingWeaponName);
+        const state = getWeaponTrainingState(selectedWeapon.name);
+        const levelInfo = getCharacterLevelInfo(state);
+        const progress = state.level >= WEAPON_MAX_LEVEL ? 100 : Math.min(100, (levelInfo.expInLevel / levelInfo.expRequired) * 100);
+        const equippedCharacterName = Object.keys(equippedWeapons).find(characterName => equippedWeapons[characterName] === selectedWeapon.name) || null;
+        const damage = getWeaponDamage(selectedWeapon.name, equippedCharacterName);
+
+        container.innerHTML = `
+            <section class="training-character-picker">
+                <h2>${translations[currentLanguage]['training-weapon-select']}</h2>
+                ${getWeaponControlsMarkup('trainingWeaponsFilter', 'trainingWeaponsSort', trainingWeaponFilter, trainingWeaponSort)}
+                <div class="training-character-list">
+                    ${trainingWeapons.map(weapon => `
+                        <button class="training-character-option${weapon.name === selectedWeapon.name ? ' selected' : ''}" type="button" data-training-weapon="${weapon.name}">
+                            <img src="${weapon.img}" alt="${weapon.name}">
+                            <span>${weapon.name}</span>
+                        </button>
+                    `).join('')}
+                </div>
+            </section>
+            <section class="training-detail-panel">
+                <div class="training-character-showcase training-weapon-showcase">
+                    ${getTrainingModeMarkup()}
+                    <img src="${getTrainingWeaponImage(selectedWeapon)}" alt="${selectedWeapon.name}" onerror="this.onerror=null; this.src='${selectedWeapon.img}'">
+                    <h2>${selectedWeapon.name}</h2>
+                </div>
+                <div class="training-level-panel">
+                    <div class="training-level-heading"><span>${translations[currentLanguage]['training-level']}</span><strong>${state.level} / ${WEAPON_MAX_LEVEL}</strong></div>
+                    <div class="training-exp-track"><div class="training-exp-fill" style="width:${progress}%"></div></div>
+                    <p>${state.level >= WEAPON_MAX_LEVEL ? translations[currentLanguage]['training-max-level'] : `${levelInfo.expInLevel} / ${levelInfo.expRequired} EXP`}</p>
+                    <div class="training-stat-grid">
+                        <div><span>${translations[currentLanguage]['training-base-dmg']}</span><strong>${damage.base}</strong></div>
+                        <div><span>${translations[currentLanguage]['training-synergy-dmg']}</span><strong>${damage.synergy}</strong></div>
+                        <div><span>${translations[currentLanguage]['training-weapon-dmg']}</span><strong>${damage.active}</strong></div>
+                        <div><span>${damage.hasSynergy ? translations[currentLanguage]['training-synergy-active'] : translations[currentLanguage]['training-synergy-inactive']}</span><strong>${equippedCharacterName || '—'}</strong></div>
+                    </div>
+                    <h3>${translations[currentLanguage]['training-energy-cores']}</h3>
+                    <div class="training-potions">
+                        ${Object.entries(energyCoreDefinitions).map(([key, core]) => `
+                            <article class="training-potion-card">
+                                <img src="${core.image}" alt="${core.name}">
+                                <div><strong>${core.name}</strong><span>+${core.exp} EXP · x${energyCores[key] || 0}</span></div>
+                                <button type="button" data-energy-core="${key}" ${state.level >= WEAPON_MAX_LEVEL || !(energyCores[key] > 0) ? 'disabled' : ''}>${translations[currentLanguage]['training-use']}</button>
+                            </article>
+                        `).join('')}
+                    </div>
+                </div>
+            </section>`;
+
+        bindTrainingModeControls(container);
+        bindTrainingWeaponControls(container);
+        container.querySelectorAll('[data-training-weapon]').forEach(button => {
+            button.addEventListener('click', () => {
+                selectedTrainingWeaponName = button.dataset.trainingWeapon;
+                saveCurrentUserData();
+                renderTrainingPage();
+            });
+        });
+        container.querySelectorAll('[data-energy-core]').forEach(button => {
+            button.addEventListener('click', () => applyEnergyCore(button.dataset.energyCore));
+        });
+    }
+
+    function bindTrainingWeaponControls(container) {
+        const filterSelect = container.querySelector('#trainingWeaponsFilter');
+        const sortSelect = container.querySelector('#trainingWeaponsSort');
+        filterSelect?.addEventListener('change', () => {
+            trainingWeaponFilter = filterSelect.value;
+            renderTrainingPage();
+        });
+        sortSelect?.addEventListener('change', () => {
+            trainingWeaponSort = sortSelect.value;
+            renderTrainingPage();
+        });
+    }
+
+    function applyEnergyCore(coreKey) {
+        const weapon = obtainedWeapons.find(item => item.name === selectedTrainingWeaponName);
+        const core = energyCoreDefinitions[coreKey];
+        if (!weapon || !core || !(energyCores[coreKey] > 0)) return;
+        const state = getWeaponTrainingState(weapon.name);
+        if (state.level >= WEAPON_MAX_LEVEL) return;
+        energyCores[coreKey]--;
+        state.exp += core.exp;
+        while (state.level < WEAPON_MAX_LEVEL) {
+            const required = 100 + (state.level - 1) * 50;
+            if (state.exp < required) break;
+            state.exp -= required;
+            state.level++;
+        }
+        if (state.level >= WEAPON_MAX_LEVEL) state.exp = 0;
+        saveCurrentUserData();
+        renderTrainingPage();
+    }
+
+    function applyResonancePotion(potionKey) {
+        const character = obtainedCharacters.find(item => item.name === selectedTrainingCharacterName);
+        const potion = potionDefinitions[potionKey];
+        if (!character || !potion || !(resonancePotions[potionKey] > 0)) return;
+
+        const state = getCharacterTrainingState(character.name);
+        if (state.level >= CHARACTER_MAX_LEVEL) return;
+        resonancePotions[potionKey]--;
+        state.exp += potion.exp;
+
+        while (state.level < CHARACTER_MAX_LEVEL) {
+            const required = 100 + (state.level - 1) * 50;
+            if (state.exp < required) break;
+            state.exp -= required;
+            state.level++;
+        }
+        if (state.level >= CHARACTER_MAX_LEVEL) state.exp = 0;
+        saveCurrentUserData();
+        renderTrainingPage();
+    }
+
     // --- Domain mini-game ---
     const domainPlayButton = document.getElementById('playDomainGame');
     const domainPlayfield = document.getElementById('domainPlayfield');
@@ -1185,7 +1810,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const username = document.getElementById('registerUsername').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
         if (password !== confirmPassword) {
-            registerMessage.textContent = "Parolele nu se potrivesc.";
+            registerMessage.textContent = translations[currentLanguage]['auth-error-password'];
             registerMessage.className = 'form-message error';
             return;
         }
@@ -1253,6 +1878,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateCharactersCollection();
             } else if (targetPage === 'weapons') {
                 updateWeaponsCollection();
+            } else if (targetPage === 'training') {
+                renderTrainingPage();
             }
         });
     });
@@ -1411,11 +2038,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Function to update character collection ---
     function updateCharactersCollection() {
-        const activeRarity = document.querySelector('#characters .rarity-tab.active').getAttribute('data-rarity');
-        const filteredCharacters = obtainedCharacters.filter(c => c.rarity == activeRarity);
+        const filteredCharacters = getFilteredAndSortedCharacters(obtainedCharacters, characterCollectionFilter, characterCollectionSort);
         
         if (filteredCharacters.length === 0) {
-            const emptyText = translations[currentLanguage]['characters-empty'].replace('{rarity}', activeRarity);
+            const emptyText = characterCollectionFilter === 'all'
+                ? translations[currentLanguage]['training-empty']
+                : translations[currentLanguage]['character-filter-empty'];
             charactersGrid.innerHTML = `<p class="empty-collection">${emptyText}</p>`;
             return;
         }
@@ -1429,7 +2057,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const rarityText = translations[currentLanguage]['rarity-text'].replace('{rarity}', character.rarity);
             
             characterElement.innerHTML = `
-                <img src="${character.img}" alt="${character.name}">
+                <div class="collection-character-visual">
+                    <img src="${character.img}" alt="${character.name}">
+                    ${getCharacterElementIconMarkup(character)}
+                </div>
                 <div class="info">
                     <div class="collection-name-row"><h3 class="name">${character.name}</h3><span class="copy-count">x${getItemCopyCount(character.name)}</span></div>
                     <p class="rarity rarity-text-${character.rarity}">${rarityText}</p>
@@ -1441,11 +2072,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Function to update weapon collection ---
     function updateWeaponsCollection() {
-        const activeRarity = document.querySelector('#weapons .rarity-tab.active').getAttribute('data-rarity');
-        const filteredWeapons = obtainedWeapons.filter(w => w.rarity == activeRarity);
+        const filteredWeapons = obtainedWeapons
+            .filter(weapon => weaponCollectionFilter === 'all' || (weaponCollectionFilter.startsWith('rarity-')
+                ? weapon.rarity === Number(weaponCollectionFilter.replace('rarity-', ''))
+                : getWeaponType(weapon) === weaponCollectionFilter))
+            .sort((first, second) => weaponCollectionSort === 'alphabetical'
+                ? first.name.localeCompare(second.name)
+                : (weaponProgress[second.name]?.level || 1) - (weaponProgress[first.name]?.level || 1) || first.name.localeCompare(second.name));
         
         if (filteredWeapons.length === 0) {
-            const emptyText = translations[currentLanguage]['weapons-empty'].replace('{rarity}', activeRarity);
+            const emptyText = weaponCollectionFilter === 'all' ? translations[currentLanguage]['training-weapon-empty'] : translations[currentLanguage]['character-filter-empty'];
             weaponsGrid.innerHTML = `<p class="empty-collection">${emptyText}</p>`;
             return;
         }
@@ -1463,6 +2099,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="info">
                     <div class="collection-name-row"><h3 class="name">${weapon.name}</h3><span class="copy-count">x${getItemCopyCount(weapon.name)}</span></div>
                     <p class="rarity rarity-text-${weapon.rarity}">${rarityText}</p>
+                    <p class="weapon-type">${getWeaponType(weapon)}</p>
                 </div>
             `;
             weaponsGrid.appendChild(weaponElement);
@@ -1584,6 +2221,16 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCharactersCollection();
         });
     });
+
+    charactersFilterSelect?.addEventListener('change', () => {
+        characterCollectionFilter = charactersFilterSelect.value;
+        updateCharactersCollection();
+    });
+
+    charactersSortSelect?.addEventListener('change', () => {
+        characterCollectionSort = charactersSortSelect.value;
+        updateCharactersCollection();
+    });
     
     // --- Event listeners for rarity tabs in weapons ---
     weaponsRarityTabs.forEach(tab => {
@@ -1595,6 +2242,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update displayed collection
             updateWeaponsCollection();
         });
+    });
+
+    weaponsFilterSelect?.addEventListener('change', () => {
+        weaponCollectionFilter = weaponsFilterSelect.value;
+        updateWeaponsCollection();
+    });
+
+    weaponsSortSelect?.addEventListener('change', () => {
+        weaponCollectionSort = weaponsSortSelect.value;
+        updateWeaponsCollection();
     });
     
     // Initialize language on page load
@@ -1690,8 +2347,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUnionExpDisplay();
         updateProfileAvatar();
         renderProfileAvatarPicker();
-        // Astrite
-        const astrite = document.getElementById('astriteValue').textContent;
+
+        // Astrite — folosește variabila globală (sursa de adevăr), nu citirea din DOM
         document.getElementById('profileAstrite').textContent = astrite;
         const profileEmail = document.getElementById('profileEmail');
         if (profileEmail) profileEmail.textContent = currentUser ? currentUser.email : '';
