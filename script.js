@@ -185,6 +185,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const navLinks = document.querySelectorAll('.nav-link');
     const pages = document.querySelectorAll('.page');
+    const shopAstriteAmount = document.getElementById('shopAstriteAmount');
+    const shopCostValue = document.getElementById('shopCostValue');
+    const shopShellBalance = document.getElementById('shopShellBalance');
+    const shopAstriteBalance = document.getElementById('shopAstriteBalance');
+    const shopBuyButton = document.getElementById('shopBuyButton');
+    const shopMaxButton = document.getElementById('shopMaxButton');
+    const shopMessage = document.getElementById('shopMessage');
+    const energyValue = document.getElementById('energyValue');
+    const energyBar = document.getElementById('energyBar');
+    const energyTimer = document.getElementById('energyTimer');
+    const domainsEnergyValue = document.getElementById('domainsEnergyValue');
     
     // Authentication elements
     const authButton = document.getElementById('authButton');
@@ -213,6 +224,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const wish10Button = document.getElementById('wish10');
     const wishResultsDiv = document.getElementById('wishResults');
     const totalWishesSpan = document.getElementById('totalWishes');
+    const freeWishesRemainingSpan = document.getElementById('freeWishesRemaining');
+    const wishCostInfo = document.getElementById('wishCostInfo');
     const stat5Star = document.getElementById('stat5Star');
     const stat4Star = document.getElementById('stat4Star');
     const stat3Star = document.getElementById('stat3Star');
@@ -272,6 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let last5StarWish = 0; // Tracks the total number of pulls at the last 5-star
     const PITY_5_STAR_MAX = 80;
     const PITY_4_STAR_MAX = 10;
+    const FREE_WISH_LIMIT = 1000;
+    const WISH_ASTRITE_COST = 160;
     const RATE_5_STAR = 0.025; // 2.5% for 5-star
     let shellCredits = 0;
     let astrite = 0;
@@ -289,6 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedTrainingWeaponName = null;
     let equippedWeapons = {};
     let energyCores = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+    let echoInventory = [];
+    let usedHuntingCharacters = [];
+    let selectedHuntCharacterName = null;
     let trainingMode = 'character';
     let characterCollectionFilter = 'all';
     let characterCollectionSort = 'level-desc';
@@ -315,6 +333,35 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav-weapons': 'Arme',
             'nav-training': 'Antrenament',
             'nav-domain': 'Expediție',
+            'nav-domains': 'Domeniu',
+            'nav-hunting': 'Vânătoare',
+            'hunting-eyebrow': 'EXPEDIȚIE DE VÂNĂTOARE',
+            'hunting-title': 'Vânătoare',
+            'hunting-description': 'Trimite un personaj într-o vânătoare. Fiecare personaj poate pleca o singură dată.',
+            'hunting-select': 'Alege un personaj',
+            'hunting-start': 'Trimite la vânătoare',
+            'hunting-used': 'Acest personaj a fost deja trimis la vânătoare.',
+            'hunting-empty': 'Obține un personaj din Wish pentru a începe vânătoarea.',
+            'hunting-login': 'Autentifică-te pentru a porni o vânătoare.',
+            'hunting-select-error': 'Alege un personaj disponibil.',
+            'hunting-success': '{character} s-a întors cu {shell} Shell Credits și {count} Echoes.',
+            'hunting-echoes': 'Echoes obținute',
+            'hunting-echoes-description': 'Echoes sunt păstrate pe sonate și rarități, pregătite pentru vânzarea în Shop.',
+            'hunting-none': 'Nu ai obținut Echoes încă.',
+            'energy-label': 'Energie',
+            'energy-full': 'Energie completă',
+            'energy-next': 'Următorul punct în {time}',
+            'domains-eyebrow': 'DOMENII DE RESURSE',
+            'domains-title': 'Domeniu',
+            'domains-description': 'Folosește energie pentru a obține resursele necesare dezvoltării. Mini-game-urile vor fi adăugate ulterior.',
+            'domains-character-tag': 'DEZVOLTARE CARACTERE',
+            'domains-character-title': 'Domeniul Rezonanței',
+            'domains-character-description': 'Aici vei obține Resonance Potions pentru creșterea personajelor.',
+            'domains-weapon-tag': 'DEZVOLTARE ARME',
+            'domains-weapon-title': 'Domeniul Energiei',
+            'domains-weapon-description': 'Aici vei obține Energy Cores pentru creșterea armelor.',
+            'domains-coming-soon': 'Mini-game în curând',
+            'domains-rewards-label': 'RECOMPENSE POSIBILE',
             'auth-login': 'Autentificare',
             'auth-logout': 'Deconectare',
             'auth-title': 'Autentificare',
@@ -345,6 +392,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'wish-title': 'Wuthering Waves Wishing Simulator',
             'wish-description': 'Apasă pe butoane pentru a face o tragere!',
             'wish-total-wishes': 'Total Trageri: ',
+            'wish-free-remaining': 'Trageri gratuite rămase: ',
+            'wish-cost-info-free': 'Primele 1.000 de trageri sunt gratuite.',
+            'wish-cost-info-paid': 'După limita gratuită, o tragere costă 160 Astrite.',
+            'wish-error-login': 'Autentifică-te pentru a folosi Astrite la trageri.',
+            'wish-error-astrite': 'Nu ai suficiente Astrite pentru aceste trageri.',
             'wish-filter-all': 'Toate',
             'wish-filter-5': '5-stele',
             'wish-filter-4': '4-stele',
@@ -473,6 +525,35 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav-weapons': 'Weapons',
             'nav-training': 'Training',
             'nav-domain': 'Expedition',
+            'nav-domains': 'Domain',
+            'nav-hunting': 'Hunting',
+            'hunting-eyebrow': 'HUNTING EXPEDITION',
+            'hunting-title': 'Hunting',
+            'hunting-description': 'Send a character on a hunt. Each character can only go once.',
+            'hunting-select': 'Choose a character',
+            'hunting-start': 'Send hunting',
+            'hunting-used': 'This character has already been sent hunting.',
+            'hunting-empty': 'Get a character from Wish to start hunting.',
+            'hunting-login': 'Log in to start a hunt.',
+            'hunting-select-error': 'Choose an available character.',
+            'hunting-success': '{character} returned with {shell} Shell Credits and {count} Echoes.',
+            'hunting-echoes': 'Echoes obtained',
+            'hunting-echoes-description': 'Echoes are stored by sonata and rarity, ready to be sold in the Shop.',
+            'hunting-none': 'You have not obtained Echoes yet.',
+            'energy-label': 'Energy',
+            'energy-full': 'Energy full',
+            'energy-next': 'Next point in {time}',
+            'domains-eyebrow': 'RESOURCE DOMAINS',
+            'domains-title': 'Domain',
+            'domains-description': 'Use energy to obtain resources needed for development. Mini-games will be added later.',
+            'domains-character-tag': 'CHARACTER DEVELOPMENT',
+            'domains-character-title': 'Resonance Domain',
+            'domains-character-description': 'You will obtain Resonance Potions to level up characters here.',
+            'domains-weapon-tag': 'WEAPON DEVELOPMENT',
+            'domains-weapon-title': 'Energy Domain',
+            'domains-weapon-description': 'You will obtain Energy Cores to level up weapons here.',
+            'domains-coming-soon': 'Mini-game coming soon',
+            'domains-rewards-label': 'POSSIBLE REWARDS',
             'auth-login': 'Login',
             'auth-logout': 'Logout',
             'auth-title': 'Login',
@@ -503,6 +584,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'wish-title': 'Wuthering Waves Wishing Simulator',
             'wish-description': 'Press the buttons to make a pull!',
             'wish-total-wishes': 'Total Pulls: ',
+            'wish-free-remaining': 'Free pulls remaining: ',
+            'wish-cost-info-free': 'Your first 1,000 pulls are free.',
+            'wish-cost-info-paid': 'After the free limit, one pull costs 160 Astrite.',
+            'wish-error-login': 'Log in to use Astrite for pulls.',
+            'wish-error-astrite': 'You do not have enough Astrite for these pulls.',
             'wish-filter-all': 'All',
             'wish-filter-5': '5-star',
             'wish-filter-4': '4-star',
@@ -606,11 +692,83 @@ document.addEventListener('DOMContentLoaded', () => {
             'domain-game-active': 'Collect cores before they disappear!',
             'domain-game-finished': 'Expedition complete: +{shell} Shell Credits and +{astrite} Astrite.',
             'domain-play-btn': 'Play',
+            'nav-shop': 'Shop',
+            'shop-eyebrow': 'RESOURCE EXCHANGE',
+            'shop-title': 'Shop',
+            'shop-description': 'Exchange Shell Credits for Astrite. 1 Astrite costs 20 Shell Credits.',
+            'shop-rate-label': 'Exchange rate',
+            'shop-rate-value': '1 Astrite = 20 Shell Credits',
+            'shop-buy-amount-label': 'Astrite amount',
+            'shop-cost-label': 'Cost',
+            'shop-buy-btn': 'Buy',
+            'shop-buy-max': 'Max',
+            'shop-login': 'Log in to use the shop.',
+            'shop-success': 'You bought {astrite} Astrite for {shell} Shell Credits.',
+            'shop-error-funds': 'You do not have enough Shell Credits.',
+            'shop-error-amount': 'Enter a valid amount greater than 0.',
+            'shop-balance': 'Current balance',
         }
     };
     
     // Current language
     let currentLanguage = localStorage.getItem('wwLanguage') || 'ro';
+    const ENERGY_MAX = 300;
+    const ENERGY_RECHARGE_MS = 5 * 60 * 1000;
+    const ENERGY_STORAGE_KEY = 'wwEnergyState';
+
+    function getEnergyState() {
+        const now = Date.now();
+        let state;
+        try {
+            state = JSON.parse(localStorage.getItem(ENERGY_STORAGE_KEY));
+        } catch {
+            state = null;
+        }
+        if (!state || !Number.isFinite(state.energy) || !Number.isFinite(state.lastChargeAt)) {
+            state = { energy: 0, lastChargeAt: now };
+            localStorage.setItem(ENERGY_STORAGE_KEY, JSON.stringify(state));
+            return state;
+        }
+        state.energy = Math.max(0, Math.min(ENERGY_MAX, Math.floor(state.energy)));
+        if (state.energy < ENERGY_MAX) {
+            const gained = Math.floor(Math.max(0, now - state.lastChargeAt) / ENERGY_RECHARGE_MS);
+            if (gained > 0) {
+                state.energy = Math.min(ENERGY_MAX, state.energy + gained);
+                state.lastChargeAt += gained * ENERGY_RECHARGE_MS;
+                if (state.energy === ENERGY_MAX) state.lastChargeAt = now;
+                localStorage.setItem(ENERGY_STORAGE_KEY, JSON.stringify(state));
+            }
+        }
+        return state;
+    }
+
+    function updateEnergyUI() {
+        const state = getEnergyState();
+        if (energyValue) energyValue.textContent = state.energy;
+        if (domainsEnergyValue) domainsEnergyValue.textContent = state.energy;
+        if (energyBar) energyBar.style.width = `${(state.energy / ENERGY_MAX) * 100}%`;
+        if (energyTimer) {
+            if (state.energy >= ENERGY_MAX) {
+                energyTimer.textContent = translations[currentLanguage]['energy-full'];
+            } else {
+                const remaining = Math.max(0, ENERGY_RECHARGE_MS - (Date.now() - state.lastChargeAt));
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                const time = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                energyTimer.textContent = translations[currentLanguage]['energy-next'].replace('{time}', time);
+            }
+        }
+    }
+
+    function spendEnergy(amount) {
+        const state = getEnergyState();
+        if (!Number.isInteger(amount) || amount <= 0 || state.energy < amount) return false;
+        state.energy -= amount;
+        state.lastChargeAt = Date.now();
+        localStorage.setItem(ENERGY_STORAGE_KEY, JSON.stringify(state));
+        updateEnergyUI();
+        return true;
+    }
     
     // --- User management functions ---
     function getUsers() {
@@ -662,6 +820,9 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedTrainingWeaponName,
             equippedWeapons,
             energyCores,
+            echoInventory,
+            usedHuntingCharacters,
+            selectedHuntCharacterName,
             domainProgress
         };
         
@@ -740,6 +901,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('weaponsGrid')) updateWeaponsCollection();
         if (document.getElementById('trainingContent')) renderTrainingPage();
         if (document.getElementById('profileEmail')) updateProfileDropdown();
+        updateWishPurchaseUI();
+        updateEnergyUI();
     }
     
     // --- User state change listener ---
@@ -783,6 +946,9 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedTrainingWeaponName = null;
         equippedWeapons = {};
         energyCores = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+        echoInventory = [];
+        usedHuntingCharacters = [];
+        selectedHuntCharacterName = null;
         trainingMode = 'character';
         updateAstriteDisplay(0);
         updateShellCreditsDisplay(0);
@@ -832,7 +998,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 weaponProgress: {},
                 selectedTrainingWeaponName: null,
                 equippedWeapons: {},
-                energyCores: { basic: 0, medium: 0, advanced: 0, premium: 0 }
+                energyCores: { basic: 0, medium: 0, advanced: 0, premium: 0 },
+                echoInventory: [],
+                usedHuntingCharacters: [],
+                selectedHuntCharacterName: null
         });
     }
     
@@ -848,6 +1017,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateAstriteDisplay(value) {
         document.getElementById('astriteValue').textContent = value;
+        updateShopUI();
     }
     
     function updateShellCreditsDisplay(value) {
@@ -857,6 +1027,42 @@ document.addEventListener('DOMContentLoaded', () => {
         // și în Domain, dacă există
         const domainShell = document.getElementById('shellCreditsValueDomain');
         if(domainShell) domainShell.textContent = value;
+        updateShopUI();
+    }
+
+    function updateShopUI() {
+        const amount = Math.max(0, Math.floor(Number(shopAstriteAmount?.value) || 0));
+        if (shopCostValue) shopCostValue.textContent = amount * 20;
+        if (shopShellBalance) shopShellBalance.textContent = shellCredits;
+        if (shopAstriteBalance) shopAstriteBalance.textContent = astrite;
+    }
+
+    function buyAstriteFromShop() {
+        if (!currentUser) {
+            shopMessage.textContent = translations[currentLanguage]['shop-login'];
+            shopMessage.className = 'shop-message error';
+            return;
+        }
+        const amount = Math.floor(Number(shopAstriteAmount.value));
+        if (!Number.isFinite(amount) || amount <= 0) {
+            shopMessage.textContent = translations[currentLanguage]['shop-error-amount'];
+            shopMessage.className = 'shop-message error';
+            return;
+        }
+        const cost = amount * 20;
+        if (shellCredits < cost) {
+            shopMessage.textContent = translations[currentLanguage]['shop-error-funds'];
+            shopMessage.className = 'shop-message error';
+            return;
+        }
+        shellCredits -= cost;
+        astrite += amount;
+        updateShellCreditsDisplay(shellCredits);
+        updateAstriteDisplay(astrite);
+        saveCurrentUserData();
+        updateProfileDropdown();
+        shopMessage.textContent = translations[currentLanguage]['shop-success'].replace('{astrite}', amount).replace('{shell}', cost);
+        shopMessage.className = 'shop-message success';
     }
     
     function changeAstrite(user, delta) {
@@ -1041,6 +1247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalWishesSpan) {
             totalWishesSpan.textContent = totalWishes;
         }
+        updateWishPurchaseUI();
         stat5Star.textContent = count5Star;
         stat4Star.textContent = count4Star;
         stat3Star.textContent = count3Star;
@@ -1088,6 +1295,9 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedTrainingWeaponName = userData.selectedTrainingWeaponName || null;
             equippedWeapons = userData.equippedWeapons || {};
             energyCores = userData.energyCores || { basic: 0, medium: 0, advanced: 0, premium: 0 };
+            echoInventory = userData.echoInventory || [];
+            usedHuntingCharacters = userData.usedHuntingCharacters || [];
+            selectedHuntCharacterName = userData.selectedHuntCharacterName || null;
             if (weaponProgress['Red String']) {
                 weaponProgress['Red Spring'] = weaponProgress['Red Spring'] || weaponProgress['Red String'];
                 delete weaponProgress['Red String'];
@@ -1569,6 +1779,98 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTrainingPage();
     }
 
+    // --- Hunting ---
+    const echoCatalog = [
+        { sonata: 'Wishes of Quiet Snowfall', sonataImage: 'poze echoes (sonata)/Wishes of Quiet Snowfall/Wishes of Quiet Snowfall.png', rarity: 4, name: 'Reminiscence Threnodian - Voidborne Construct', image: 'poze echoes (sonata)/Wishes of Quiet Snowfall/echoes 4/Reminiscence Threnodian - Voidborne Construct.png' },
+        { sonata: 'Wishes of Quiet Snowfall', sonataImage: 'poze echoes (sonata)/Wishes of Quiet Snowfall/Wishes of Quiet Snowfall.png', rarity: 3, name: 'Windlash Coleoid', image: 'poze echoes (sonata)/Wishes of Quiet Snowfall/echoes 3/Windlash Coleoid.png' },
+        { sonata: 'Wishes of Quiet Snowfall', sonataImage: 'poze echoes (sonata)/Wishes of Quiet Snowfall/Wishes of Quiet Snowfall.png', rarity: 1, name: 'Iceglint Dancer', image: 'poze echoes (sonata)/Wishes of Quiet Snowfall/echoes 1/Iceglint Dancer.png' },
+        { sonata: 'Void Thunder', sonataImage: 'poze echoes (sonata)/Void Thunder/Void Thunder.png', rarity: 4, name: 'Thundering Mephis', image: 'poze echoes (sonata)/Void Thunder/echoes 4/Thundering Mephis.png' },
+        { sonata: 'Void Thunder', sonataImage: 'poze echoes (sonata)/Void Thunder/Void Thunder.png', rarity: 3, name: 'Flautist', image: 'poze echoes (sonata)/Void Thunder/echoes 3/Flautist.png' },
+        { sonata: 'Void Thunder', sonataImage: 'poze echoes (sonata)/Void Thunder/Void Thunder.png', rarity: 1, name: 'Traffic Illuminator', image: 'poze echoes (sonata)/Void Thunder/echoes 1/Traffic Illuminator.png' },
+        { sonata: 'Molten Rift', sonataImage: 'poze echoes (sonata)/Molten Rift/Molten Rift.png', rarity: 4, name: 'Inferno Rider', image: 'poze echoes (sonata)/Molten Rift/echoes 4/Inferno Rider.png' },
+        { sonata: 'Molten Rift', sonataImage: 'poze echoes (sonata)/Molten Rift/Molten Rift.png', rarity: 3, name: 'Viridblaze Saurian', image: 'poze echoes (sonata)/Molten Rift/echoes 3/Viridblaze Saurian.png' },
+        { sonata: 'Molten Rift', sonataImage: 'poze echoes (sonata)/Molten Rift/Molten Rift.png', rarity: 1, name: 'Lava Larva', image: 'poze echoes (sonata)/Molten Rift/echoes 1/Lava Larva.png' },
+        { sonata: 'Windward Pilgrimage', sonataImage: 'poze echoes (sonata)/Windward Pilgrimage/Windward Pilgrimage.png', rarity: 4, name: 'Reminiscence Fleurdelys', image: 'poze echoes (sonata)/Windward Pilgrimage/echoes 4/Reminiscence Fleurdelys.png' },
+        { sonata: 'Windward Pilgrimage', sonataImage: 'poze echoes (sonata)/Windward Pilgrimage/Windward Pilgrimage.png', rarity: 3, name: 'Kerasaur', image: 'poze echoes (sonata)/Windward Pilgrimage/echoes 3/Kerasaur.png' },
+        { sonata: 'Windward Pilgrimage', sonataImage: 'poze echoes (sonata)/Windward Pilgrimage/Windward Pilgrimage.png', rarity: 1, name: 'Spectro Drake', image: 'poze echoes (sonata)/Windward Pilgrimage/echoes 1/Spectro Drake.png' }
+    ];
+
+    function renderHuntingPage() {
+        const charactersContainer = document.getElementById('huntingCharacters');
+        const inventoryContainer = document.getElementById('huntingInventory');
+        const message = document.getElementById('huntingMessage');
+        const huntButton = document.getElementById('startHuntButton');
+        if (!charactersContainer || !inventoryContainer || !huntButton) return;
+        if (!currentUser) {
+            charactersContainer.innerHTML = `<p class="empty-collection">${translations[currentLanguage]['hunting-login']}</p>`;
+            inventoryContainer.innerHTML = '';
+            huntButton.disabled = true;
+            return;
+        }
+        if (!obtainedCharacters.length) {
+            charactersContainer.innerHTML = `<p class="empty-collection">${translations[currentLanguage]['hunting-empty']}</p>`;
+            huntButton.disabled = true;
+            return;
+        }
+        const availableCharacters = obtainedCharacters.filter(character => !usedHuntingCharacters.includes(character.name));
+        if (!availableCharacters.some(character => character.name === selectedHuntCharacterName)) {
+            selectedHuntCharacterName = availableCharacters[0]?.name || null;
+        }
+        charactersContainer.innerHTML = obtainedCharacters.map(character => {
+            const used = usedHuntingCharacters.includes(character.name);
+            return `<button class="profile-avatar-option${character.name === selectedHuntCharacterName ? ' selected' : ''}${used ? ' hunting-used' : ''}" type="button" data-hunt-character="${character.name}" ${used ? 'disabled' : ''}><img src="${character.img}" alt="${character.name}"><span>${character.name}${used ? ' · ✓' : ''}</span></button>`;
+        }).join('');
+        huntButton.disabled = !selectedHuntCharacterName;
+        if (!message.textContent) message.textContent = '';
+
+        if (!echoInventory.length) {
+            inventoryContainer.innerHTML = `<p class="empty-collection">${translations[currentLanguage]['hunting-none']}</p>`;
+        } else {
+            const grouped = echoInventory.reduce((groups, echo) => {
+                const key = `${echo.sonata}|${echo.rarity}`;
+                if (!groups[key]) groups[key] = { ...echo, count: 0 };
+                groups[key].count++;
+                return groups;
+            }, {});
+            inventoryContainer.innerHTML = Object.values(grouped).map(group => `<article class="hunting-echo-summary rarity-${group.rarity}-echo"><img src="${group.sonataImage}" alt="${group.sonata}"><div><strong>${group.sonata}</strong><span>${group.rarity}-cost Echoes · x${group.count}</span></div></article>`).join('');
+        }
+
+        charactersContainer.querySelectorAll('[data-hunt-character]').forEach(button => button.addEventListener('click', () => {
+            selectedHuntCharacterName = button.dataset.huntCharacter;
+            saveCurrentUserData();
+            renderHuntingPage();
+        }));
+        huntButton.onclick = startHunt;
+    }
+
+    function startHunt() {
+        const message = document.getElementById('huntingMessage');
+        const character = obtainedCharacters.find(item => item.name === selectedHuntCharacterName);
+        if (!character || usedHuntingCharacters.includes(character.name)) {
+            message.textContent = translations[currentLanguage]['hunting-select-error'];
+            message.className = 'hunting-message error';
+            return;
+        }
+        const echoCount = 5 + Math.floor(Math.random() * 16);
+        const shellReward = 50 + Math.floor(Math.random() * 151);
+        const rewards = Array.from({ length: echoCount }, () => {
+            const rarity = Math.random() < 0.42 ? 3 : 1;
+            const options = echoCatalog.filter(echo => echo.rarity === rarity);
+            return { ...options[Math.floor(Math.random() * options.length)] };
+        });
+        echoInventory.push(...rewards);
+        usedHuntingCharacters.push(character.name);
+        selectedHuntCharacterName = null;
+        shellCredits += shellReward;
+        updateShellCreditsDisplay(shellCredits);
+        saveCurrentUserData();
+        updateProfileDropdown();
+        renderHuntingPage();
+        const resultMessage = document.getElementById('huntingMessage');
+        resultMessage.textContent = translations[currentLanguage]['hunting-success'].replace('{character}', character.name).replace('{shell}', shellReward).replace('{count}', echoCount);
+        resultMessage.className = 'hunting-message success';
+    }
+
     // --- Domain mini-game ---
     const domainPlayButton = document.getElementById('playDomainGame');
     const domainPlayfield = document.getElementById('domainPlayfield');
@@ -1880,6 +2182,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateWeaponsCollection();
             } else if (targetPage === 'training') {
                 renderTrainingPage();
+            } else if (targetPage === 'shop') {
+                updateShopUI();
+            } else if (targetPage === 'hunting') {
+                renderHuntingPage();
             }
         });
     });
@@ -2000,6 +2306,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePityHistory();
 
         totalWishesSpan.textContent = totalWishes;
+        updateWishPurchaseUI();
         
         // Update stats
         stat5Star.textContent = count5Star;
@@ -2145,8 +2452,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event listeners for pull buttons ---
     wish1Button.addEventListener('click', () => handleWish(1));
     wish10Button.addEventListener('click', () => handleWish(10));
+
+    function getWishAstriteCost(numWishes) {
+        const paidWishes = Math.max(0, totalWishes + numWishes - FREE_WISH_LIMIT);
+        return paidWishes * WISH_ASTRITE_COST;
+    }
+
+    function updateWishPurchaseUI() {
+        const freeRemaining = Math.max(0, FREE_WISH_LIMIT - totalWishes);
+        if (freeWishesRemainingSpan) freeWishesRemainingSpan.textContent = freeRemaining;
+        if (wishCostInfo) {
+            wishCostInfo.textContent = freeRemaining > 0
+                ? translations[currentLanguage]['wish-cost-info-free']
+                : translations[currentLanguage]['wish-cost-info-paid'];
+        }
+    }
     
     async function handleWish(numWishes) {
+        const astriteCost = getWishAstriteCost(numWishes);
+        if (astriteCost > 0 && !currentUser) {
+            wishResultsDiv.innerHTML = `<h3 class="wish-purchase-error">${translations[currentLanguage]['wish-error-login']}</h3>`;
+            return;
+        }
+        if (astriteCost > astrite) {
+            wishResultsDiv.innerHTML = `<h3 class="wish-purchase-error">${translations[currentLanguage]['wish-error-astrite']}</h3>`;
+            return;
+        }
+        if (astriteCost > 0) {
+            astrite -= astriteCost;
+            updateAstriteDisplay(astrite);
+            saveCurrentUserData();
+            updateProfileDropdown();
+        }
         wish1Button.disabled = true;
         wish10Button.disabled = true;
         wishResultsDiv.innerHTML = '';
@@ -2186,6 +2523,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         renderWishHistory();
         updateUI(results);
+        updateWishPurchaseUI();
         
         wish1Button.disabled = false;
         wish10Button.disabled = false;
@@ -2253,10 +2591,26 @@ document.addEventListener('DOMContentLoaded', () => {
         weaponCollectionSort = weaponsSortSelect.value;
         updateWeaponsCollection();
     });
+
+    shopAstriteAmount?.addEventListener('input', () => {
+        if (shopMessage) shopMessage.textContent = '';
+        updateShopUI();
+    });
+
+    shopMaxButton?.addEventListener('click', () => {
+        if (!currentUser) return buyAstriteFromShop();
+        shopAstriteAmount.value = Math.floor(shellCredits / 20);
+        if (shopMessage) shopMessage.textContent = '';
+        updateShopUI();
+    });
+
+    shopBuyButton?.addEventListener('click', buyAstriteFromShop);
     
     // Initialize language on page load
     setLanguage(currentLanguage);
     restoreLocalSession();
+    updateEnergyUI();
+    setInterval(updateEnergyUI, 1000);
     
     // Hamburger menu toggle
     const menuToggle = document.getElementById('menuToggle');
