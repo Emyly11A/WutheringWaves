@@ -24,6 +24,11 @@
                     <div class="sidebar-union-track"><div id="sidebarUnionExpBar" class="sidebar-union-fill"></div></div>
                 </div>
             </div>
+            <div class="sidebar-energy" aria-label="Energy">
+                <div class="sidebar-energy-heading"><span data-translate="energy-label">Energie</span><strong><span id="energyValue">0</span> / 300</strong></div>
+                <div class="sidebar-energy-track"><div id="energyBar" class="sidebar-energy-fill"></div></div>
+                <small id="energyTimer"></small>
+            </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="nav-link active" data-page="main" data-translate="nav-main">Meniu Principal</a></li>
                 <li><a href="#" class="nav-link" data-page="wish" data-translate="nav-wish">Wish</a></li>
@@ -31,6 +36,8 @@
                 <li><a href="#" class="nav-link" data-page="weapons" data-translate="nav-weapons">Arme</a></li>
                 <li><a href="#" class="nav-link" data-page="training" data-translate="nav-training">Antrenament</a></li>
                 <li><a href="#" class="nav-link" data-page="domain" data-translate="nav-domain">Domain</a></li>
+                <li><a href="#" class="nav-link" data-page="domains" data-translate="nav-domains">Domeniu</a></li>
+                <li><a href="#" class="nav-link" data-page="hunting" data-translate="nav-hunting">Vânătoare</a></li>
                 <li><a href="#" class="nav-link" data-page="shop" data-translate="nav-shop">Shop</a></li>
             </ul>
             <div class="menu-user-block">
@@ -155,7 +162,9 @@
                 
                 <div class="counters">
                     <div class="counter-box"><span data-translate="wish-total-wishes">Total Trageri: </span><span id="totalWishes">0</span></div>
+                    <div class="counter-box"><span data-translate="wish-free-remaining">Trageri gratuite rămase: </span><span id="freeWishesRemaining">1000</span></div>
                 </div>
+                <p id="wishCostInfo" class="wish-cost-info"></p>
                 
                 <div class="filter-buttons">
                     <div class="filter-button active" data-filter="all" data-translate="wish-filter-all">Toate</div>
@@ -386,6 +395,75 @@
                         <div id="domainGameResult" class="domain-game-result" aria-live="polite"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Pagina Domenii de resurse -->
+        <div class="page" id="domains">
+            <div class="domains-container">
+                <header class="domains-header">
+                    <span data-translate="domains-eyebrow">DOMENII DE RESURSE</span>
+                    <h1 data-translate="domains-title">Domeniu</h1>
+                    <p data-translate="domains-description">Folosește energie pentru a obține resursele necesare dezvoltării. Mini-game-urile vor fi adăugate ulterior.</p>
+                </header>
+                <div class="domains-energy-summary"><span data-translate="energy-label">Energie</span><strong><span id="domainsEnergyValue">0</span> / 300</strong></div>
+                <div class="domains-grid">
+                    <article class="resource-domain-card character-domain-card">
+                        <span data-translate="domains-character-tag">DEZVOLTARE CARACTERE</span>
+                        <h2 data-translate="domains-character-title">Domeniul Rezonanței</h2>
+                        <p data-translate="domains-character-description">Aici vei obține Resonance Potions pentru creșterea personajelor.</p>
+                        <span class="domain-rewards-label" data-translate="domains-rewards-label">RECOMPENSE POSIBILE</span>
+                        <div class="domain-resource-preview"><img src="Extra/Basic%20Resonance%20Potion.png" alt=""><img src="Extra/Medium%20Resonance%20Potion.png" alt=""><img src="Extra/Advanced%20Resonance%20Potion.png" alt=""><img src="Extra/Premium%20Resonance%20Potion.png" alt=""><img src="Extra/Shell%20Credit.png" alt="Shell Credits"></div>
+                        <span class="domain-coming-soon" data-translate="domains-coming-soon">Mini-game în curând</span>
+                    </article>
+                    <article class="resource-domain-card weapon-domain-card">
+                        <span data-translate="domains-weapon-tag">DEZVOLTARE ARME</span>
+                        <h2 data-translate="domains-weapon-title">Domeniul Energiei</h2>
+                        <p data-translate="domains-weapon-description">Aici vei obține Energy Cores pentru creșterea armelor.</p>
+                        <span class="domain-rewards-label" data-translate="domains-rewards-label">RECOMPENSE POSIBILE</span>
+                        <div class="domain-resource-preview"><img src="Extra/Basic%20Energy%20Core.png" alt=""><img src="Extra/Medium%20Energy%20Core.png" alt=""><img src="Extra/Advanced%20Energy%20Core.png" alt=""><img src="Extra/Premium%20Energy%20Core.png" alt=""><img src="Extra/Shell%20Credit.png" alt="Shell Credits"></div>
+                        <span class="domain-coming-soon" data-translate="domains-coming-soon">Mini-game în curând</span>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagina Vânătoare -->
+        <div class="page" id="hunting">
+            <div class="hunting-container">
+                <header class="hunting-header"><span data-translate="hunting-eyebrow">EXPEDIȚIE DE VÂNĂTOARE</span><h1 data-translate="hunting-title">Vânătoare</h1><p data-translate="hunting-description">Trimite un personaj într-o vânătoare. Fiecare personaj poate pleca o singură dată.</p></header>
+                <section class="hunting-panel">
+                    <h2 data-translate="hunting-select">Alege un personaj</h2>
+                    <div id="huntingCharacters" class="profile-avatar-options hunting-character-options"></div>
+                    <button type="button" id="startHuntButton" class="wish-button" data-translate="hunting-start">Trimite la vânătoare</button>
+                    <p id="huntingMessage" class="hunting-message" aria-live="polite"></p>
+                </section>
+                <section class="hunting-inventory">
+                    <div><h2 data-translate="hunting-echoes">Echoes obținute</h2><p data-translate="hunting-echoes-description">Echoes sunt păstrate pe sonate și rarități, pregătite pentru vânzarea în Shop.</p></div>
+                    <div id="huntingInventory" class="hunting-inventory-list"></div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Pagina Shop -->
+        <div class="page" id="shop">
+            <div class="shop-container">
+                <header class="shop-header">
+                    <span class="shop-eyebrow" data-translate="shop-eyebrow">BURSA DE RESURSE</span>
+                    <h1 data-translate="shop-title">Magazin</h1>
+                    <p data-translate="shop-description">Schimbă Shell Credits pe Astrite. 1 Astrite costă 20 Shell Credits.</p>
+                </header>
+                <section class="shop-card">
+                    <div class="shop-rate"><span data-translate="shop-rate-label">Curs valutar</span><strong data-translate="shop-rate-value">1 Astrite = 20 Shell Credits</strong></div>
+                    <div class="shop-balances">
+                        <div><img src="Extra/Shell%20Credit.png" alt=""><span data-translate="profile-shell">Shell Credits</span><strong id="shopShellBalance">0</strong></div>
+                        <div><img src="Extra/Astrite.png" alt=""><span data-translate="profile-astrite">Astrite</span><strong id="shopAstriteBalance">0</strong></div>
+                    </div>
+                    <label class="shop-amount-label"><span data-translate="shop-buy-amount-label">Cantitate Astrite</span><span class="shop-amount-input"><input id="shopAstriteAmount" type="number" min="1" step="1" value="1"><button type="button" id="shopMaxButton" class="shop-secondary-button" data-translate="shop-buy-max">Max</button></span></label>
+                    <p class="shop-cost"><span data-translate="shop-cost-label">Cost</span>: <strong id="shopCostValue">20</strong> Shell Credits</p>
+                    <div class="shop-actions"><button type="button" id="shopBuyButton" class="wish-button" data-translate="shop-buy-btn">Cumpără</button></div>
+                    <p id="shopMessage" class="shop-message" aria-live="polite"></p>
+                </section>
             </div>
         </div>
     </div>
