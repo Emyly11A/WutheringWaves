@@ -304,9 +304,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedTrainingWeaponName = null;
     let equippedWeapons = {};
     let energyCores = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+    let soldWeaponCopies = {};
     let echoInventory = [];
     let usedHuntingCharacters = [];
     let selectedHuntCharacterName = null;
+    let huntingSonataFilter = [];
+    let huntingRarityFilter = [];
+    let shopEchoSonataFilter = [];
+    let shopEchoRarityFilter = [];
+    let shopWeaponTypeFilter = 'all';
     let trainingMode = 'character';
     let characterCollectionFilter = 'all';
     let characterCollectionSort = 'level-desc';
@@ -345,6 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'hunting-login': 'Autentifică-te pentru a porni o vânătoare.',
             'hunting-select-error': 'Alege un personaj disponibil.',
             'hunting-success': '{character} s-a întors cu {shell} Shell Credits și {count} Echoes.',
+            'hunting-reward-title': 'Recompense de vânătoare',
+            'hunting-reward-shell': 'Shell Credits câștigate',
             'hunting-echoes': 'Echoes obținute',
             'hunting-echoes-description': 'Echoes sunt păstrate pe sonate și rarități, pregătite pentru vânzarea în Shop.',
             'hunting-none': 'Nu ai obținut Echoes încă.',
@@ -397,6 +405,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'wish-cost-info-paid': 'După limita gratuită, o tragere costă 160 Astrite.',
             'wish-error-login': 'Autentifică-te pentru a folosi Astrite la trageri.',
             'wish-error-astrite': 'Nu ai suficiente Astrite pentru aceste trageri.',
+            'wish-cost-prefix': 'Cost: ',
+            'wish-free': 'Gratuit',
+            'wish-error-details': 'Ai nevoie de {cost} Astrite, dar ai doar {balance}.',
             'wish-filter-all': 'Toate',
             'wish-filter-5': '5-stele',
             'wish-filter-4': '4-stele',
@@ -515,6 +526,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'shop-error-funds': 'Nu ai suficiente Shell Credits.',
             'shop-error-amount': 'Introdu o cantitate validă (mai mare ca 0).',
             'shop-balance': 'Sold curent',
+            'shop-echoes-title': 'Vinde Echoes',
+            'shop-echoes-description': 'Filtrează Echoes după sonată și raritate, apoi vinde-le pentru Shell Credits.',
+            'shop-echoes-empty': 'Nu ai Echoes care corespund filtrelor alese.',
+            'shop-sell-echo': 'Vinde',
+            'shop-filter-all': 'Toate',
+            'shop-sell-all-echoes': 'Vinde toate Echoes',
+            'shop-weapons-title': 'Vinde arme de 3 stele',
+            'shop-weapons-description': 'Alege toate armele sau un tip de armă, apoi vinde armele de 3 stele pentru Shell Credits.',
+            'shop-weapons-all': 'Toate tipurile',
+            'shop-sell-weapons': 'Vinde armele',
+            'shop-weapons-empty': 'Nu ai arme de 3 stele pentru filtrul ales.',
         },
         // English
         en: {
@@ -537,6 +559,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'hunting-login': 'Log in to start a hunt.',
             'hunting-select-error': 'Choose an available character.',
             'hunting-success': '{character} returned with {shell} Shell Credits and {count} Echoes.',
+            'hunting-reward-title': 'Hunting rewards',
+            'hunting-reward-shell': 'Shell Credits earned',
             'hunting-echoes': 'Echoes obtained',
             'hunting-echoes-description': 'Echoes are stored by sonata and rarity, ready to be sold in the Shop.',
             'hunting-none': 'You have not obtained Echoes yet.',
@@ -589,6 +613,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'wish-cost-info-paid': 'After the free limit, one pull costs 160 Astrite.',
             'wish-error-login': 'Log in to use Astrite for pulls.',
             'wish-error-astrite': 'You do not have enough Astrite for these pulls.',
+            'wish-cost-prefix': 'Cost: ',
+            'wish-free': 'Free',
+            'wish-error-details': 'You need {cost} Astrite, but only have {balance}.',
             'wish-filter-all': 'All',
             'wish-filter-5': '5-star',
             'wish-filter-4': '4-star',
@@ -707,6 +734,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'shop-error-funds': 'You do not have enough Shell Credits.',
             'shop-error-amount': 'Enter a valid amount greater than 0.',
             'shop-balance': 'Current balance',
+            'shop-echoes-title': 'Sell Echoes',
+            'shop-echoes-description': 'Filter Echoes by sonata and rarity, then sell them for Shell Credits.',
+            'shop-echoes-empty': 'You have no Echoes matching the selected filters.',
+            'shop-sell-echo': 'Sell',
+            'shop-filter-all': 'All',
+            'shop-sell-all-echoes': 'Sell all Echoes',
+            'shop-weapons-title': 'Sell 3-star weapons',
+            'shop-weapons-description': 'Choose all weapons or one weapon type, then sell your 3-star weapons for Shell Credits.',
+            'shop-weapons-all': 'All types',
+            'shop-sell-weapons': 'Sell weapons',
+            'shop-weapons-empty': 'You have no 3-star weapons for the selected filter.',
         }
     };
     
@@ -820,6 +858,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedTrainingWeaponName,
             equippedWeapons,
             energyCores,
+            soldWeaponCopies,
             echoInventory,
             usedHuntingCharacters,
             selectedHuntCharacterName,
@@ -901,6 +940,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('weaponsGrid')) updateWeaponsCollection();
         if (document.getElementById('trainingContent')) renderTrainingPage();
         if (document.getElementById('profileEmail')) updateProfileDropdown();
+        if (document.getElementById('huntingCharacters')) renderHuntingPage();
         updateWishPurchaseUI();
         updateEnergyUI();
     }
@@ -946,6 +986,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedTrainingWeaponName = null;
         equippedWeapons = {};
         energyCores = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+        soldWeaponCopies = {};
         echoInventory = [];
         usedHuntingCharacters = [];
         selectedHuntCharacterName = null;
@@ -999,6 +1040,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedTrainingWeaponName: null,
                 equippedWeapons: {},
                 energyCores: { basic: 0, medium: 0, advanced: 0, premium: 0 },
+                soldWeaponCopies: {},
                 echoInventory: [],
                 usedHuntingCharacters: [],
                 selectedHuntCharacterName: null
@@ -1035,6 +1077,77 @@ document.addEventListener('DOMContentLoaded', () => {
         if (shopCostValue) shopCostValue.textContent = amount * 20;
         if (shopShellBalance) shopShellBalance.textContent = shellCredits;
         if (shopAstriteBalance) shopAstriteBalance.textContent = astrite;
+        renderShopEchoes();
+        renderShopWeapons();
+    }
+
+    function renderShopEchoes() {
+        const inventoryContainer = document.getElementById('shopEchoInventory');
+        if (!inventoryContainer) return;
+        const sellableEchoes = echoInventory.filter(echo => echo.rarity === 1 || echo.rarity === 3);
+        const filteredEchoes = sellableEchoes.filter(echo =>
+            (!shopEchoSonataFilter.length || shopEchoSonataFilter.includes(echo.sonata)) &&
+            (!shopEchoRarityFilter.length || shopEchoRarityFilter.includes(String(echo.rarity))));
+        const totalValue = filteredEchoes.reduce((total, echo) => total + (echo.rarity === 1 ? 100 : 300), 0);
+        const allFiltersSelected = !shopEchoSonataFilter.length && !shopEchoRarityFilter.length;
+        inventoryContainer.innerHTML = `<div class="hunting-filters shop-echo-filters"><div class="hunting-sonata-filters"><strong class="shop-filter-heading"><span>Sonate</span><button type="button" class="shop-filter-all ${allFiltersSelected ? 'active' : ''}" data-shop-echo-all>${translations[currentLanguage]['shop-filter-all']}</button></strong>${sonataCatalog.map(sonata => `<label title="${sonata}"><input type="checkbox" data-shop-echo-sonata="${sonata}" ${shopEchoSonataFilter.includes(sonata) ? 'checked' : ''}><img src="poze echoes (sonata)/${sonata}/${sonata}.png" alt="${sonata}"></label>`).join('')}</div><div class="hunting-rarity-filters"><strong class="shop-filter-heading">Raritate</strong>${[1, 3].map(rarity => `<label title="Cost ${rarity}"><input type="checkbox" data-shop-echo-rarity="${rarity}" ${shopEchoRarityFilter.includes(String(rarity)) ? 'checked' : ''}><span class="rarity-filter-icon cost-${rarity}">${rarity}</span></label>`).join('')}</div></div><div class="shop-echo-actions"><button type="button" class="wish-button" data-sell-filtered-echoes ${filteredEchoes.length && currentUser ? '' : 'disabled'}>${translations[currentLanguage]['shop-sell-echo']} &middot; +${totalValue} Shell Credits</button>${filteredEchoes.length ? '' : `<p class="empty-collection">${translations[currentLanguage]['shop-echoes-empty']}</p>`}</div>`;
+        inventoryContainer.querySelectorAll('[data-shop-echo-sonata]').forEach(input => input.addEventListener('change', () => {
+            shopEchoSonataFilter = [...inventoryContainer.querySelectorAll('[data-shop-echo-sonata]:checked')].map(item => item.dataset.shopEchoSonata);
+            renderShopEchoes();
+        }));
+        inventoryContainer.querySelectorAll('[data-shop-echo-rarity]').forEach(input => input.addEventListener('change', () => {
+            shopEchoRarityFilter = [...inventoryContainer.querySelectorAll('[data-shop-echo-rarity]:checked')].map(item => item.dataset.shopEchoRarity);
+            renderShopEchoes();
+        }));
+        inventoryContainer.querySelector('[data-shop-echo-all]')?.addEventListener('click', () => {
+            shopEchoSonataFilter = [];
+            shopEchoRarityFilter = [];
+            renderShopEchoes();
+        });
+        inventoryContainer.querySelector('[data-sell-filtered-echoes]')?.addEventListener('click', () => {
+            if (!currentUser || !filteredEchoes.length) return;
+            const soldEchoes = new Set(filteredEchoes);
+            echoInventory = echoInventory.filter(echo => !soldEchoes.has(echo));
+            shellCredits += totalValue;
+            updateShellCreditsDisplay(shellCredits);
+            saveCurrentUserData();
+            updateProfileDropdown();
+            renderHuntingPage();
+        });
+    }
+
+    function renderShopWeapons() {
+        const container = document.getElementById('shopWeaponInventory');
+        if (!container) return;
+        const sellableWeapons = obtainedWeapons.filter(weapon => weapon.rarity === 3);
+        const filteredWeapons = sellableWeapons.filter(weapon => shopWeaponTypeFilter === 'all' || getWeaponType(weapon) === shopWeaponTypeFilter);
+        const saleValue = filteredWeapons.reduce((total, weapon) => total + getItemCopyCount(weapon.name) * 100, 0);
+        container.innerHTML = `<div class="shop-weapon-actions"><select aria-label="Tipul armei" data-shop-weapon-type><option value="all">${translations[currentLanguage]['shop-weapons-all']}</option>${Object.keys(weaponTypeGroups).map(type => `<option value="${type}" ${shopWeaponTypeFilter === type ? 'selected' : ''}>${type}</option>`).join('')}</select><button type="button" class="wish-button" data-sell-3star-weapons ${filteredWeapons.length && currentUser ? '' : 'disabled'}>${translations[currentLanguage]['shop-sell-weapons']} · +${saleValue} Shell Credits</button></div>${filteredWeapons.length ? '' : `<p class="empty-collection">${translations[currentLanguage]['shop-weapons-empty']}</p>`}`;
+        container.querySelector('[data-shop-weapon-type]')?.addEventListener('change', event => {
+            shopWeaponTypeFilter = event.target.value;
+            renderShopWeapons();
+        });
+        container.querySelector('[data-sell-3star-weapons]')?.addEventListener('click', () => {
+            if (!currentUser || !filteredWeapons.length) return;
+            const soldNames = new Set(filteredWeapons.map(weapon => weapon.name));
+            filteredWeapons.forEach(weapon => {
+                soldWeaponCopies[weapon.name] = (soldWeaponCopies[weapon.name] || 0) + getItemCopyCount(weapon.name);
+            });
+            obtainedWeapons = obtainedWeapons.filter(weapon => !soldNames.has(weapon.name));
+            soldNames.forEach(name => {
+                delete weaponProgress[name];
+                if (selectedTrainingWeaponName === name) selectedTrainingWeaponName = null;
+            });
+            Object.keys(equippedWeapons).forEach(characterName => {
+                if (soldNames.has(equippedWeapons[characterName])) delete equippedWeapons[characterName];
+            });
+            shellCredits += saleValue;
+            updateShellCreditsDisplay(shellCredits);
+            saveCurrentUserData();
+            updateProfileDropdown();
+            if (document.getElementById('weaponsGrid')) updateWeaponsCollection();
+            if (document.getElementById('trainingContent')) renderTrainingPage();
+        });
     }
 
     function buyAstriteFromShop() {
@@ -1295,6 +1408,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedTrainingWeaponName = userData.selectedTrainingWeaponName || null;
             equippedWeapons = userData.equippedWeapons || {};
             energyCores = userData.energyCores || { basic: 0, medium: 0, advanced: 0, premium: 0 };
+            soldWeaponCopies = userData.soldWeaponCopies || {};
             echoInventory = userData.echoInventory || [];
             usedHuntingCharacters = userData.usedHuntingCharacters || [];
             selectedHuntCharacterName = userData.selectedHuntCharacterName || null;
@@ -1780,6 +1894,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Hunting ---
+    const sonataCatalog = ['Celestial Light', 'Chromatic Foam', 'Crown of Valor', 'Dream of the Lost', 'Empyrean Anthem', 'Eternal Radiance', "Flamewing's Shadow", 'Flaming Clawprint', 'Freezing Frost', 'Frosty Resolve', 'Gusts of Welkin', 'Halo of Starry Radiance', 'Havoc Eclipse', "Heart of Evil's Purge", 'Lamp of Nether Road', 'Law of Harmony', 'Lingering Tunes', 'Midnight Veil', 'Molten Rift', 'Moonlit Clouds', 'Pact of Neonlight Leap', 'Reel of Spliced Memories', 'Rejuvenating Glow', 'Rite of Gilded Revelation', 'Shadow of Shattered Dreams', 'Sierra Gale', 'Song of Feathered Trace', 'Sound of True Name', 'Thread of Severed Fate', 'Tidebreaking Courage', 'Trailblazing Star', 'Void Thunder', 'Windward Pilgrimage', 'Wishes of Quiet Snowfall'];
     const echoCatalog = [
         { sonata: 'Wishes of Quiet Snowfall', sonataImage: 'poze echoes (sonata)/Wishes of Quiet Snowfall/Wishes of Quiet Snowfall.png', rarity: 4, name: 'Reminiscence Threnodian - Voidborne Construct', image: 'poze echoes (sonata)/Wishes of Quiet Snowfall/echoes 4/Reminiscence Threnodian - Voidborne Construct.png' },
         { sonata: 'Wishes of Quiet Snowfall', sonataImage: 'poze echoes (sonata)/Wishes of Quiet Snowfall/Wishes of Quiet Snowfall.png', rarity: 3, name: 'Windlash Coleoid', image: 'poze echoes (sonata)/Wishes of Quiet Snowfall/echoes 3/Windlash Coleoid.png' },
@@ -1794,6 +1909,22 @@ document.addEventListener('DOMContentLoaded', () => {
         { sonata: 'Windward Pilgrimage', sonataImage: 'poze echoes (sonata)/Windward Pilgrimage/Windward Pilgrimage.png', rarity: 3, name: 'Kerasaur', image: 'poze echoes (sonata)/Windward Pilgrimage/echoes 3/Kerasaur.png' },
         { sonata: 'Windward Pilgrimage', sonataImage: 'poze echoes (sonata)/Windward Pilgrimage/Windward Pilgrimage.png', rarity: 1, name: 'Spectro Drake', image: 'poze echoes (sonata)/Windward Pilgrimage/echoes 1/Spectro Drake.png' }
     ];
+    const additionalSonataEchoes = [
+        ['Celestial Light','Clang Bang','Autopuppet Scout'],['Chromatic Foam','Shadow Stepper','Kronablight'],['Crown of Valor','Calcified Junrock','Hurriclaw'],['Dream of the Lost','Fae Ignis','Chop Chop'],['Empyrean Anthem','Calcified Junrock','Abyssal Patricius'],['Eternal Radiance','Aero Prism','Abyssal Mercator'],["Flamewing's Shadow",'Nightmare Baby Roseshroom','Corrosaurus'],['Flaming Clawprint','Aero Drake','Corrosaurus'],['Freezing Frost','Clang Bang','Autopuppet Scout'],['Frosty Resolve','Chest Mimic','Abyssal Mercator'],['Gusts of Welkin','Aero Drake','Capitaneus'],['Halo of Starry Radiance','Geospider S4','Frostbite Coleoid'],['Havoc Eclipse','Baby Roseshroom','Havoc Dreadmane'],["Heart of Evil's Purge",'Aureate Picket','Fog Lionarch'],['Lamp of Nether Road','Kernel Puppet Fright','Fog Lionarch'],['Law of Harmony','Golden Junrock','Nightmare Cyan-Feathered Heron'],['Lingering Tunes','Baby Viridblaze Saurian','Chasm Guardian'],['Midnight Veil','Chest Mimic','Abyssal Gladius'],['Moonlit Clouds','Cruisewing','Carapace'],['Pact of Neonlight Leap','Flora Drone','Ironhoof'],['Reel of Spliced Memories','Flora Drone','Flora Reindeer'],['Rejuvenating Glow','Cruisewing','Chasm Guardian'],['Rite of Gilded Revelation','Flora Drone','Flora Reindeer'],['Sierra Gale','Aero Predator','Carapace'],['Song of Feathered Trace','Fog Lionarch Body','Fog Lionarch'],['Sound of True Name','Flora Drone','Sabercat Prowler'],['Thread of Severed Fate','Havoc Drake','Abyssal Gladius'],['Tidebreaking Courage','Aero Drake','Abyssal Gladius'],['Trailblazing Star','Geospider S4','Glommoth']
+    ];
+    additionalSonataEchoes.forEach(([sonata, oneCostName, threeCostName]) => {
+        const basePath = `poze echoes (sonata)/${sonata}`;
+        echoCatalog.push(
+            { sonata, sonataImage: `${basePath}/${sonata}.png`, rarity: 1, name: oneCostName, image: `${basePath}/echoes 1/${oneCostName}.png` },
+            { sonata, sonataImage: `${basePath}/${sonata}.png`, rarity: 3, name: threeCostName, image: `${basePath}/echoes 3/${threeCostName}.png` }
+        );
+    });
+
+    // Catalogul generat din toate fișierele Echo existente are prioritate.
+    // Lista scurtă de mai sus rămâne doar ca rezervă dacă acest fișier lipsește.
+    if (Array.isArray(window.allEchoCatalog) && window.allEchoCatalog.length) {
+        echoCatalog.splice(0, echoCatalog.length, ...window.allEchoCatalog);
+    }
 
     function renderHuntingPage() {
         const charactersContainer = document.getElementById('huntingCharacters');
@@ -1828,11 +1959,26 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const grouped = echoInventory.reduce((groups, echo) => {
                 const key = `${echo.sonata}|${echo.rarity}`;
-                if (!groups[key]) groups[key] = { ...echo, count: 0 };
+                if (!groups[key]) groups[key] = { ...echo, count: 0, echoes: [] };
                 groups[key].count++;
+                groups[key].echoes.push(echo);
                 return groups;
             }, {});
             inventoryContainer.innerHTML = Object.values(grouped).map(group => `<article class="hunting-echo-summary rarity-${group.rarity}-echo"><img src="${group.sonataImage}" alt="${group.sonata}"><div><strong>${group.sonata}</strong><span>${group.rarity}-cost Echoes · x${group.count}</span></div></article>`).join('');
+        }
+
+        if (echoInventory.length) {
+            const sonatas = sonataCatalog;
+            const filteredEchoes = echoInventory.filter(echo =>
+                (!huntingSonataFilter.length || huntingSonataFilter.includes(echo.sonata)) &&
+                (!huntingRarityFilter.length || huntingRarityFilter.includes(String(echo.rarity))));
+            const filteredGroups = filteredEchoes.reduce((groups, echo) => {
+                const key = `${echo.sonata}|${echo.rarity}`;
+                if (!groups[key]) groups[key] = { ...echo, echoes: [] };
+                groups[key].echoes.push(echo);
+                return groups;
+            }, {});
+            inventoryContainer.innerHTML = `<div class="hunting-filters"><div class="hunting-sonata-filters"><strong>Sonate</strong>${sonatas.map(sonata => `<label title="${sonata}"><input type="checkbox" data-hunt-sonata="${sonata}" ${huntingSonataFilter.includes(sonata) ? 'checked' : ''}><img src="poze echoes (sonata)/${sonata}/${sonata}.png" alt="${sonata}"></label>`).join('')}</div><div class="hunting-rarity-filters"><strong>Raritate</strong>${[1, 3, 4].map(rarity => `<label title="Cost ${rarity}"><input type="checkbox" data-hunt-rarity="${rarity}" ${huntingRarityFilter.includes(String(rarity)) ? 'checked' : ''}><span class="rarity-filter-icon cost-${rarity}">${rarity}</span></label>`).join('')}</div></div>${Object.values(filteredGroups).map(group => `<article class="hunting-echo-summary rarity-${group.rarity}-echo"><header><img src="${group.sonataImage}" alt="${group.sonata}"><strong>${group.sonata} - cost ${group.rarity} x${group.echoes.length}</strong></header><div class="hunting-echo-images">${group.echoes.map(echo => `<img src="${echo.image}" alt="${echo.name}" title="${echo.name}">`).join('')}</div></article>`).join('') || `<p class="empty-collection">${translations[currentLanguage]['hunting-none']}</p>`}`;
         }
 
         charactersContainer.querySelectorAll('[data-hunt-character]').forEach(button => button.addEventListener('click', () => {
@@ -1840,7 +1986,27 @@ document.addEventListener('DOMContentLoaded', () => {
             saveCurrentUserData();
             renderHuntingPage();
         }));
+        inventoryContainer.querySelectorAll('[data-hunt-sonata]').forEach(input => input.addEventListener('change', () => {
+            huntingSonataFilter = [...inventoryContainer.querySelectorAll('[data-hunt-sonata]:checked')].map(item => item.dataset.huntSonata);
+            renderHuntingPage();
+        }));
+        inventoryContainer.querySelectorAll('[data-hunt-rarity]').forEach(input => input.addEventListener('change', () => {
+            huntingRarityFilter = [...inventoryContainer.querySelectorAll('[data-hunt-rarity]:checked')].map(item => item.dataset.huntRarity);
+            renderHuntingPage();
+        }));
         huntButton.onclick = startHunt;
+    }
+
+    function showHuntRewardPopup(rewards, shellReward) {
+        document.getElementById('huntRewardsPopup')?.remove();
+        const popup = document.createElement('div');
+        popup.id = 'huntRewardsPopup';
+        popup.className = 'hunt-rewards-popup';
+        popup.setAttribute('role', 'dialog');
+        popup.setAttribute('aria-modal', 'true');
+        popup.innerHTML = `<section class="hunt-rewards-card"><h2>${translations[currentLanguage]['hunting-reward-title']}</h2><p class="hunt-rewards-shell">${translations[currentLanguage]['hunting-reward-shell']}: <strong>+${shellReward}</strong></p><div class="hunt-rewards-list">${rewards.map(echo => `<article class="hunt-reward-echo rarity-${echo.rarity}-echo"><img src="${echo.image}" alt="${echo.name}"><span>${echo.name}</span><small>${echo.sonata} · cost ${echo.rarity}</small></article>`).join('')}</div><p class="hunt-rewards-close">Apasă oriunde pentru a închide</p></section>`;
+        popup.addEventListener('click', () => popup.remove(), { once: true });
+        document.body.appendChild(popup);
     }
 
     function startHunt() {
@@ -1852,7 +2018,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const echoCount = 5 + Math.floor(Math.random() * 16);
-        const shellReward = 50 + Math.floor(Math.random() * 151);
+        const shellReward = 500 + Math.floor(Math.random() * 501);
         const rewards = Array.from({ length: echoCount }, () => {
             const rarity = Math.random() < 0.42 ? 3 : 1;
             const options = echoCatalog.filter(echo => echo.rarity === rarity);
@@ -1869,6 +2035,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultMessage = document.getElementById('huntingMessage');
         resultMessage.textContent = translations[currentLanguage]['hunting-success'].replace('{character}', character.name).replace('{shell}', shellReward).replace('{count}', echoCount);
         resultMessage.className = 'hunting-message success';
+        showHuntRewardPopup(rewards, shellReward);
     }
 
     // --- Domain mini-game ---
@@ -2340,7 +2507,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function getItemCopyCount(itemName) {
         const copies = wishHistory.filter(item => item.name === itemName).length;
-        return Math.max(1, copies);
+        const isWeapon = weapons.some(weapon => weapon.name === itemName);
+        return Math.max(1, copies - (isWeapon ? (soldWeaponCopies[itemName] || 0) : 0));
     }
 
     // --- Function to update character collection ---
@@ -2454,8 +2622,18 @@ document.addEventListener('DOMContentLoaded', () => {
     wish10Button.addEventListener('click', () => handleWish(10));
 
     function getWishAstriteCost(numWishes) {
-        const paidWishes = Math.max(0, totalWishes + numWishes - FREE_WISH_LIMIT);
+        const freeWishesRemaining = Math.max(0, FREE_WISH_LIMIT - Number(totalWishes || 0));
+        const paidWishes = Math.max(0, numWishes - freeWishesRemaining);
         return paidWishes * WISH_ASTRITE_COST;
+    }
+
+    function refreshSavedAstriteBalance() {
+        if (!currentUser) return;
+        const savedBalance = Number(getUserData(currentUser.username)?.astrite);
+        if (Number.isFinite(savedBalance) && savedBalance >= 0) {
+            astrite = savedBalance;
+            updateAstriteDisplay(astrite);
+        }
     }
 
     function updateWishPurchaseUI() {
@@ -2466,16 +2644,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? translations[currentLanguage]['wish-cost-info-free']
                 : translations[currentLanguage]['wish-cost-info-paid'];
         }
+        const setButtonCost = (button, amount, key) => {
+            if (!button) return;
+            const cost = getWishAstriteCost(amount);
+            button.textContent = `${translations[currentLanguage][key]} · ${cost ? `${translations[currentLanguage]['wish-cost-prefix']}${cost} Astrite` : translations[currentLanguage]['wish-free']}`;
+        };
+        setButtonCost(wish1Button, 1, 'wish-button-1');
+        setButtonCost(wish10Button, 10, 'wish-button-10');
     }
     
     async function handleWish(numWishes) {
+        refreshSavedAstriteBalance();
         const astriteCost = getWishAstriteCost(numWishes);
         if (astriteCost > 0 && !currentUser) {
             wishResultsDiv.innerHTML = `<h3 class="wish-purchase-error">${translations[currentLanguage]['wish-error-login']}</h3>`;
             return;
         }
         if (astriteCost > astrite) {
-            wishResultsDiv.innerHTML = `<h3 class="wish-purchase-error">${translations[currentLanguage]['wish-error-astrite']}</h3>`;
+            const details = translations[currentLanguage]['wish-error-details'].replace('{cost}', astriteCost).replace('{balance}', astrite);
+            wishResultsDiv.innerHTML = `<h3 class="wish-purchase-error">${translations[currentLanguage]['wish-error-astrite']}<br><small>${details}</small></h3>`;
             return;
         }
         if (astriteCost > 0) {
