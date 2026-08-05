@@ -2940,6 +2940,23 @@ nav {
     margin: 0 auto;
     padding: clamp(1.5rem, 4vw, 3rem);
 }
+/* Filtrul de sonate din Antrenament: se întinde pe toată lățimea, pe rânduri */
+.training-echo-filter { grid-template-columns: 1fr; margin: 0.85rem 0; }
+.training-echo-filter .hunting-sonata-filters {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.7rem;
+    align-items: center;
+}
+/* Eticheta "Filtrează după sonată" pe rând propriu, apoi sonatele pe rând */
+.training-echo-filter .hunting-sonata-filters > strong { width: 100%; }
+.training-echo-filter .hunting-sonata-filters > label {
+    flex: 0 0 auto;
+    margin: 0;
+}
+.training-echo-showcase > img { object-fit: contain; padding: 1rem; }
+.training-echo-showcase p { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.82rem; }
 
 /* Resource Domains */
 .domains-container { width: min(980px, 100%); margin: 0 auto; padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid var(--line); border-radius: 24px; background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%); box-shadow: var(--shadow); }
@@ -2958,6 +2975,7 @@ nav {
 .domain-resource-preview { display: flex; gap: 0.55rem; margin: 1.1rem 0; }
 .domain-resource-preview img { width: 46px; height: 46px; padding: 0.35rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; background: rgba(255,255,255,0.04); object-fit: contain; }
 .resource-domain-card .domain-rewards-label { display: block; margin-top: 1rem; color: var(--muted); font-family: 'Orbitron', sans-serif; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.08em; }
+.domain-echo-reward { display: grid; width: 42px; height: 42px; place-items: center; border: 2px solid var(--accent-3); border-radius: 50%; color: var(--accent-3); background: rgba(255,209,102,0.1); font-family: 'Orbitron', sans-serif; font-weight: 800; }
 .domain-coming-soon { display: inline-block; padding: 0.42rem 0.65rem; border-radius: 999px; background: rgba(124,240,255,0.1); color: var(--accent); font-size: 0.75rem; font-weight: 800; }
 @media (max-width: 640px) { .domains-grid { grid-template-columns: 1fr; } }
 
