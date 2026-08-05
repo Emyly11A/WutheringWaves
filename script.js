@@ -304,10 +304,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedTrainingWeaponName = null;
     let equippedWeapons = {};
     let energyCores = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+    let echoProgress = {};
+    let sealedTubes = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+    let equippedEchoes = {};
+    let selectedTrainingEchoId = null;
+    let trainingEchoSonataFilter = [];
+    let equipmentEchoSonataFilter = [];
+    let nextEchoId = 1;
     let soldWeaponCopies = {};
     let echoInventory = [];
     let usedHuntingCharacters = [];
     let selectedHuntCharacterName = null;
+    let huntingLastResetDate = null;
     let huntingSonataFilter = [];
     let huntingRarityFilter = [];
     let shopEchoSonataFilter = [];
@@ -368,6 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
             'domains-weapon-tag': 'DEZVOLTARE ARME',
             'domains-weapon-title': 'Domeniul Energiei',
             'domains-weapon-description': 'Aici vei obține Energy Cores pentru creșterea armelor.',
+            'domains-echo-tag': 'ECHOES DE 4 COST',
+            'domains-echo-title': 'Domeniul Ecourilor',
+            'domains-echo-description': 'Aici vei obține Echoes de 4 cost și Shell Credits.',
+            'domains-echo-tube-tag': 'DEZVOLTARE ECHOES',
+            'domains-echo-tube-title': 'Domeniul Tuburilor Sigilate',
+            'domains-echo-tube-description': 'Aici vei obține Sealed Tubes pentru creșterea Echoes de 4 cost și Shell Credits.',
             'domains-coming-soon': 'Mini-game în curând',
             'domains-rewards-label': 'RECOMPENSE POSIBILE',
             'auth-login': 'Autentificare',
@@ -479,6 +493,13 @@ document.addEventListener('DOMContentLoaded', () => {
             'training-empty': 'Obține un personaj din Wish pentru a începe antrenamentul.',
             'training-mode-character': 'Caracter',
             'training-mode-weapon': 'Armă',
+            'training-mode-echo': 'Echo',
+            'training-echo-select': 'Alege un Echo de 4 cost',
+            'training-echo-empty': 'Obține un Echo de 4 cost pentru a-l putea crește.',
+            'training-echo-equipped': 'Echo echipat',
+            'training-echo-none': 'Fără Echo echipat',
+            'training-sealed-tubes': 'Sealed Tubes',
+            'training-echo-sonata-filter': 'Filtrează după sonată',
             'training-weapon-select': 'Alege o armă',
             'training-weapon-empty': 'Obține o armă din Wish pentru a o putea crește.',
             'training-weapon-equipped': 'Armă echipată',
@@ -576,6 +597,12 @@ document.addEventListener('DOMContentLoaded', () => {
             'domains-weapon-tag': 'WEAPON DEVELOPMENT',
             'domains-weapon-title': 'Energy Domain',
             'domains-weapon-description': 'You will obtain Energy Cores to level up weapons here.',
+            'domains-echo-tag': '4-COST ECHOES',
+            'domains-echo-title': 'Echo Domain',
+            'domains-echo-description': 'You will obtain 4-cost Echoes and Shell Credits here.',
+            'domains-echo-tube-tag': 'ECHO DEVELOPMENT',
+            'domains-echo-tube-title': 'Sealed Tube Domain',
+            'domains-echo-tube-description': 'You will obtain Sealed Tubes to level up 4-cost Echoes and Shell Credits here.',
             'domains-coming-soon': 'Mini-game coming soon',
             'domains-rewards-label': 'POSSIBLE REWARDS',
             'auth-login': 'Login',
@@ -687,6 +714,13 @@ document.addEventListener('DOMContentLoaded', () => {
             'training-empty': 'Get a character from Wish to begin training.',
             'training-mode-character': 'Character',
             'training-mode-weapon': 'Weapon',
+            'training-mode-echo': 'Echo',
+            'training-echo-select': 'Choose a 4-cost Echo',
+            'training-echo-empty': 'Get a 4-cost Echo to level it up.',
+            'training-echo-equipped': 'Equipped Echo',
+            'training-echo-none': 'No Echo equipped',
+            'training-sealed-tubes': 'Sealed Tubes',
+            'training-echo-sonata-filter': 'Filter by sonata',
             'training-weapon-select': 'Choose a weapon',
             'training-weapon-empty': 'Get a weapon from Wish to level it up.',
             'training-weapon-equipped': 'Equipped weapon',
@@ -858,10 +892,16 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedTrainingWeaponName,
             equippedWeapons,
             energyCores,
+            echoProgress,
+            sealedTubes,
+            equippedEchoes,
+            selectedTrainingEchoId,
+            nextEchoId,
             soldWeaponCopies,
             echoInventory,
             usedHuntingCharacters,
             selectedHuntCharacterName,
+            huntingLastResetDate,
             domainProgress
         };
         
@@ -986,10 +1026,18 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedTrainingWeaponName = null;
         equippedWeapons = {};
         energyCores = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+        echoProgress = {};
+        sealedTubes = { basic: 0, medium: 0, advanced: 0, premium: 0 };
+        equippedEchoes = {};
+        selectedTrainingEchoId = null;
+        trainingEchoSonataFilter = [];
+        equipmentEchoSonataFilter = [];
+        nextEchoId = 1;
         soldWeaponCopies = {};
         echoInventory = [];
         usedHuntingCharacters = [];
         selectedHuntCharacterName = null;
+        huntingLastResetDate = null;
         trainingMode = 'character';
         updateAstriteDisplay(0);
         updateShellCreditsDisplay(0);
@@ -1040,10 +1088,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedTrainingWeaponName: null,
                 equippedWeapons: {},
                 energyCores: { basic: 0, medium: 0, advanced: 0, premium: 0 },
+                echoProgress: {},
+                sealedTubes: { basic: 0, medium: 0, advanced: 0, premium: 0 },
+                equippedEchoes: {},
+                selectedTrainingEchoId: null,
+                nextEchoId: 1,
                 soldWeaponCopies: {},
                 echoInventory: [],
                 usedHuntingCharacters: [],
-                selectedHuntCharacterName: null
+                selectedHuntCharacterName: null,
+                huntingLastResetDate: null
         });
     }
     
@@ -1408,10 +1462,16 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedTrainingWeaponName = userData.selectedTrainingWeaponName || null;
             equippedWeapons = userData.equippedWeapons || {};
             energyCores = userData.energyCores || { basic: 0, medium: 0, advanced: 0, premium: 0 };
+            echoProgress = userData.echoProgress || {};
+            sealedTubes = userData.sealedTubes || { basic: 0, medium: 0, advanced: 0, premium: 0 };
+            equippedEchoes = userData.equippedEchoes || {};
+            selectedTrainingEchoId = userData.selectedTrainingEchoId || null;
+            nextEchoId = userData.nextEchoId || 1;
             soldWeaponCopies = userData.soldWeaponCopies || {};
             echoInventory = userData.echoInventory || [];
             usedHuntingCharacters = userData.usedHuntingCharacters || [];
             selectedHuntCharacterName = userData.selectedHuntCharacterName || null;
+            huntingLastResetDate = userData.huntingLastResetDate || null;
             if (weaponProgress['Red String']) {
                 weaponProgress['Red Spring'] = weaponProgress['Red Spring'] || weaponProgress['Red String'];
                 delete weaponProgress['Red String'];
@@ -1471,6 +1531,13 @@ document.addEventListener('DOMContentLoaded', () => {
         advanced: { name: 'Advanced Energy Core', exp: 2500, image: 'Extra/Advanced%20Energy%20Core.png' },
         premium: { name: 'Premium Energy Core', exp: 10000, image: 'Extra/Premium%20Energy%20Core.png' }
     };
+    const ECHO_MAX_LEVEL = 25;
+    const sealedTubeDefinitions = {
+        basic: { name: 'Basic Sealed Tube', exp: 100, image: 'Extra/Basic%20Sealed%20Tube.png' },
+        medium: { name: 'Medium Sealed Tube', exp: 500, image: 'Extra/Medium%20Sealed%20Tube.png' },
+        advanced: { name: 'Advanced Sealed Tube', exp: 2500, image: 'Extra/Advanced%20Sealed%20Tube.png' },
+        premium: { name: 'Premium Sealed Tube', exp: 10000, image: 'Extra/Premium%20Sealed%20Tube.png' }
+    };
     const weaponSynergies = {
         'Lingyang': 'Abyss Surges', 'Zhezhi': 'Rime-Draped Sprouts', 'Carlotta': 'The Last Dance',
         'Lucilla': 'Freeze Frame', 'Hiyuki': 'Frostburn', 'Suisui': "Firstlight's Herald",
@@ -1519,6 +1586,26 @@ document.addEventListener('DOMContentLoaded', () => {
         return weaponProgress[weaponName];
     }
 
+    function ensureEchoIds() {
+        echoInventory.forEach(echo => {
+            if (!echo.id) echo.id = `echo-${nextEchoId++}`;
+        });
+    }
+
+    function getFourCostEchoes() {
+        ensureEchoIds();
+        return echoInventory.filter(echo => echo.rarity === 4);
+    }
+
+    function getEchoTrainingState(echoId) {
+        if (!echoProgress[echoId]) echoProgress[echoId] = { level: 1, exp: 0 };
+        return echoProgress[echoId];
+    }
+
+    function getEchoDamage(echoId) {
+        return 50 + (getEchoTrainingState(echoId).level - 1) * 2;
+    }
+
     function getWeaponDamage(weaponName, characterName = null) {
         if (!weaponName) return { base: 0, synergy: 0, active: 0, hasSynergy: false };
         const level = getWeaponTrainingState(weaponName).level;
@@ -1532,6 +1619,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<div class="training-mode-switch">
             <button type="button" data-training-mode="character" class="${trainingMode === 'character' ? 'active' : ''}">${translations[currentLanguage]['training-mode-character']}</button>
             <button type="button" data-training-mode="weapon" class="${trainingMode === 'weapon' ? 'active' : ''}">${translations[currentLanguage]['training-mode-weapon']}</button>
+            <button type="button" data-training-mode="echo" class="${trainingMode === 'echo' ? 'active' : ''}">${translations[currentLanguage]['training-mode-echo']}</button>
         </div>`;
     }
 
@@ -1546,6 +1634,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderTrainingPage() {
         if (trainingMode === 'weapon') return renderWeaponTrainingPage();
+        if (trainingMode === 'echo') return renderEchoTrainingPage();
         renderCharacterTrainingPage();
     }
 
@@ -1655,6 +1744,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const equippedWeapon = obtainedWeapons.find(weapon => weapon.name === equippedWeaponName);
         const weaponDamage = getWeaponDamage(equippedWeaponName, selectedCharacter.name);
         const equippableWeapons = getFilteredAndSortedWeapons(obtainedWeapons, equipmentWeaponFilter);
+        const equippedEchoId = equippedEchoes[selectedCharacter.name] || '';
+        const equippedEcho = getFourCostEchoes().find(echo => echo.id === equippedEchoId);
+        const equippableEchoes = getFourCostEchoes().filter(echo => !equipmentEchoSonataFilter.length || equipmentEchoSonataFilter.includes(echo.sonata));
 
         container.innerHTML = `
             <section class="training-character-picker">
@@ -1703,6 +1795,17 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <img src="${weapon.img}" alt="${weapon.name}"><span>${weapon.name}</span>
                             </button>`).join('')}
                     </div>
+                    <h3>${translations[currentLanguage]['training-echo-equipped']}</h3>
+                    <div class="training-equipment-slot">
+                        <img src="${equippedEcho?.image || 'Extra/Basic%20Sealed%20Tube.png'}" alt="${equippedEcho?.name || translations[currentLanguage]['training-echo-none']}">
+                        <strong>${equippedEcho?.name || translations[currentLanguage]['training-echo-none']}</strong>
+                        <span>${equippedEcho?.sonata || ''}</span>
+                    </div>
+                    ${getEchoSonataFilterMarkup(equipmentEchoSonataFilter, 'data-equipment-echo-sonata')}
+                    <div class="profile-avatar-options training-weapon-options training-echo-options">
+                        <button class="profile-avatar-option${!equippedEchoId ? ' selected' : ''}" type="button" data-equip-echo=""><span>${translations[currentLanguage]['training-echo-none']}</span></button>
+                        ${equippableEchoes.map(echo => `<button class="profile-avatar-option${echo.id === equippedEchoId ? ' selected' : ''}" type="button" data-equip-echo="${echo.id}"><img src="${echo.image}" alt="${echo.name}"><span>${echo.name}</span></button>`).join('')}
+                    </div>
                     <h3>${translations[currentLanguage]['training-potions']}</h3>
                     <div class="training-potions">
                         ${Object.entries(potionDefinitions).map(([key, potion]) => `
@@ -1728,6 +1831,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const weaponName = button.dataset.equipWeapon;
                 if (weaponName) equippedWeapons[selectedCharacter.name] = weaponName;
                 else delete equippedWeapons[selectedCharacter.name];
+                saveCurrentUserData();
+                renderTrainingPage();
+            });
+        });
+        container.querySelectorAll('[data-equipment-echo-sonata]').forEach(input => input.addEventListener('change', () => {
+            equipmentEchoSonataFilter = [...container.querySelectorAll('[data-equipment-echo-sonata]:checked')].map(item => item.dataset.equipmentEchoSonata);
+            renderTrainingPage();
+        }));
+        container.querySelectorAll('[data-equip-echo]').forEach(button => {
+            button.addEventListener('click', () => {
+                const echoId = button.dataset.equipEcho;
+                if (echoId) equippedEchoes[selectedCharacter.name] = echoId;
+                else delete equippedEchoes[selectedCharacter.name];
                 saveCurrentUserData();
                 renderTrainingPage();
             });
@@ -1893,6 +2009,93 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTrainingPage();
     }
 
+    function getEchoSonataFilterMarkup(selectedSonatas, dataAttribute) {
+        return `<div class="training-echo-filter hunting-filters"><div class="hunting-sonata-filters"><strong>${translations[currentLanguage]['training-echo-sonata-filter']}</strong>${sonataCatalog.map(sonata => `<label title="${sonata}"><input type="checkbox" ${dataAttribute}="${sonata}" ${selectedSonatas.includes(sonata) ? 'checked' : ''}><img src="poze echoes (sonata)/${sonata}/${sonata}.png" alt="${sonata}"></label>`).join('')}</div></div>`;
+    }
+
+    function renderEchoTrainingPage() {
+        const container = document.getElementById('trainingContent');
+        if (!container) return;
+        const allEchoes = getFourCostEchoes();
+        if (!allEchoes.length) {
+            container.innerHTML = `${getTrainingModeMarkup()}<p class="empty-collection">${translations[currentLanguage]['training-echo-empty']}</p>`;
+            bindTrainingModeControls(container);
+            return;
+        }
+        const trainingEchoes = allEchoes.filter(echo => !trainingEchoSonataFilter.length || trainingEchoSonataFilter.includes(echo.sonata));
+        if (!trainingEchoes.length) {
+            container.innerHTML = `${getTrainingModeMarkup()}${getEchoSonataFilterMarkup(trainingEchoSonataFilter, 'data-training-echo-sonata')}<p class="empty-collection">${translations[currentLanguage]['training-echo-empty']}</p>`;
+            bindTrainingModeControls(container);
+            container.querySelectorAll('[data-training-echo-sonata]').forEach(input => input.addEventListener('change', () => {
+                trainingEchoSonataFilter = [...container.querySelectorAll('[data-training-echo-sonata]:checked')].map(item => item.dataset.trainingEchoSonata);
+                renderTrainingPage();
+            }));
+            return;
+        }
+        if (!trainingEchoes.some(echo => echo.id === selectedTrainingEchoId)) selectedTrainingEchoId = trainingEchoes[0].id;
+        const selectedEcho = allEchoes.find(echo => echo.id === selectedTrainingEchoId);
+        const state = getEchoTrainingState(selectedEcho.id);
+        const levelInfo = getCharacterLevelInfo(state);
+        const progress = state.level >= ECHO_MAX_LEVEL ? 100 : Math.min(100, (levelInfo.expInLevel / levelInfo.expRequired) * 100);
+        const echoDamage = getEchoDamage(selectedEcho.id);
+
+        container.innerHTML = `
+            <section class="training-character-picker">
+                <h2>${translations[currentLanguage]['training-echo-select']}</h2>
+                ${getEchoSonataFilterMarkup(trainingEchoSonataFilter, 'data-training-echo-sonata')}
+                <div class="training-character-list">
+                    ${trainingEchoes.map(echo => `<button class="training-character-option${echo.id === selectedEcho.id ? ' selected' : ''}" type="button" data-training-echo="${echo.id}"><img src="${echo.image}" alt="${echo.name}"><span>${echo.name}</span></button>`).join('')}
+                </div>
+            </section>
+            <section class="training-detail-panel">
+                <div class="training-character-showcase training-weapon-showcase training-echo-showcase">
+                    ${getTrainingModeMarkup()}
+                    <img src="${selectedEcho.image}" alt="${selectedEcho.name}">
+                    <h2>${selectedEcho.name}</h2><p>${selectedEcho.sonata} · cost 4</p>
+                </div>
+                <div class="training-level-panel">
+                    <div class="training-level-heading"><span>${translations[currentLanguage]['training-level']}</span><strong>${state.level} / ${ECHO_MAX_LEVEL}</strong></div>
+                    <div class="training-exp-track"><div class="training-exp-fill" style="width:${progress}%"></div></div>
+                    <p>${state.level >= ECHO_MAX_LEVEL ? translations[currentLanguage]['training-max-level'] : `${levelInfo.expInLevel} / ${levelInfo.expRequired} EXP`}</p>
+                    <div class="training-stat-grid"><div><span>DMG</span><strong>${echoDamage}</strong></div></div>
+                    <h3>${translations[currentLanguage]['training-sealed-tubes']}</h3>
+                    <div class="training-potions">
+                        ${Object.entries(sealedTubeDefinitions).map(([key, tube]) => `<article class="training-potion-card"><img src="${tube.image}" alt="${tube.name}"><div><strong>${tube.name}</strong><span>+${tube.exp} EXP · x${sealedTubes[key] || 0}</span></div><button type="button" data-sealed-tube="${key}" ${state.level >= ECHO_MAX_LEVEL || !(sealedTubes[key] > 0) ? 'disabled' : ''}>${translations[currentLanguage]['training-use']}</button></article>`).join('')}
+                    </div>
+                </div>
+            </section>`;
+        bindTrainingModeControls(container);
+        container.querySelectorAll('[data-training-echo-sonata]').forEach(input => input.addEventListener('change', () => {
+            trainingEchoSonataFilter = [...container.querySelectorAll('[data-training-echo-sonata]:checked')].map(item => item.dataset.trainingEchoSonata);
+            renderTrainingPage();
+        }));
+        container.querySelectorAll('[data-training-echo]').forEach(button => button.addEventListener('click', () => {
+            selectedTrainingEchoId = button.dataset.trainingEcho;
+            saveCurrentUserData();
+            renderTrainingPage();
+        }));
+        container.querySelectorAll('[data-sealed-tube]').forEach(button => button.addEventListener('click', () => applySealedTube(button.dataset.sealedTube)));
+    }
+
+    function applySealedTube(tubeKey) {
+        const echo = getFourCostEchoes().find(item => item.id === selectedTrainingEchoId);
+        const tube = sealedTubeDefinitions[tubeKey];
+        if (!echo || !tube || !(sealedTubes[tubeKey] > 0)) return;
+        const state = getEchoTrainingState(echo.id);
+        if (state.level >= ECHO_MAX_LEVEL) return;
+        sealedTubes[tubeKey]--;
+        state.exp += tube.exp;
+        while (state.level < ECHO_MAX_LEVEL) {
+            const required = 100 + (state.level - 1) * 50;
+            if (state.exp < required) break;
+            state.exp -= required;
+            state.level++;
+        }
+        if (state.level >= ECHO_MAX_LEVEL) state.exp = 0;
+        saveCurrentUserData();
+        renderTrainingPage();
+    }
+
     // --- Hunting ---
     const sonataCatalog = ['Celestial Light', 'Chromatic Foam', 'Crown of Valor', 'Dream of the Lost', 'Empyrean Anthem', 'Eternal Radiance', "Flamewing's Shadow", 'Flaming Clawprint', 'Freezing Frost', 'Frosty Resolve', 'Gusts of Welkin', 'Halo of Starry Radiance', 'Havoc Eclipse', "Heart of Evil's Purge", 'Lamp of Nether Road', 'Law of Harmony', 'Lingering Tunes', 'Midnight Veil', 'Molten Rift', 'Moonlit Clouds', 'Pact of Neonlight Leap', 'Reel of Spliced Memories', 'Rejuvenating Glow', 'Rite of Gilded Revelation', 'Shadow of Shattered Dreams', 'Sierra Gale', 'Song of Feathered Trace', 'Sound of True Name', 'Thread of Severed Fate', 'Tidebreaking Courage', 'Trailblazing Star', 'Void Thunder', 'Windward Pilgrimage', 'Wishes of Quiet Snowfall'];
     const echoCatalog = [
@@ -1926,12 +2129,27 @@ document.addEventListener('DOMContentLoaded', () => {
         echoCatalog.splice(0, echoCatalog.length, ...window.allEchoCatalog);
     }
 
+    function getHuntingDateKey() {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    function resetDailyHuntingCharactersIfNeeded() {
+        const today = getHuntingDateKey();
+        if (huntingLastResetDate === today) return;
+        usedHuntingCharacters = [];
+        selectedHuntCharacterName = null;
+        huntingLastResetDate = today;
+        saveCurrentUserData();
+    }
+
     function renderHuntingPage() {
         const charactersContainer = document.getElementById('huntingCharacters');
         const inventoryContainer = document.getElementById('huntingInventory');
         const message = document.getElementById('huntingMessage');
         const huntButton = document.getElementById('startHuntButton');
         if (!charactersContainer || !inventoryContainer || !huntButton) return;
+        if (currentUser) resetDailyHuntingCharactersIfNeeded();
         if (!currentUser) {
             charactersContainer.innerHTML = `<p class="empty-collection">${translations[currentLanguage]['hunting-login']}</p>`;
             inventoryContainer.innerHTML = '';
@@ -2011,6 +2229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startHunt() {
         const message = document.getElementById('huntingMessage');
+        resetDailyHuntingCharactersIfNeeded();
         const character = obtainedCharacters.find(item => item.name === selectedHuntCharacterName);
         if (!character || usedHuntingCharacters.includes(character.name)) {
             message.textContent = translations[currentLanguage]['hunting-select-error'];
@@ -2022,7 +2241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const rewards = Array.from({ length: echoCount }, () => {
             const rarity = Math.random() < 0.42 ? 3 : 1;
             const options = echoCatalog.filter(echo => echo.rarity === rarity);
-            return { ...options[Math.floor(Math.random() * options.length)] };
+            return { ...options[Math.floor(Math.random() * options.length)], id: `echo-${nextEchoId++}` };
         });
         echoInventory.push(...rewards);
         usedHuntingCharacters.push(character.name);
