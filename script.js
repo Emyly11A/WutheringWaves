@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {"name": "Jianxin", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Jianxin.png" },
         {"name": "Jinshi", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Jinshi.png" },
         {"name": "Jiyan", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Jiyan.png" },
+        {"name": "Jingran", "rarity": 5, "element": "Fusion", "img": "poze charactere/char 5/Jingran.png" },
         {"name": "Lingyang", "rarity": 5, "element": "Glacio", "img": "poze charactere/char 5/Lingyang.png" },
         {"name": "Lucilla", "rarity": 5, "element": "Glacio", "img": "poze charactere/char 5/Lucilla.png" },
         {"name": "Lucy", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Lucy.png" },
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {"name": "Phoebe", "rarity": 5, "element": "Spectro", "img": "poze charactere/char 5/Phoebe.png" },
         {"name": "Phrolova", "rarity": 5, "element": "Havoc", "img": "poze charactere/char 5/Phrolova.png" },
         {"name": "Qiuyuan", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Qiuyuan.png" },
+        {"name": "Qingxiao", "rarity": 5, "element": "Aero", "img": "poze charactere/char 5/Qingxiao.png" },
         {"name": "Rebecca", "rarity": 5, "element": "Electro", "img": "poze charactere/char 5/Rebecca.png" },
         {"name": "Roccia", "rarity": 5, "element": "Havoc", "img": "poze charactere/char 5/Roccia.png" },
         {"name": "Sanhua", "rarity": 4, "element": "Glacio", "img": "poze charactere/char 4/Sanhua.png" },
@@ -139,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {"name": "Forged Dwarf Star", "rarity": 5,"img": "poze arme/arme 5/Forged Dwarf Star.png" },
         {"name": "Freeze Frame", "rarity": 5,"img": "poze arme/arme 5/Freeze Frame.png" },
         {"name": "Frostburn", "rarity": 5,"img": "poze arme/arme 5/Frostburn.png" },
+        {"name": "Glint of Clouds", "rarity": 5,"img": "poze arme/arme 5/Glint of Clouds.png" },
         {"name": "Kumokiri", "rarity": 5,"img": "poze arme/arme 5/Kumokiri.png" },
         {"name": "Laser Shearer", "rarity": 5,"img": "poze arme/arme 5/Laser Shearer.png" },
         {"name": "Lethean Elegy", "rarity": 5,"img": "poze arme/arme 5/Lethean Elegy.png" },
@@ -161,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {"name": "Stringmaster", "rarity": 5,"img": "poze arme/arme 5/Stringmaster.png" },
         {"name": "The Last Dance", "rarity": 5,"img": "poze arme/arme 5/The Last Dance.png" },
         {"name": "Thunderflare Dominion", "rarity": 5,"img": "poze arme/arme 5/Thunderflare Dominion.png" },
+        {"name": "Thounsandfold Deliverance", "rarity": 5,"img": "poze arme/arme 5/Thounsandfold Deliverance.png" },
         {"name": "Tragicomedy", "rarity": 5,"img": "poze arme/arme 5/Tragicomedy.png" },
         {"name": "Unflickering Valor", "rarity": 5,"img": "poze arme/arme 5/Unflickering Valor.png" },
         {"name": "Verdant Summit", "rarity": 5,"img": "poze arme/arme 5/Verdant Summit.png" },
@@ -171,8 +175,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const allItems = [...characters, ...weapons];
     const weaponTypeGroups = {
-        Sword: ["Emerald of Genesis", "Blazing Brilliance", "Red Spring", "Unflickering Valor", "Bloodpact's Pledge", "Defier's Thorn", "Emerald Sentence", "Laser Shearer", "Everbright Polestar", "Frostburn", "Azure Oath", "Lumingloss", "Overture", "Sword#18", "Commando of Conviction", "Lunar Cutter", "Endless Collapse", "Somnoire Anchor", "Fables of Wisdom", "Feather Edge", "Sword of Night", "Originite: Type II", "Sword of Voyager", "Guardian Sword"],
-        Broadblade: ["Lustrous Razor", "Verdant Summit", "Ages of Harvest", "Wildfire Mark", "Thunderflare Dominion", "Kumokiri", "Starfield Calibrator", "Radiance Cleaver", "Autumntrace", "Discord", "Broadblade#41", "Dauntless Evernight", "Helios Cleaver", "Waning Redshift", "Meditations on Mercy", "Aureate Zenith", "Broadblade of Night", "Originite: Type I", "Broadblade of Voyager", "Guardian Broadblade", "Beguiling Melody"],
+        Sword: ["Emerald of Genesis", "Blazing Brilliance", "Red Spring", "Unflickering Valor", "Bloodpact's Pledge", "Defier's Thorn", "Emerald Sentence", "Laser Shearer", "Everbright Polestar", "Frostburn", "Azure Oath", "Lumingloss", "Overture", "Sword#18", "Commando of Conviction", "Lunar Cutter", "Endless Collapse", "Somnoire Anchor", "Fables of Wisdom", "Feather Edge", "Glint of Clouds", "Sword of Night", "Originite: Type II", "Sword of Voyager", "Guardian Sword"],
+        Broadblade: ["Lustrous Razor", "Verdant Summit", "Ages of Harvest", "Wildfire Mark", "Thunderflare Dominion", "Thounsandfold Deliverance", "Kumokiri", "Starfield Calibrator", "Radiance Cleaver", "Autumntrace", "Discord", "Broadblade#41", "Dauntless Evernight", "Helios Cleaver", "Waning Redshift", "Meditations on Mercy", "Aureate Zenith", "Broadblade of Night", "Originite: Type I", "Broadblade of Voyager", "Guardian Broadblade", "Beguiling Melody"],
         Pistols: ["Static Mist", "The Last Dance", "Woodland Aria", "Lux & Umbra", "Spectrum Blaster", "Phasic Homogenizer", "Spectral Trigger", "Skull Thrasher", "Thunderbolt", "Cadenza", "Pistols#26", "Undying Flame", "Novaburst", "Relativistic Jet", "Romance in Farewell", "Solar Flame", "Pistols of Night", "Originite: Type III", "Pistols of Voyager", "Guardian Pistols"],
         Gauntlets: ["Abyss Surges", "Verity's Handle", "Tragicomedy", "Blazing Justice", "Moongazer's Sigil", "Pulsation Bracer", "Daybreaker's Spine", "Solsworn Ciphers", "Stonard", "Marcato", "Gauntlets#21D", "Amity Accord", "Hollow Mirage", "Celestial Spiral", "Legend of Drunken Hero", "Aether Strike", "Gauntlets of Night", "Originite: Type IV", "Gauntlets of Voyager", "Guardian Gauntlets"],
         Rectifier: ["Cosmic Ripples", "Stringmaster", "Rime-Draped Sprouts", "Stellar Symphony", "Luminous Hymn", "Whispers of Sirens", "Lethean Elegy", "Boson Astrolabe", "Forged Dwarf Star", "Freeze Frame", "Firstlight's Herald", "Augment", "Variation", "Rectifier#25", "Jinzhou Keeper", "Comet Flare", "Fusion Accretion", "Call of the Abyss", "Waltz in Masquerade", "Ocean's Gift", "Radiant Dawn", "Rectifier of Night", "Originite: Type V", "Rectifier of Voyager", "Guardian Rectifier"]
@@ -315,6 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let echoInventory = [];
     let usedHuntingCharacters = [];
     let selectedHuntCharacterName = null;
+    let selectedEchoHuntCharacterName = null;
     let huntingLastResetDate = null;
     let huntingSonataFilter = [];
     let huntingRarityFilter = [];
@@ -331,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let trainingWeaponFilter = 'all';
     let trainingWeaponSort = 'level-desc';
     let equipmentWeaponFilter = 'all';
+    const trainingMaterialQuantities = { potion: {}, core: {}, tube: {} };
 
     if (totalWishesSpan) {
         totalWishesSpan.textContent = totalWishes;
@@ -369,20 +375,51 @@ document.addEventListener('DOMContentLoaded', () => {
             'energy-next': 'Următorul punct în {time}',
             'domains-eyebrow': 'DOMENII DE RESURSE',
             'domains-title': 'Domeniu',
-            'domains-description': 'Folosește energie pentru a obține resursele necesare dezvoltării. Mini-game-urile vor fi adăugate ulterior.',
+            'domains-description': 'Folosește energie pentru a obține resursele necesare dezvoltării.',
             'domains-character-tag': 'DEZVOLTARE CARACTERE',
             'domains-character-title': 'Domeniul Rezonanței',
-            'domains-character-description': 'Aici vei obține Resonance Potions pentru creșterea personajelor.',
+            'domains-character-description': 'Înfruntă valuri de inamici și folosește abilitățile personajului pentru a obține potions.',
+            'resonance-surge-select-character': 'Alege personajul',
+            'resonance-surge-select-difficulty': 'Alege dificultatea',
+            'resonance-surge-easy': 'Ușor',
+            'resonance-surge-medium': 'Mediu',
+            'resonance-surge-hard': 'Greu',
+            'resonance-surge-requirements': '{energy} energie · {waves} valuri · {rewards}',
+            'resonance-surge-start': 'Intră în domeniu',
+            'resonance-surge-active': 'Învinge valurile de inamici!',
+            'resonance-surge-score': 'Val',
+            'resonance-surge-time': 'Timp',
+            'resonance-surge-finished': 'Resonance Surge completat! +{rewards} și +{shell} Shell Credits.',
+            'resonance-surge-login': 'Autentifică-te și obține un personaj pentru a juca.',
+            'resonance-surge-no-character': 'Obține un personaj din Wish pentru a juca.',
+            'resonance-surge-energy': 'Energie insuficientă. Ai nevoie de {energy}.',
             'domains-weapon-tag': 'DEZVOLTARE ARME',
             'domains-weapon-title': 'Domeniul Energiei',
             'domains-weapon-description': 'Aici vei obține Energy Cores pentru creșterea armelor.',
-            'domains-echo-tag': 'ECHOES DE 4 COST',
+            'domains-echo-tag': 'ECHO HUNT · ECHOES DE 4 COST',
             'domains-echo-title': 'Domeniul Ecourilor',
-            'domains-echo-description': 'Aici vei obține Echoes de 4 cost și Shell Credits.',
+            'domains-echo-description': 'Alege un personaj și înfruntă Echoes pentru recompense.',
+            'echo-hunt-select-character': 'Alege personajul',
+            'echo-hunt-select-difficulty': 'Alege dificultatea',
+            'echo-hunt-easy': 'Ușor',
+            'echo-hunt-medium': 'Mediu',
+            'echo-hunt-hard': 'Greu',
+            'echo-hunt-start': 'Intră în domeniu',
+            'echo-hunt-attack': 'Atacă Echo-ul',
+            'echo-hunt-login': 'Autentifică-te și obține un personaj pentru a juca.',
+            'echo-hunt-no-character': 'Obține un personaj din Wish pentru a juca.',
+            'echo-hunt-fight': '{character} luptă împotriva lui {echo}.',
+            'echo-hunt-victory': 'Victorie! Ai primit {count} Echo de 4 Cost și {shell} Shell Credits.',
+            'echo-hunt-defeat': 'Ai fost învins. Încearcă din nou cu un personaj mai bine antrenat.',
+            'echo-hunt-energy': 'Energie insuficientă. Ai nevoie de {energy}.',
+            'echo-hunt-requirements': '{energy} energie · {count} Echoes · {shell} Shell Credits',
+            'echo-hunt-character-hp': 'HP personaj',
+            'echo-hunt-echo-hp': 'HP Echo',
             'domains-echo-tube-tag': 'DEZVOLTARE ECHOES',
             'domains-echo-tube-title': 'Domeniul Tuburilor Sigilate',
             'domains-echo-tube-description': 'Aici vei obține Sealed Tubes pentru creșterea Echoes de 4 cost și Shell Credits.',
             'domains-coming-soon': 'Mini-game în curând',
+            'domains-enter': 'Intră în domeniu',
             'domains-rewards-label': 'RECOMPENSE POSIBILE',
             'auth-login': 'Autentificare',
             'auth-logout': 'Deconectare',
@@ -590,20 +627,51 @@ document.addEventListener('DOMContentLoaded', () => {
             'energy-next': 'Next point in {time}',
             'domains-eyebrow': 'RESOURCE DOMAINS',
             'domains-title': 'Domain',
-            'domains-description': 'Use energy to obtain resources needed for development. Mini-games will be added later.',
+            'domains-description': 'Use energy to obtain resources needed for development.',
             'domains-character-tag': 'CHARACTER DEVELOPMENT',
             'domains-character-title': 'Resonance Domain',
-            'domains-character-description': 'You will obtain Resonance Potions to level up characters here.',
+            'domains-character-description': 'Collect resonance particles to earn potions.',
+            'resonance-surge-select-character': 'Choose character',
+            'resonance-surge-select-difficulty': 'Choose difficulty',
+            'resonance-surge-easy': 'Easy',
+            'resonance-surge-medium': 'Medium',
+            'resonance-surge-hard': 'Hard',
+            'resonance-surge-requirements': '{energy} energy · {waves} waves · {rewards}',
+            'resonance-surge-start': 'Enter domain',
+            'resonance-surge-active': 'Collect the particles!',
+            'resonance-surge-score': 'Particles',
+            'resonance-surge-time': 'Time',
+            'resonance-surge-finished': 'Mission complete! +{rewards} and +{shell} Shell Credits.',
+            'resonance-surge-login': 'Log in and obtain a character to play.',
+            'resonance-surge-no-character': 'Get a character from Wish to play.',
+            'resonance-surge-energy': 'Not enough energy. You need {energy}.',
             'domains-weapon-tag': 'WEAPON DEVELOPMENT',
             'domains-weapon-title': 'Energy Domain',
             'domains-weapon-description': 'You will obtain Energy Cores to level up weapons here.',
-            'domains-echo-tag': '4-COST ECHOES',
+            'domains-echo-tag': 'ECHO HUNT · 4-COST ECHOES',
             'domains-echo-title': 'Echo Domain',
-            'domains-echo-description': 'You will obtain 4-cost Echoes and Shell Credits here.',
+            'domains-echo-description': 'Choose a character and fight Echoes for rewards.',
+            'echo-hunt-select-character': 'Choose character',
+            'echo-hunt-select-difficulty': 'Choose difficulty',
+            'echo-hunt-easy': 'Easy',
+            'echo-hunt-medium': 'Medium',
+            'echo-hunt-hard': 'Hard',
+            'echo-hunt-start': 'Enter domain',
+            'echo-hunt-attack': 'Attack Echo',
+            'echo-hunt-login': 'Log in and obtain a character to play.',
+            'echo-hunt-no-character': 'Get a character from Wish to play.',
+            'echo-hunt-fight': '{character} is fighting {echo}.',
+            'echo-hunt-victory': 'Victory! You received {count} 4-Cost Echoes and {shell} Shell Credits.',
+            'echo-hunt-defeat': 'You were defeated. Try again with a better-trained character.',
+            'echo-hunt-energy': 'Not enough energy. You need {energy}.',
+            'echo-hunt-requirements': '{energy} energy · {count} Echoes · {shell} Shell Credits',
+            'echo-hunt-character-hp': 'Character HP',
+            'echo-hunt-echo-hp': 'Echo HP',
             'domains-echo-tube-tag': 'ECHO DEVELOPMENT',
             'domains-echo-tube-title': 'Sealed Tube Domain',
             'domains-echo-tube-description': 'You will obtain Sealed Tubes to level up 4-cost Echoes and Shell Credits here.',
             'domains-coming-soon': 'Mini-game coming soon',
+            'domains-enter': 'Enter domain',
             'domains-rewards-label': 'POSSIBLE REWARDS',
             'auth-login': 'Login',
             'auth-logout': 'Logout',
@@ -901,6 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
             echoInventory,
             usedHuntingCharacters,
             selectedHuntCharacterName,
+            selectedEchoHuntCharacterName,
             huntingLastResetDate,
             domainProgress
         };
@@ -981,6 +1050,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('trainingContent')) renderTrainingPage();
         if (document.getElementById('profileEmail')) updateProfileDropdown();
         if (document.getElementById('huntingCharacters')) renderHuntingPage();
+        if (document.getElementById('echoHuntGame')) renderEchoHunt();
+        if (document.getElementById('resonanceSurgeGame') && typeof renderResonanceSurge === 'function') renderResonanceSurge();
+        if (typeof window !== 'undefined' && window.renderResourceSurge) {
+            window.renderResourceSurge('energyCore');
+            window.renderResourceSurge('sealedTube');
+        }
         updateWishPurchaseUI();
         updateEnergyUI();
     }
@@ -997,6 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (logoutButton) logoutButton.style.display = isLoggedIn ? 'block' : 'none';
         if (welcomeMessage) welcomeMessage.style.display = isLoggedIn ? 'none' : 'block';
+        if (echoHuntGame) renderEchoHunt();
     }
 
     function startLocalSession(user) {
@@ -1082,6 +1158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 expeditionExpGranted: 0,
                 characterProgress: {},
                 selectedTrainingCharacterName: null,
+                        selectedEchoHuntCharacterName: null,
                 resonancePotions: { basic: 0, medium: 0, advanced: 0, premium: 0 },
                 resonancePotionStarterPackRemoved: true,
                 weaponProgress: {},
@@ -1471,6 +1548,7 @@ document.addEventListener('DOMContentLoaded', () => {
             echoInventory = userData.echoInventory || [];
             usedHuntingCharacters = userData.usedHuntingCharacters || [];
             selectedHuntCharacterName = userData.selectedHuntCharacterName || null;
+            selectedEchoHuntCharacterName = userData.selectedEchoHuntCharacterName || null;
             huntingLastResetDate = userData.huntingLastResetDate || null;
             if (weaponProgress['Red String']) {
                 weaponProgress['Red Spring'] = weaponProgress['Red Spring'] || weaponProgress['Red String'];
@@ -1633,9 +1711,91 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderTrainingPage() {
-        if (trainingMode === 'weapon') return renderWeaponTrainingPage();
-        if (trainingMode === 'echo') return renderEchoTrainingPage();
-        renderCharacterTrainingPage();
+        const scrollPosition = Math.max(window.scrollY, document.documentElement.scrollTop, document.body.scrollTop);
+        const activeElement = document.activeElement;
+        const activeMaterial = activeElement?.matches('[data-potion], [data-energy-core], [data-sealed-tube]')
+            ? {
+                type: activeElement.dataset.potion ? 'potion' : activeElement.dataset.energyCore ? 'energy-core' : 'sealed-tube',
+                key: activeElement.dataset.potion || activeElement.dataset.energyCore || activeElement.dataset.sealedTube,
+                top: activeElement.getBoundingClientRect().top
+            }
+            : null;
+        if (trainingMode === 'weapon') renderWeaponTrainingPage();
+        else if (trainingMode === 'echo') renderEchoTrainingPage();
+        else renderCharacterTrainingPage();
+        requestAnimationFrame(() => {
+            window.scrollTo({ top: scrollPosition, left: 0, behavior: 'auto' });
+            if (activeMaterial) {
+                const selector = activeMaterial.type === 'potion'
+                    ? `[data-potion="${activeMaterial.key}"]`
+                    : activeMaterial.type === 'energy-core'
+                        ? `[data-energy-core="${activeMaterial.key}"]`
+                        : `[data-sealed-tube="${activeMaterial.key}"]`;
+                const replacement = document.querySelector(selector);
+                if (replacement) window.scrollBy(0, replacement.getBoundingClientRect().top - activeMaterial.top);
+            }
+            requestAnimationFrame(() => {
+                window.scrollTo({ top: window.scrollY, left: 0, behavior: 'auto' });
+                if (activeMaterial) {
+                    const selector = activeMaterial.type === 'potion'
+                        ? `[data-potion="${activeMaterial.key}"]`
+                        : activeMaterial.type === 'energy-core'
+                            ? `[data-energy-core="${activeMaterial.key}"]`
+                            : `[data-sealed-tube="${activeMaterial.key}"]`;
+                    const replacement = document.querySelector(selector);
+                    if (replacement) window.scrollBy(0, replacement.getBoundingClientRect().top - activeMaterial.top);
+                }
+            });
+        });
+    }
+
+    function getTrainingMaterialQuantityMarkup(type, key, available) {
+        const quantity = Math.max(1, Math.min(trainingMaterialQuantities[type][key] || 1, available || 1));
+        trainingMaterialQuantities[type][key] = quantity;
+        return `<div class="training-material-stepper" aria-label="Cantitate ${quantity}"><button type="button" data-material-step="down" data-material-type="${type}" data-material-key="${key}" aria-label="Folosește mai puține">↓</button><output data-material-value="${type}-${key}">${quantity}</output><button type="button" data-material-step="up" data-material-type="${type}" data-material-key="${key}" aria-label="Folosește mai multe">↑</button></div>`;
+    }
+
+    function bindTrainingMaterialQuantityControls(container) {
+        container.querySelectorAll('[data-material-step]').forEach(button => {
+            button.addEventListener('click', () => {
+                const { materialStep, materialType, materialKey } = button.dataset;
+                const available = materialType === 'potion'
+                    ? resonancePotions[materialKey]
+                    : materialType === 'core' ? energyCores[materialKey] : sealedTubes[materialKey];
+                const current = trainingMaterialQuantities[materialType][materialKey] || 1;
+                const next = materialStep === 'max'
+                    ? Math.max(1, available)
+                    : Math.max(1, Math.min(available, current + (materialStep === 'up' ? 1 : -1)));
+                trainingMaterialQuantities[materialType][materialKey] = next;
+                const output = container.querySelector(`[data-material-value="${materialType}-${materialKey}"]`);
+                if (output) output.textContent = next;
+            });
+        });
+    }
+
+    function getTrainingMaterialsActionsMarkup(type, label) {
+        return `<div class="training-material-actions"><button type="button" class="training-material-max-all" data-material-max-all="${type}">MAX</button><button type="button" class="wish-button training-material-use-all" data-material-use-all="${type}">${label}</button></div>`;
+    }
+
+    function setAllTrainingMaterialQuantities(type, inventory) {
+        Object.keys(inventory).forEach(key => {
+            trainingMaterialQuantities[type][key] = Math.max(1, inventory[key] || 1);
+        });
+    }
+
+    function refreshTrainingMaterialQuantityOutputs(container, type) {
+        Object.keys(trainingMaterialQuantities[type]).forEach(key => {
+            const output = container.querySelector(`[data-material-value="${type}-${key}"]`);
+            if (output) output.textContent = trainingMaterialQuantities[type][key];
+        });
+    }
+
+    function bindTrainingMaterialActions(container, type, inventory, useAll) {
+        container.querySelector(`[data-material-max-all="${type}"]`)?.addEventListener('click', () => {
+            setAllTrainingMaterialQuantities(type, inventory);
+            refreshTrainingMaterialQuantityOutputs(container, type);
+        });
+        container.querySelector(`[data-material-use-all="${type}"]`)?.addEventListener('click', useAll);
     }
 
     function getCharacterElement(character) {
@@ -1807,12 +1967,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${equippableEchoes.map(echo => `<button class="profile-avatar-option${echo.id === equippedEchoId ? ' selected' : ''}" type="button" data-equip-echo="${echo.id}"><img src="${echo.image}" alt="${echo.name}"><span>${echo.name}</span></button>`).join('')}
                     </div>
                     <h3>${translations[currentLanguage]['training-potions']}</h3>
+                    ${getTrainingMaterialsActionsMarkup('potion', translations[currentLanguage]['training-use'])}
                     <div class="training-potions">
                         ${Object.entries(potionDefinitions).map(([key, potion]) => `
                             <article class="training-potion-card">
                                 <img src="${potion.image}" alt="${potion.name}">
                                 <div><strong>${potion.name}</strong><span>+${potion.exp} EXP · x${resonancePotions[key] || 0}</span></div>
-                                <button type="button" data-potion="${key}" ${state.level >= CHARACTER_MAX_LEVEL || !(resonancePotions[key] > 0) ? 'disabled' : ''}>${translations[currentLanguage]['training-use']}</button>
+                                ${getTrainingMaterialQuantityMarkup('potion', key, resonancePotions[key] || 0)}
                             </article>
                         `).join('')}
                     </div>
@@ -1855,8 +2016,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderTrainingPage();
             });
         });
+        bindTrainingMaterialQuantityControls(container);
+        bindTrainingMaterialActions(container, 'potion', resonancePotions, () => {
+            Object.keys(potionDefinitions).forEach(key => applyResonancePotion(key, trainingMaterialQuantities.potion[key] || 1, false));
+            saveCurrentUserData();
+            renderTrainingPage();
+        });
         container.querySelectorAll('[data-potion]').forEach(button => {
-            button.addEventListener('click', () => applyResonancePotion(button.dataset.potion));
+            button.addEventListener('click', () => {
+                const quantity = trainingMaterialQuantities.potion[button.dataset.potion] || 1;
+                applyResonancePotion(button.dataset.potion, quantity);
+            });
         });
     }
 
@@ -1930,12 +2100,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div><span>${damage.hasSynergy ? translations[currentLanguage]['training-synergy-active'] : translations[currentLanguage]['training-synergy-inactive']}</span><strong>${equippedCharacterName || '—'}</strong></div>
                     </div>
                     <h3>${translations[currentLanguage]['training-energy-cores']}</h3>
+                    ${getTrainingMaterialsActionsMarkup('core', translations[currentLanguage]['training-use'])}
                     <div class="training-potions">
                         ${Object.entries(energyCoreDefinitions).map(([key, core]) => `
                             <article class="training-potion-card">
                                 <img src="${core.image}" alt="${core.name}">
                                 <div><strong>${core.name}</strong><span>+${core.exp} EXP · x${energyCores[key] || 0}</span></div>
-                                <button type="button" data-energy-core="${key}" ${state.level >= WEAPON_MAX_LEVEL || !(energyCores[key] > 0) ? 'disabled' : ''}>${translations[currentLanguage]['training-use']}</button>
+                                ${getTrainingMaterialQuantityMarkup('core', key, energyCores[key] || 0)}
                             </article>
                         `).join('')}
                     </div>
@@ -1951,8 +2122,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderTrainingPage();
             });
         });
+        bindTrainingMaterialQuantityControls(container);
+        bindTrainingMaterialActions(container, 'core', energyCores, () => {
+            Object.keys(energyCoreDefinitions).forEach(key => applyEnergyCore(key, trainingMaterialQuantities.core[key] || 1, false));
+            saveCurrentUserData();
+            renderTrainingPage();
+        });
         container.querySelectorAll('[data-energy-core]').forEach(button => {
-            button.addEventListener('click', () => applyEnergyCore(button.dataset.energyCore));
+            button.addEventListener('click', () => {
+                const quantity = trainingMaterialQuantities.core[button.dataset.energyCore] || 1;
+                applyEnergyCore(button.dataset.energyCore, quantity);
+            });
         });
     }
 
@@ -1969,14 +2149,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function applyEnergyCore(coreKey) {
+    function applyEnergyCore(coreKey, quantity = 1, shouldRender = true) {
         const weapon = obtainedWeapons.find(item => item.name === selectedTrainingWeaponName);
         const core = energyCoreDefinitions[coreKey];
         if (!weapon || !core || !(energyCores[coreKey] > 0)) return;
         const state = getWeaponTrainingState(weapon.name);
         if (state.level >= WEAPON_MAX_LEVEL) return;
-        energyCores[coreKey]--;
-        state.exp += core.exp;
+        const amount = Math.max(1, Math.min(Math.floor(quantity), energyCores[coreKey]));
+        energyCores[coreKey] -= amount;
+        state.exp += core.exp * amount;
         while (state.level < WEAPON_MAX_LEVEL) {
             const required = 100 + (state.level - 1) * 50;
             if (state.exp < required) break;
@@ -1984,19 +2165,22 @@ document.addEventListener('DOMContentLoaded', () => {
             state.level++;
         }
         if (state.level >= WEAPON_MAX_LEVEL) state.exp = 0;
-        saveCurrentUserData();
-        renderTrainingPage();
+        if (shouldRender) {
+            saveCurrentUserData();
+            renderTrainingPage();
+        }
     }
 
-    function applyResonancePotion(potionKey) {
+    function applyResonancePotion(potionKey, quantity = 1, shouldRender = true) {
         const character = obtainedCharacters.find(item => item.name === selectedTrainingCharacterName);
         const potion = potionDefinitions[potionKey];
         if (!character || !potion || !(resonancePotions[potionKey] > 0)) return;
 
         const state = getCharacterTrainingState(character.name);
         if (state.level >= CHARACTER_MAX_LEVEL) return;
-        resonancePotions[potionKey]--;
-        state.exp += potion.exp;
+        const amount = Math.max(1, Math.min(Math.floor(quantity), resonancePotions[potionKey]));
+        resonancePotions[potionKey] -= amount;
+        state.exp += potion.exp * amount;
 
         while (state.level < CHARACTER_MAX_LEVEL) {
             const required = 100 + (state.level - 1) * 50;
@@ -2005,12 +2189,15 @@ document.addEventListener('DOMContentLoaded', () => {
             state.level++;
         }
         if (state.level >= CHARACTER_MAX_LEVEL) state.exp = 0;
-        saveCurrentUserData();
-        renderTrainingPage();
+        if (shouldRender) {
+            saveCurrentUserData();
+            renderTrainingPage();
+        }
     }
 
     function getEchoSonataFilterMarkup(selectedSonatas, dataAttribute) {
-        return `<div class="training-echo-filter hunting-filters"><div class="hunting-sonata-filters"><strong>${translations[currentLanguage]['training-echo-sonata-filter']}</strong>${sonataCatalog.map(sonata => `<label title="${sonata}"><input type="checkbox" ${dataAttribute}="${sonata}" ${selectedSonatas.includes(sonata) ? 'checked' : ''}><img src="poze echoes (sonata)/${sonata}/${sonata}.png" alt="${sonata}"></label>`).join('')}</div></div>`;
+        const selectedLabel = selectedSonatas.length ? selectedSonatas.join(', ') : 'Toate sonatele';
+        return `<div class="training-echo-filter"><div class="training-sonata-picker"><button type="button" class="training-sonata-selected"><span>${translations[currentLanguage]['training-echo-sonata-filter']}</span><strong>${selectedLabel}</strong><small>⌄</small></button><div class="training-sonata-options">${sonataCatalog.map(sonata => `<label title="${sonata}"><input type="checkbox" ${dataAttribute}="${sonata}" ${selectedSonatas.includes(sonata) ? 'checked' : ''}><img src="poze echoes (sonata)/${sonata}/${sonata}.png" alt="${sonata}"><span>${sonata}</span></label>`).join('')}</div></div></div>`;
     }
 
     function renderEchoTrainingPage() {
@@ -2059,8 +2246,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>${state.level >= ECHO_MAX_LEVEL ? translations[currentLanguage]['training-max-level'] : `${levelInfo.expInLevel} / ${levelInfo.expRequired} EXP`}</p>
                     <div class="training-stat-grid"><div><span>DMG</span><strong>${echoDamage}</strong></div></div>
                     <h3>${translations[currentLanguage]['training-sealed-tubes']}</h3>
+                    ${getTrainingMaterialsActionsMarkup('tube', translations[currentLanguage]['training-use'])}
                     <div class="training-potions">
-                        ${Object.entries(sealedTubeDefinitions).map(([key, tube]) => `<article class="training-potion-card"><img src="${tube.image}" alt="${tube.name}"><div><strong>${tube.name}</strong><span>+${tube.exp} EXP · x${sealedTubes[key] || 0}</span></div><button type="button" data-sealed-tube="${key}" ${state.level >= ECHO_MAX_LEVEL || !(sealedTubes[key] > 0) ? 'disabled' : ''}>${translations[currentLanguage]['training-use']}</button></article>`).join('')}
+                        ${Object.entries(sealedTubeDefinitions).map(([key, tube]) => `<article class="training-potion-card"><img src="${tube.image}" alt="${tube.name}"><div><strong>${tube.name}</strong><span>+${tube.exp} EXP · x${sealedTubes[key] || 0}</span></div>${getTrainingMaterialQuantityMarkup('tube', key, sealedTubes[key] || 0)}</article>`).join('')}
                     </div>
                 </div>
             </section>`;
@@ -2074,17 +2262,27 @@ document.addEventListener('DOMContentLoaded', () => {
             saveCurrentUserData();
             renderTrainingPage();
         }));
-        container.querySelectorAll('[data-sealed-tube]').forEach(button => button.addEventListener('click', () => applySealedTube(button.dataset.sealedTube)));
+        bindTrainingMaterialQuantityControls(container);
+        bindTrainingMaterialActions(container, 'tube', sealedTubes, () => {
+            Object.keys(sealedTubeDefinitions).forEach(key => applySealedTube(key, trainingMaterialQuantities.tube[key] || 1, false));
+            saveCurrentUserData();
+            renderTrainingPage();
+        });
+        container.querySelectorAll('[data-sealed-tube]').forEach(button => button.addEventListener('click', () => {
+            const quantity = trainingMaterialQuantities.tube[button.dataset.sealedTube] || 1;
+            applySealedTube(button.dataset.sealedTube, quantity);
+        }));
     }
 
-    function applySealedTube(tubeKey) {
+    function applySealedTube(tubeKey, quantity = 1, shouldRender = true) {
         const echo = getFourCostEchoes().find(item => item.id === selectedTrainingEchoId);
         const tube = sealedTubeDefinitions[tubeKey];
         if (!echo || !tube || !(sealedTubes[tubeKey] > 0)) return;
         const state = getEchoTrainingState(echo.id);
         if (state.level >= ECHO_MAX_LEVEL) return;
-        sealedTubes[tubeKey]--;
-        state.exp += tube.exp;
+        const amount = Math.max(1, Math.min(Math.floor(quantity), sealedTubes[tubeKey]));
+        sealedTubes[tubeKey] -= amount;
+        state.exp += tube.exp * amount;
         while (state.level < ECHO_MAX_LEVEL) {
             const required = 100 + (state.level - 1) * 50;
             if (state.exp < required) break;
@@ -2092,8 +2290,10 @@ document.addEventListener('DOMContentLoaded', () => {
             state.level++;
         }
         if (state.level >= ECHO_MAX_LEVEL) state.exp = 0;
-        saveCurrentUserData();
-        renderTrainingPage();
+        if (shouldRender) {
+            saveCurrentUserData();
+            renderTrainingPage();
+        }
     }
 
     // --- Hunting ---
@@ -2139,6 +2339,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (huntingLastResetDate === today) return;
         usedHuntingCharacters = [];
         selectedHuntCharacterName = null;
+        selectedEchoHuntCharacterName = null;
+        echoHuntState = { difficulty: 'easy', active: false, characterHp: 0, echoHp: 0, defeated: 0, currentEcho: null };
+        clearInterval(resonanceSurgeState.countdown);
+        resonanceSurgeState = { difficulty: 'easy', active: false, score: 0, seconds: 0, characterHp: 0, enemyHp: 0, wave: 1, skillCooldown: 0, enemyName: '', enemyImage: '', countdown: null };
         huntingLastResetDate = today;
         saveCurrentUserData();
     }
@@ -2265,6 +2469,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const domainScore = document.getElementById('domainScore');
     const domainGameResult = document.getElementById('domainGameResult');
     const domainGameLimit = document.getElementById('domainGameLimit');
+    const echoHuntGame = document.getElementById('echoHuntGame');
     const DOMAIN_DAILY_LIMIT = 10;
     const DOMAIN_COOLDOWN_MS = 5 * 60 * 1000;
     let domainGameActive = false;
@@ -2276,6 +2481,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let domainTargetTimeout = null;
     let domainCooldownTicker = null;
     let domainProgress = createEmptyDomainProgress();
+    const echoHuntDifficulties = {
+        easy: { energy: 5, echoCount: 1, echoHp: 100, shell: 200 },
+        medium: { energy: 15, echoCount: 3, echoHp: 250, shell: 600 },
+        hard: { energy: 30, echoCount: 5, echoHp: 500, shell: 1200 }
+    };
+    let echoHuntState = { difficulty: 'easy', active: false, characterHp: 0, echoHp: 0, defeated: 0, currentEcho: null };
+    const resonanceSurgeDifficulties = {
+        easy: { energy: 5, rewards: { basic: 5, medium: 3 }, rewardText: '5 Basic + 3 Medium potions', waves: 3, duration: 60, enemyHp: 70, enemyAttack: 8, shell: 100 },
+        medium: { energy: 15, rewards: { medium: 5, advanced: 3 }, rewardText: '5 Medium + 3 Advanced potions', waves: 6, duration: 90, enemyHp: 105, enemyAttack: 12, shell: 250 },
+        hard: { energy: 30, rewards: { advanced: 5, premium: 3 }, rewardText: '5 Advanced + 3 Premium potions', waves: 8, duration: 120, enemyHp: 145, enemyAttack: 17, shell: 500 }
+    };
+    let resonanceSurgeState = { difficulty: 'easy', active: false, score: 0, seconds: 0, characterHp: 0, enemyHp: 0, wave: 1, skillCooldown: 0, enemyName: '', enemyImage: '', countdown: null };
+    const resourceSurgeStates = {
+        energyCore: { difficulty: 'easy', active: false, score: 0, seconds: 0, characterHp: 0, enemyHp: 0, wave: 1, skillCooldown: 0, enemyName: '', enemyImage: '', countdown: null },
+        sealedTube: { difficulty: 'easy', active: false, score: 0, seconds: 0, characterHp: 0, enemyHp: 0, wave: 1, skillCooldown: 0, enemyName: '', enemyImage: '', countdown: null }
+    };
 
     function getLocalDateKey() {
         const date = new Date();
@@ -2433,6 +2654,288 @@ document.addEventListener('DOMContentLoaded', () => {
         domainPlayButton.addEventListener('click', startDomainGame);
     }
 
+    function renderEchoHunt() {
+        if (typeof window !== 'undefined') window.renderResonanceSurge = renderResonanceSurge;
+        if (!echoHuntGame) return;
+        if (!currentUser) {
+            echoHuntGame.innerHTML = `<p class="echo-hunt-message">${translations[currentLanguage]['echo-hunt-login']}</p>`;
+            return;
+        }
+
+    function renderResonanceSurge() {
+            if (typeof window !== 'undefined') window.renderResourceSurge = renderResourceSurge;
+            const game = document.getElementById('resonanceSurgeGame');
+            if (!game) return;
+            if (!currentUser) {
+                game.innerHTML = `<p class="resonance-surge-message">${translations[currentLanguage]['resonance-surge-login']}</p>`;
+                return;
+            }
+
+            function renderResourceSurge(kind) {
+                const game = document.getElementById(kind === 'energyCore' ? 'energyCoreSurgeGame' : 'sealedTubeSurgeGame');
+                if (!game) return;
+                if (!currentUser || !obtainedCharacters.length) {
+                    game.innerHTML = `<p class="resonance-surge-message">${currentUser ? 'Obține un personaj din Wish pentru a juca.' : 'Autentifică-te și obține un personaj pentru a juca.'}</p>`;
+                    return;
+                }
+                const state = resourceSurgeStates[kind];
+                const difficulty = resonanceSurgeDifficulties[state.difficulty];
+                const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName) || obtainedCharacters[0];
+                selectedEchoHuntCharacterName = character.name;
+                const label = kind === 'energyCore' ? 'Energy Cores' : 'Sealed Tubes';
+                const rewardText = (difficultyKey) => {
+                    const names = kind === 'energyCore' ? ['cores', 'cores'] : ['tubes', 'tubes'];
+                    const tiers = difficultyKey === 'easy' ? ['Basic', 'Medium'] : difficultyKey === 'medium' ? ['Medium', 'Advanced'] : ['Advanced', 'Premium'];
+                    return `5 ${tiers[0]} ${names[0]} + 3 ${tiers[1]} ${names[1]}`;
+                };
+                const rewards = rewardText(state.difficulty);
+                if (state.active) {
+                    const characterState = getCharacterTrainingState(character.name);
+                    const maxHp = 100 + characterState.level * 10;
+                    const attack = 15 + characterState.level * 3;
+                    game.innerHTML = `<div class="resonance-surge-battle"><div class="resonance-surge-hud"><span>Val: <strong>${state.wave} / ${difficulty.waves}</strong></span><span>Timp: <strong>${state.seconds}s</strong></span></div><div class="resonance-surge-arena"><article class="resonance-surge-combatant resonance-surge-hero"><img src="${getTrainingCharacterImage(character)}" alt="${character.name}"><h3>${character.name}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${state.characterHp} / ${maxHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${state.characterHp / maxHp * 100}%"></div></div><p>ATK <strong>${attack}</strong></p></article><div class="resonance-surge-vs">VS</div><article class="resonance-surge-combatant resonance-surge-enemy"><img src="${state.enemyImage}" alt="${state.enemyName}"><h3>${state.enemyName}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${state.enemyHp} / ${difficulty.enemyHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${state.enemyHp / difficulty.enemyHp * 100}%"></div></div><p>ATK <strong>${difficulty.enemyAttack}</strong></p></article></div><div class="resonance-surge-actions"><button type="button" class="wish-button" data-resource-action="attack">Atac normal</button><button type="button" class="wish-button" data-resource-action="skill" ${state.skillCooldown > 0 ? 'disabled' : ''}>Abilitate specială${state.skillCooldown > 0 ? ` (${state.skillCooldown})` : ''}</button></div><p class="resonance-surge-message">Învinge valurile pentru ${label}!</p></div>`;
+                    game.querySelectorAll('[data-resource-action]').forEach(button => button.addEventListener('click', () => resourceSurgeAction(kind, button.dataset.resourceAction)));
+                    return;
+                }
+                game.innerHTML = `<div class="resource-surge-setup"><h3>Alege personajul</h3><div class="echo-hunt-character-picker"><button type="button" class="echo-hunt-selected-character"><img src="${character.img}" alt="${character.name}"><span>${character.name}</span><small>⌄</small></button><div class="echo-hunt-characters">${obtainedCharacters.map(item => `<button type="button" class="echo-hunt-character${item.name === selectedEchoHuntCharacterName ? ' selected' : ''}" data-resource-character="${item.name}"><img src="${item.img}" alt="${item.name}"><span>${item.name}</span></button>`).join('')}</div></div><h3>Alege dificultatea</h3><div class="echo-hunt-difficulty-picker"><button type="button" class="echo-hunt-selected-difficulty"><strong>${state.difficulty === 'easy' ? 'Ușor' : state.difficulty === 'medium' ? 'Mediu' : 'Greu'}</strong><span>${difficulty.energy} energie · ${difficulty.waves} valuri · ${rewards}</span><small>⌄</small></button><div class="echo-hunt-difficulties">${Object.entries(resonanceSurgeDifficulties).map(([key, value]) => `<button type="button" class="echo-hunt-difficulty${state.difficulty === key ? ' selected' : ''}" data-resource-difficulty="${key}"><strong>${key === 'easy' ? 'Ușor' : key === 'medium' ? 'Mediu' : 'Greu'}</strong><span>${value.energy} energie · ${value.waves} valuri</span></button>`).join('')}</div></div><button type="button" class="wish-button" data-resource-start>${translations[currentLanguage]['domains-enter']}</button></div>`;
+                game.querySelectorAll('[data-resource-character]').forEach(button => button.addEventListener('click', () => { selectedEchoHuntCharacterName = button.dataset.resourceCharacter; renderResourceSurge(kind); }));
+                game.querySelectorAll('[data-resource-difficulty]').forEach(button => button.addEventListener('click', () => { state.difficulty = button.dataset.resourceDifficulty; renderResourceSurge(kind); }));
+                game.querySelector('[data-resource-start]').addEventListener('click', () => startResourceSurge(kind));
+            }
+
+            function startResourceSurge(kind) {
+                const state = resourceSurgeStates[kind];
+                const difficulty = resonanceSurgeDifficulties[state.difficulty];
+                if (!spendEnergy(difficulty.energy)) return;
+                state.active = true; state.score = 0; state.wave = 1; state.seconds = difficulty.duration; state.characterHp = 100 + getCharacterTrainingState(selectedEchoHuntCharacterName).level * 10; state.skillCooldown = 0;
+                startResourceWave(kind);
+                renderResourceSurge(kind);
+                state.countdown = setInterval(() => { state.seconds--; if (state.seconds <= 0) finishResourceSurge(kind, false); else renderResourceSurge(kind); }, 1000);
+            }
+
+            function startResourceWave(kind) {
+                const state = resourceSurgeStates[kind];
+                const difficulty = resonanceSurgeDifficulties[state.difficulty];
+                const enemy = echoCatalog.filter(echo => echo.rarity === 4)[Math.floor(Math.random() * echoCatalog.filter(echo => echo.rarity === 4).length)];
+                state.enemyHp = difficulty.enemyHp + (state.wave - 1) * 15;
+                state.enemyName = enemy?.name || 'Resonance Warden'; state.enemyImage = enemy?.image || '';
+            }
+
+            function resourceSurgeAction(kind, action) {
+                const state = resourceSurgeStates[kind]; if (!state.active) return;
+                const difficulty = resonanceSurgeDifficulties[state.difficulty];
+                const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
+                const attack = 15 + getCharacterTrainingState(character.name).level * 3;
+                if (action === 'skill' && state.skillCooldown > 0) return;
+                state.enemyHp = Math.max(0, state.enemyHp - (action === 'skill' ? attack * 2 : attack));
+                if (action === 'skill') state.skillCooldown = 3;
+                if (state.enemyHp === 0) { state.score++; if (state.score >= difficulty.waves) return finishResourceSurge(kind, true); state.wave++; startResourceWave(kind); }
+                else { state.characterHp = Math.max(0, state.characterHp - difficulty.enemyAttack); if (!state.characterHp) return finishResourceSurge(kind, false); }
+                if (state.skillCooldown > 0 && action !== 'skill') state.skillCooldown--;
+                renderResourceSurge(kind);
+            }
+
+            function finishResourceSurge(kind, victory) {
+                const state = resourceSurgeStates[kind]; if (!state.active) return;
+                clearInterval(state.countdown);
+                if (victory) {
+                    const target = kind === 'energyCore' ? energyCores : sealedTubes;
+                    const rewardKeys = state.difficulty === 'easy' ? ['basic', 'medium'] : state.difficulty === 'medium' ? ['medium', 'advanced'] : ['advanced', 'premium'];
+                    target[rewardKeys[0]] += 5; target[rewardKeys[1]] += 3;
+                    changeShellCredits(currentUser, resonanceSurgeDifficulties[state.difficulty].shell);
+                    saveCurrentUserData();
+                }
+                state.active = false; renderResourceSurge(kind);
+            }
+            if (typeof window !== 'undefined') window.renderResourceSurge = renderResourceSurge;
+            if (!obtainedCharacters.length) {
+                game.innerHTML = `<p class="resonance-surge-message">${translations[currentLanguage]['resonance-surge-no-character']}</p>`;
+                return;
+            }
+            if (!obtainedCharacters.some(character => character.name === selectedEchoHuntCharacterName)) selectedEchoHuntCharacterName = obtainedCharacters[0].name;
+            const difficulty = resonanceSurgeDifficulties[resonanceSurgeState.difficulty];
+            const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
+            if (resonanceSurgeState.active) {
+                const characterState = getCharacterTrainingState(character.name);
+                const characterMaxHp = 100 + characterState.level * 10;
+                const characterAttack = 15 + characterState.level * 3;
+                const characterImage = getTrainingCharacterImage(character);
+                game.innerHTML = `<div class="resonance-surge-battle"><div class="resonance-surge-hud"><span>${translations[currentLanguage]['resonance-surge-score']}: <strong>${resonanceSurgeState.wave} / ${difficulty.waves}</strong></span><span>${translations[currentLanguage]['resonance-surge-time']}: <strong>${resonanceSurgeState.seconds}s</strong></span></div><div class="resonance-surge-arena"><article class="resonance-surge-combatant resonance-surge-hero"><img src="${characterImage}" alt="${character.name}" onerror="this.onerror=null;this.src='${character.img}'"><h3>${character.name}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${resonanceSurgeState.characterHp} / ${characterMaxHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${Math.max(0, resonanceSurgeState.characterHp / characterMaxHp * 100)}%"></div></div><p>ATK <strong>${characterAttack}</strong></p></article><div class="resonance-surge-vs">VS</div><article class="resonance-surge-combatant resonance-surge-enemy"><img src="${resonanceSurgeState.enemyImage}" alt="${resonanceSurgeState.enemyName}"><h3>${resonanceSurgeState.enemyName}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${resonanceSurgeState.enemyHp} / ${difficulty.enemyHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${Math.max(0, resonanceSurgeState.enemyHp / difficulty.enemyHp * 100)}%"></div></div><p>ATK <strong>${difficulty.enemyAttack}</strong></p></article></div><div class="resonance-surge-actions"><button type="button" class="wish-button" data-surge-action="attack">Atac normal</button><button type="button" class="wish-button" data-surge-action="skill" ${resonanceSurgeState.skillCooldown > 0 ? 'disabled' : ''}>Abilitate specială${resonanceSurgeState.skillCooldown > 0 ? ` (${resonanceSurgeState.skillCooldown})` : ''}</button></div><p class="resonance-surge-message" id="resonanceSurgeMessage">${translations[currentLanguage]['resonance-surge-active']}</p></div>`;
+                game.querySelectorAll('[data-surge-action]').forEach(button => button.addEventListener('click', () => resonanceSurgeAction(button.dataset.surgeAction)));
+                return;
+            }
+            game.innerHTML = `<h3>${translations[currentLanguage]['resonance-surge-select-character']}</h3><div class="echo-hunt-character-picker"><button type="button" class="echo-hunt-selected-character"><img src="${character.img}" alt="${character.name}"><span>${character.name}</span><small>⌄</small></button><div class="echo-hunt-characters">${obtainedCharacters.map(item => `<button type="button" class="echo-hunt-character${item.name === selectedEchoHuntCharacterName ? ' selected' : ''}" data-surge-character="${item.name}"><img src="${item.img}" alt="${item.name}"><span>${item.name}</span></button>`).join('')}</div></div><h3>${translations[currentLanguage]['resonance-surge-select-difficulty']}</h3><div class="echo-hunt-difficulty-picker"><button type="button" class="echo-hunt-selected-difficulty"><strong>${translations[currentLanguage]['resonance-surge-' + resonanceSurgeState.difficulty]}</strong><span>${translations[currentLanguage]['resonance-surge-requirements'].replace('{energy}', difficulty.energy).replace('{waves}', difficulty.waves).replace('{rewards}', difficulty.rewardText)}</span><small>⌄</small></button><div class="echo-hunt-difficulties">${Object.entries(resonanceSurgeDifficulties).map(([key, value]) => `<button type="button" class="echo-hunt-difficulty${resonanceSurgeState.difficulty === key ? ' selected' : ''}" data-surge-difficulty="${key}"><strong>${translations[currentLanguage]['resonance-surge-' + key]}</strong><span>${translations[currentLanguage]['resonance-surge-requirements'].replace('{energy}', value.energy).replace('{waves}', value.waves).replace('{rewards}', value.rewardText)}</span></button>`).join('')}</div></div><button type="button" class="wish-button" data-surge-start>${translations[currentLanguage]['resonance-surge-start']}</button><p class="resonance-surge-message" id="resonanceSurgeMessage"></p>`;
+            game.querySelectorAll('[data-surge-character]').forEach(button => button.addEventListener('click', () => {
+                selectedEchoHuntCharacterName = button.dataset.surgeCharacter;
+                renderResonanceSurge();
+            }));
+            game.querySelectorAll('[data-surge-difficulty]').forEach(button => button.addEventListener('click', () => {
+                resonanceSurgeState.difficulty = button.dataset.surgeDifficulty;
+                renderResonanceSurge();
+            }));
+            game.querySelector('[data-surge-start]').addEventListener('click', startResonanceSurge);
+    }
+
+    function finishResonanceSurge(victory = true) {
+            if (!resonanceSurgeState.active) return;
+            const difficulty = resonanceSurgeDifficulties[resonanceSurgeState.difficulty];
+            clearInterval(resonanceSurgeState.countdown);
+            const rewards = victory ? difficulty.rewards : {};
+            if (victory) {
+                Object.entries(rewards).forEach(([type, amount]) => {
+                    resonancePotions[type] += amount;
+                });
+                changeShellCredits(currentUser, difficulty.shell);
+            }
+            resonanceSurgeState = { difficulty: resonanceSurgeState.difficulty, active: false, score: 0, seconds: 0, characterHp: 0, enemyHp: 0, wave: 1, skillCooldown: 0, enemyName: '', enemyImage: '', countdown: null };
+            saveCurrentUserData();
+            renderResonanceSurge();
+            const message = document.getElementById('resonanceSurgeMessage');
+            if (message) message.textContent = victory ? translations[currentLanguage]['resonance-surge-finished'].replace('{rewards}', difficulty.rewardText).replace('{shell}', difficulty.shell) : 'Ai fost învins. Încearcă din nou.';
+        }
+
+        function startResonanceWave() {
+            const difficulty = resonanceSurgeDifficulties[resonanceSurgeState.difficulty];
+            const echoes = echoCatalog.filter(echo => echo.rarity === 4);
+            resonanceSurgeState.enemyHp = difficulty.enemyHp + (resonanceSurgeState.wave - 1) * 15;
+            const enemy = echoes[Math.floor(Math.random() * echoes.length)];
+            resonanceSurgeState.enemyName = enemy?.name || 'Resonance Warden';
+            resonanceSurgeState.enemyImage = enemy?.image || '';
+        }
+
+        function resonanceSurgeAction(action) {
+            if (!resonanceSurgeState.active) return;
+            const difficulty = resonanceSurgeDifficulties[resonanceSurgeState.difficulty];
+            const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
+            const characterState = getCharacterTrainingState(character.name);
+            const attack = 15 + characterState.level * 3;
+            const damage = action === 'skill' ? attack * 2 : attack;
+            if (action === 'skill' && resonanceSurgeState.skillCooldown > 0) return;
+            resonanceSurgeState.enemyHp = Math.max(0, resonanceSurgeState.enemyHp - damage);
+            if (action === 'skill') resonanceSurgeState.skillCooldown = 3;
+            if (resonanceSurgeState.enemyHp === 0) {
+                resonanceSurgeState.score++;
+                if (resonanceSurgeState.score >= difficulty.waves) {
+                    finishResonanceSurge();
+                    return;
+                }
+                resonanceSurgeState.wave++;
+                startResonanceWave();
+            } else {
+                resonanceSurgeState.characterHp = Math.max(0, resonanceSurgeState.characterHp - difficulty.enemyAttack);
+                if (resonanceSurgeState.characterHp === 0) {
+                    finishResonanceSurge(false);
+                    return;
+                }
+            }
+            if (resonanceSurgeState.skillCooldown > 0 && action !== 'skill') resonanceSurgeState.skillCooldown--;
+            renderResonanceSurge();
+        }
+
+        function startResonanceSurge() {
+            const difficulty = resonanceSurgeDifficulties[resonanceSurgeState.difficulty];
+            if (!spendEnergy(difficulty.energy)) {
+                document.getElementById('resonanceSurgeMessage').textContent = translations[currentLanguage]['resonance-surge-energy'].replace('{energy}', difficulty.energy);
+                return;
+            }
+            resonanceSurgeState.active = true;
+            resonanceSurgeState.score = 0;
+            resonanceSurgeState.seconds = difficulty.duration;
+            resonanceSurgeState.characterHp = 100 + getCharacterTrainingState(selectedEchoHuntCharacterName).level * 10;
+            resonanceSurgeState.wave = 1;
+            resonanceSurgeState.skillCooldown = 0;
+            startResonanceWave();
+            renderResonanceSurge();
+            resonanceSurgeState.countdown = setInterval(() => {
+                resonanceSurgeState.seconds--;
+                if (resonanceSurgeState.seconds <= 0) finishResonanceSurge(false);
+                else renderResonanceSurge();
+            }, 1000);
+        }
+        if (!obtainedCharacters.length) {
+            echoHuntGame.innerHTML = `<p class="echo-hunt-message">${translations[currentLanguage]['echo-hunt-no-character']}</p>`;
+            return;
+        }
+        if (!obtainedCharacters.some(character => character.name === selectedEchoHuntCharacterName)) {
+            selectedEchoHuntCharacterName = obtainedCharacters[0].name;
+        }
+        const difficulty = echoHuntDifficulties[echoHuntState.difficulty];
+        const selectedCharacter = obtainedCharacters.find(character => character.name === selectedEchoHuntCharacterName);
+        const characterState = getCharacterTrainingState(selectedCharacter.name);
+        const characterMaxHp = 100 + characterState.level * 10;
+        if (echoHuntState.active) {
+            const characterAttack = 15 + characterState.level * 3;
+            const echoAttack = 5 + Object.keys(echoHuntDifficulties).indexOf(echoHuntState.difficulty) * 5;
+            const characterImage = getTrainingCharacterImage(selectedCharacter);
+            echoHuntGame.innerHTML = `<div class="echo-hunt-battle-page"><div class="echo-hunt-battle-header"><span>ECHO HUNT</span><strong>${translations[currentLanguage]['echo-hunt-fight'].replace('{character}', selectedCharacter.name).replace('{echo}', echoHuntState.currentEcho.name)}</strong></div><div class="echo-hunt-battle-arena"><article class="echo-hunt-battle-card echo-hunt-hero"><div class="echo-hunt-battle-image"><img src="${characterImage}" alt="${selectedCharacter.name}" onerror="this.onerror=null;this.src='${selectedCharacter.img}'"></div><h3>${selectedCharacter.name}</h3><div class="echo-hunt-stat"><span>${translations[currentLanguage]['echo-hunt-character-hp']}</span><strong>${echoHuntState.characterHp} / ${characterMaxHp}</strong></div><div class="echo-hunt-hp-track"><div style="width:${Math.max(0, echoHuntState.characterHp / characterMaxHp * 100)}%"></div></div><p>ATK <strong>${characterAttack}</strong></p></article><div class="echo-hunt-vs">VS</div><article class="echo-hunt-battle-card echo-hunt-enemy"><div class="echo-hunt-battle-image"><img src="${echoHuntState.currentEcho.image}" alt="${echoHuntState.currentEcho.name}"></div><h3>${echoHuntState.currentEcho.name}</h3><div class="echo-hunt-stat"><span>${translations[currentLanguage]['echo-hunt-echo-hp']}</span><strong>${echoHuntState.echoHp} / ${difficulty.echoHp}</strong></div><div class="echo-hunt-hp-track"><div style="width:${Math.max(0, echoHuntState.echoHp / difficulty.echoHp * 100)}%"></div></div><p>ATK <strong>${echoAttack}</strong></p></article></div><button type="button" class="wish-button echo-hunt-attack-button" data-echo-hunt-attack>${translations[currentLanguage]['echo-hunt-attack']}</button></div>`;
+            echoHuntGame.querySelector('[data-echo-hunt-attack]').addEventListener('click', echoHuntAttack);
+            return;
+        }
+        const selectedDifficulty = echoHuntDifficulties[echoHuntState.difficulty];
+        echoHuntGame.innerHTML = `<h3>${translations[currentLanguage]['echo-hunt-select-character']}</h3><div class="echo-hunt-character-picker"><button type="button" class="echo-hunt-selected-character" aria-label="${translations[currentLanguage]['echo-hunt-select-character']}"><img src="${selectedCharacter.img}" alt="${selectedCharacter.name}"><span>${selectedCharacter.name}</span><small>⌄</small></button><div class="echo-hunt-characters">${obtainedCharacters.map(character => `<button type="button" class="echo-hunt-character${character.name === selectedEchoHuntCharacterName ? ' selected' : ''}" data-echo-hunt-character="${character.name}"><img src="${character.img}" alt="${character.name}"><span>${character.name}</span></button>`).join('')}</div></div><h3>${translations[currentLanguage]['echo-hunt-select-difficulty']}</h3><div class="echo-hunt-difficulty-picker"><button type="button" class="echo-hunt-selected-difficulty" aria-label="${translations[currentLanguage]['echo-hunt-select-difficulty']}"><strong>${translations[currentLanguage]['echo-hunt-' + echoHuntState.difficulty]}</strong><span>${translations[currentLanguage]['echo-hunt-requirements'].replace('{energy}', selectedDifficulty.energy).replace('{count}', selectedDifficulty.echoCount).replace('{shell}', selectedDifficulty.shell)}</span><small>⌄</small></button><div class="echo-hunt-difficulties">${Object.entries(echoHuntDifficulties).map(([key, value]) => `<button type="button" class="echo-hunt-difficulty${echoHuntState.difficulty === key ? ' selected' : ''}" data-echo-hunt-difficulty="${key}"><strong>${translations[currentLanguage]['echo-hunt-' + key]}</strong><span>${translations[currentLanguage]['echo-hunt-requirements'].replace('{energy}', value.energy).replace('{count}', value.echoCount).replace('{shell}', value.shell)}</span></button>`).join('')}</div></div><button type="button" class="wish-button" data-echo-hunt-start>${translations[currentLanguage]['echo-hunt-start']}</button><p class="echo-hunt-message" id="echoHuntMessage"></p>`;
+        echoHuntGame.querySelectorAll('[data-echo-hunt-character]').forEach(button => button.addEventListener('click', () => {
+            selectedEchoHuntCharacterName = button.dataset.echoHuntCharacter;
+            saveCurrentUserData();
+            renderEchoHunt();
+        }));
+        echoHuntGame.querySelectorAll('[data-echo-hunt-difficulty]').forEach(button => button.addEventListener('click', () => {
+            echoHuntState.difficulty = button.dataset.echoHuntDifficulty;
+            renderEchoHunt();
+        }));
+        echoHuntGame.querySelector('[data-echo-hunt-start]').addEventListener('click', startEchoHunt);
+    }
+
+    function startEchoHunt() {
+        if (!currentUser || !selectedEchoHuntCharacterName) return;
+        const difficulty = echoHuntDifficulties[echoHuntState.difficulty];
+        if (!spendEnergy(difficulty.energy)) {
+            document.getElementById('echoHuntMessage').textContent = translations[currentLanguage]['echo-hunt-energy'].replace('{energy}', difficulty.energy);
+            return;
+        }
+        const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
+        const characterState = getCharacterTrainingState(character.name);
+        const options = echoCatalog.filter(echo => echo.rarity === 4);
+        echoHuntState = { difficulty: echoHuntState.difficulty, active: true, characterHp: 100 + characterState.level * 10, echoHp: difficulty.echoHp, defeated: 0, currentEcho: options[Math.floor(Math.random() * options.length)] };
+        renderEchoHunt();
+    }
+
+    function echoHuntAttack() {
+        if (!echoHuntState.active) return;
+        const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
+        const characterState = getCharacterTrainingState(character.name);
+        const damage = 15 + characterState.level * 3;
+        echoHuntState.echoHp = Math.max(0, echoHuntState.echoHp - damage);
+        if (echoHuntState.echoHp === 0) {
+            echoHuntState.defeated++;
+            const difficulty = echoHuntDifficulties[echoHuntState.difficulty];
+            if (echoHuntState.defeated >= difficulty.echoCount) {
+                const rewards = Array.from({ length: difficulty.echoCount }, () => {
+                    const options = echoCatalog.filter(echo => echo.rarity === 4);
+                    return { ...options[Math.floor(Math.random() * options.length)], id: `echo-${nextEchoId++}` };
+                });
+                echoInventory.push(...rewards);
+                changeShellCredits(currentUser, difficulty.shell);
+                echoHuntState = { difficulty: echoHuntState.difficulty, active: false, characterHp: 0, echoHp: 0, defeated: 0, currentEcho: null };
+                saveCurrentUserData();
+                renderEchoHunt();
+                document.getElementById('echoHuntMessage').textContent = translations[currentLanguage]['echo-hunt-victory'].replace('{count}', difficulty.echoCount).replace('{shell}', difficulty.shell);
+                return;
+            }
+            echoHuntState.echoHp = difficulty.echoHp;
+            const options = echoCatalog.filter(echo => echo.rarity === 4);
+            echoHuntState.currentEcho = options[Math.floor(Math.random() * options.length)];
+        } else {
+            echoHuntState.characterHp = Math.max(0, echoHuntState.characterHp - (5 + Object.keys(echoHuntDifficulties).indexOf(echoHuntState.difficulty) * 5));
+            if (echoHuntState.characterHp === 0) {
+                echoHuntState = { difficulty: echoHuntState.difficulty, active: false, characterHp: 0, echoHp: 0, defeated: 0, currentEcho: null };
+                renderEchoHunt();
+                document.getElementById('echoHuntMessage').textContent = translations[currentLanguage]['echo-hunt-defeat'];
+                return;
+            }
+        }
+        renderEchoHunt();
+    }
+
     // --- Authentication modal handling ---
     authButton.addEventListener('click', () => {
         if (currentUser) {
@@ -2572,6 +3075,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateShopUI();
             } else if (targetPage === 'hunting') {
                 renderHuntingPage();
+            } else if (targetPage === 'domains') {
+                renderEchoHunt();
+                renderResonanceSurge();
+                if (typeof window !== 'undefined' && window.renderResourceSurge) {
+                    window.renderResourceSurge('energyCore');
+                    window.renderResourceSurge('sealedTube');
+                }
             }
         });
     });
