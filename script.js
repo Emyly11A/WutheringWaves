@@ -393,6 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'resonance-surge-login': 'Autentifică-te și obține un personaj pentru a juca.',
             'resonance-surge-no-character': 'Obține un personaj din Wish pentru a juca.',
             'resonance-surge-energy': 'Energie insuficientă. Ai nevoie de {energy}.',
+            'domain-ultimate': 'Ultimata',
             'domains-weapon-tag': 'DEZVOLTARE ARME',
             'domains-weapon-title': 'Domeniul Energiei',
             'domains-weapon-description': 'Aici vei obține Energy Cores pentru creșterea armelor.',
@@ -406,6 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'echo-hunt-hard': 'Greu',
             'echo-hunt-start': 'Intră în domeniu',
             'echo-hunt-attack': 'Atacă Echo-ul',
+            'echo-hunt-skill': 'Ultimata',
             'echo-hunt-login': 'Autentifică-te și obține un personaj pentru a juca.',
             'echo-hunt-no-character': 'Obține un personaj din Wish pentru a juca.',
             'echo-hunt-fight': '{character} luptă împotriva lui {echo}.',
@@ -645,6 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'resonance-surge-login': 'Log in and obtain a character to play.',
             'resonance-surge-no-character': 'Get a character from Wish to play.',
             'resonance-surge-energy': 'Not enough energy. You need {energy}.',
+            'domain-ultimate': 'Ultimate',
             'domains-weapon-tag': 'WEAPON DEVELOPMENT',
             'domains-weapon-title': 'Energy Domain',
             'domains-weapon-description': 'You will obtain Energy Cores to level up weapons here.',
@@ -658,6 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'echo-hunt-hard': 'Hard',
             'echo-hunt-start': 'Enter domain',
             'echo-hunt-attack': 'Attack Echo',
+            'echo-hunt-skill': 'Ultimate',
             'echo-hunt-login': 'Log in and obtain a character to play.',
             'echo-hunt-no-character': 'Get a character from Wish to play.',
             'echo-hunt-fight': '{character} is fighting {echo}.',
@@ -2340,7 +2344,7 @@ document.addEventListener('DOMContentLoaded', () => {
         usedHuntingCharacters = [];
         selectedHuntCharacterName = null;
         selectedEchoHuntCharacterName = null;
-        echoHuntState = { difficulty: 'easy', active: false, characterHp: 0, echoHp: 0, defeated: 0, currentEcho: null };
+        echoHuntState = { difficulty: 'easy', active: false, characterHp: 0, echoHp: 0, defeated: 0, skillCooldown: 0, currentEcho: null };
         clearInterval(resonanceSurgeState.countdown);
         resonanceSurgeState = { difficulty: 'easy', active: false, score: 0, seconds: 0, characterHp: 0, enemyHp: 0, wave: 1, skillCooldown: 0, enemyName: '', enemyImage: '', countdown: null };
         huntingLastResetDate = today;
@@ -2486,7 +2490,7 @@ document.addEventListener('DOMContentLoaded', () => {
         medium: { energy: 15, echoCount: 3, echoHp: 250, shell: 600 },
         hard: { energy: 30, echoCount: 5, echoHp: 500, shell: 1200 }
     };
-    let echoHuntState = { difficulty: 'easy', active: false, characterHp: 0, echoHp: 0, defeated: 0, currentEcho: null };
+    let echoHuntState = { difficulty: 'easy', active: false, characterHp: 0, echoHp: 0, defeated: 0, skillCooldown: 0, currentEcho: null };
     const resonanceSurgeDifficulties = {
         easy: { energy: 5, rewards: { basic: 5, medium: 3 }, rewardText: '5 Basic + 3 Medium potions', waves: 3, duration: 60, enemyHp: 70, enemyAttack: 8, shell: 100 },
         medium: { energy: 15, rewards: { medium: 5, advanced: 3 }, rewardText: '5 Medium + 3 Advanced potions', waves: 6, duration: 90, enemyHp: 105, enemyAttack: 12, shell: 250 },
@@ -2693,7 +2697,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const characterState = getCharacterTrainingState(character.name);
                     const maxHp = 100 + characterState.level * 10;
                     const attack = 15 + characterState.level * 3;
-                    game.innerHTML = `<div class="resonance-surge-battle"><div class="resonance-surge-hud"><span>Val: <strong>${state.wave} / ${difficulty.waves}</strong></span><span>Timp: <strong>${state.seconds}s</strong></span></div><div class="resonance-surge-arena"><article class="resonance-surge-combatant resonance-surge-hero"><img src="${getTrainingCharacterImage(character)}" alt="${character.name}"><h3>${character.name}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${state.characterHp} / ${maxHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${state.characterHp / maxHp * 100}%"></div></div><p>ATK <strong>${attack}</strong></p></article><div class="resonance-surge-vs">VS</div><article class="resonance-surge-combatant resonance-surge-enemy"><img src="${state.enemyImage}" alt="${state.enemyName}"><h3>${state.enemyName}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${state.enemyHp} / ${difficulty.enemyHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${state.enemyHp / difficulty.enemyHp * 100}%"></div></div><p>ATK <strong>${difficulty.enemyAttack}</strong></p></article></div><div class="resonance-surge-actions"><button type="button" class="wish-button" data-resource-action="attack">Atac normal</button><button type="button" class="wish-button" data-resource-action="skill" ${state.skillCooldown > 0 ? 'disabled' : ''}>Abilitate specială${state.skillCooldown > 0 ? ` (${state.skillCooldown})` : ''}</button></div><p class="resonance-surge-message">Învinge valurile pentru ${label}!</p></div>`;
+                    game.innerHTML = `<div class="resonance-surge-battle"><div class="resonance-surge-hud"><span>Val: <strong>${state.wave} / ${difficulty.waves}</strong></span><span>Timp: <strong>${state.seconds}s</strong></span></div><div class="resonance-surge-arena"><article class="resonance-surge-combatant resonance-surge-hero"><img src="${getTrainingCharacterImage(character)}" alt="${character.name}"><h3>${character.name}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${state.characterHp} / ${maxHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${state.characterHp / maxHp * 100}%"></div></div><p>ATK <strong>${attack}</strong></p></article><div class="resonance-surge-vs">VS</div><article class="resonance-surge-combatant resonance-surge-enemy"><img src="${state.enemyImage}" alt="${state.enemyName}"><h3>${state.enemyName}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${state.enemyHp} / ${difficulty.enemyHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${state.enemyHp / difficulty.enemyHp * 100}%"></div></div><p>ATK <strong>${difficulty.enemyAttack}</strong></p></article></div><div class="resonance-surge-actions"><button type="button" class="wish-button" data-resource-action="attack">Atac normal</button><button type="button" class="wish-button" data-resource-action="skill" ${state.skillCooldown > 0 ? 'disabled' : ''}>${translations[currentLanguage]['domain-ultimate']}${state.skillCooldown > 0 ? ` (${state.skillCooldown})` : ''}</button></div><p class="resonance-surge-message">Învinge valurile pentru ${label}!</p></div>`;
                     game.querySelectorAll('[data-resource-action]').forEach(button => button.addEventListener('click', () => resourceSurgeAction(kind, button.dataset.resourceAction)));
                     return;
                 }
@@ -2760,7 +2764,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const characterMaxHp = 100 + characterState.level * 10;
                 const characterAttack = 15 + characterState.level * 3;
                 const characterImage = getTrainingCharacterImage(character);
-                game.innerHTML = `<div class="resonance-surge-battle"><div class="resonance-surge-hud"><span>${translations[currentLanguage]['resonance-surge-score']}: <strong>${resonanceSurgeState.wave} / ${difficulty.waves}</strong></span><span>${translations[currentLanguage]['resonance-surge-time']}: <strong>${resonanceSurgeState.seconds}s</strong></span></div><div class="resonance-surge-arena"><article class="resonance-surge-combatant resonance-surge-hero"><img src="${characterImage}" alt="${character.name}" onerror="this.onerror=null;this.src='${character.img}'"><h3>${character.name}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${resonanceSurgeState.characterHp} / ${characterMaxHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${Math.max(0, resonanceSurgeState.characterHp / characterMaxHp * 100)}%"></div></div><p>ATK <strong>${characterAttack}</strong></p></article><div class="resonance-surge-vs">VS</div><article class="resonance-surge-combatant resonance-surge-enemy"><img src="${resonanceSurgeState.enemyImage}" alt="${resonanceSurgeState.enemyName}"><h3>${resonanceSurgeState.enemyName}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${resonanceSurgeState.enemyHp} / ${difficulty.enemyHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${Math.max(0, resonanceSurgeState.enemyHp / difficulty.enemyHp * 100)}%"></div></div><p>ATK <strong>${difficulty.enemyAttack}</strong></p></article></div><div class="resonance-surge-actions"><button type="button" class="wish-button" data-surge-action="attack">Atac normal</button><button type="button" class="wish-button" data-surge-action="skill" ${resonanceSurgeState.skillCooldown > 0 ? 'disabled' : ''}>Abilitate specială${resonanceSurgeState.skillCooldown > 0 ? ` (${resonanceSurgeState.skillCooldown})` : ''}</button></div><p class="resonance-surge-message" id="resonanceSurgeMessage">${translations[currentLanguage]['resonance-surge-active']}</p></div>`;
+                game.innerHTML = `<div class="resonance-surge-battle"><div class="resonance-surge-hud"><span>${translations[currentLanguage]['resonance-surge-score']}: <strong>${resonanceSurgeState.wave} / ${difficulty.waves}</strong></span><span>${translations[currentLanguage]['resonance-surge-time']}: <strong>${resonanceSurgeState.seconds}s</strong></span></div><div class="resonance-surge-arena"><article class="resonance-surge-combatant resonance-surge-hero"><img src="${characterImage}" alt="${character.name}" onerror="this.onerror=null;this.src='${character.img}'"><h3>${character.name}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${resonanceSurgeState.characterHp} / ${characterMaxHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${Math.max(0, resonanceSurgeState.characterHp / characterMaxHp * 100)}%"></div></div><p>ATK <strong>${characterAttack}</strong></p></article><div class="resonance-surge-vs">VS</div><article class="resonance-surge-combatant resonance-surge-enemy"><img src="${resonanceSurgeState.enemyImage}" alt="${resonanceSurgeState.enemyName}"><h3>${resonanceSurgeState.enemyName}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${resonanceSurgeState.enemyHp} / ${difficulty.enemyHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${Math.max(0, resonanceSurgeState.enemyHp / difficulty.enemyHp * 100)}%"></div></div><p>ATK <strong>${difficulty.enemyAttack}</strong></p></article></div><div class="resonance-surge-actions"><button type="button" class="wish-button" data-surge-action="attack">Atac normal</button><button type="button" class="wish-button" data-surge-action="skill" ${resonanceSurgeState.skillCooldown > 0 ? 'disabled' : ''}>${translations[currentLanguage]['domain-ultimate']}${resonanceSurgeState.skillCooldown > 0 ? ` (${resonanceSurgeState.skillCooldown})` : ''}</button></div><p class="resonance-surge-message" id="resonanceSurgeMessage">${translations[currentLanguage]['resonance-surge-active']}</p></div>`;
                 game.querySelectorAll('[data-surge-action]').forEach(button => button.addEventListener('click', () => resonanceSurgeAction(button.dataset.surgeAction)));
                 return;
             }
@@ -2867,8 +2871,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const characterAttack = 15 + characterState.level * 3;
             const echoAttack = 5 + Object.keys(echoHuntDifficulties).indexOf(echoHuntState.difficulty) * 5;
             const characterImage = getTrainingCharacterImage(selectedCharacter);
-            echoHuntGame.innerHTML = `<div class="echo-hunt-battle-page"><div class="echo-hunt-battle-header"><span>ECHO HUNT</span><strong>${translations[currentLanguage]['echo-hunt-fight'].replace('{character}', selectedCharacter.name).replace('{echo}', echoHuntState.currentEcho.name)}</strong></div><div class="echo-hunt-battle-arena"><article class="echo-hunt-battle-card echo-hunt-hero"><div class="echo-hunt-battle-image"><img src="${characterImage}" alt="${selectedCharacter.name}" onerror="this.onerror=null;this.src='${selectedCharacter.img}'"></div><h3>${selectedCharacter.name}</h3><div class="echo-hunt-stat"><span>${translations[currentLanguage]['echo-hunt-character-hp']}</span><strong>${echoHuntState.characterHp} / ${characterMaxHp}</strong></div><div class="echo-hunt-hp-track"><div style="width:${Math.max(0, echoHuntState.characterHp / characterMaxHp * 100)}%"></div></div><p>ATK <strong>${characterAttack}</strong></p></article><div class="echo-hunt-vs">VS</div><article class="echo-hunt-battle-card echo-hunt-enemy"><div class="echo-hunt-battle-image"><img src="${echoHuntState.currentEcho.image}" alt="${echoHuntState.currentEcho.name}"></div><h3>${echoHuntState.currentEcho.name}</h3><div class="echo-hunt-stat"><span>${translations[currentLanguage]['echo-hunt-echo-hp']}</span><strong>${echoHuntState.echoHp} / ${difficulty.echoHp}</strong></div><div class="echo-hunt-hp-track"><div style="width:${Math.max(0, echoHuntState.echoHp / difficulty.echoHp * 100)}%"></div></div><p>ATK <strong>${echoAttack}</strong></p></article></div><button type="button" class="wish-button echo-hunt-attack-button" data-echo-hunt-attack>${translations[currentLanguage]['echo-hunt-attack']}</button></div>`;
-            echoHuntGame.querySelector('[data-echo-hunt-attack]').addEventListener('click', echoHuntAttack);
+            echoHuntGame.innerHTML = `<div class="echo-hunt-battle-page"><div class="echo-hunt-battle-header"><span>ECHO HUNT</span><strong>${translations[currentLanguage]['echo-hunt-fight'].replace('{character}', selectedCharacter.name).replace('{echo}', echoHuntState.currentEcho.name)}</strong></div><div class="echo-hunt-battle-arena"><article class="echo-hunt-battle-card echo-hunt-hero"><div class="echo-hunt-battle-image"><img src="${characterImage}" alt="${selectedCharacter.name}" onerror="this.onerror=null;this.src='${selectedCharacter.img}'"></div><h3>${selectedCharacter.name}</h3><div class="echo-hunt-stat"><span>${translations[currentLanguage]['echo-hunt-character-hp']}</span><strong>${echoHuntState.characterHp} / ${characterMaxHp}</strong></div><div class="echo-hunt-hp-track"><div style="width:${Math.max(0, echoHuntState.characterHp / characterMaxHp * 100)}%"></div></div><p>ATK <strong>${characterAttack}</strong></p></article><div class="echo-hunt-vs">VS</div><article class="echo-hunt-battle-card echo-hunt-enemy"><div class="echo-hunt-battle-image"><img src="${echoHuntState.currentEcho.image}" alt="${echoHuntState.currentEcho.name}"></div><h3>${echoHuntState.currentEcho.name}</h3><div class="echo-hunt-stat"><span>${translations[currentLanguage]['echo-hunt-echo-hp']}</span><strong>${echoHuntState.echoHp} / ${difficulty.echoHp}</strong></div><div class="echo-hunt-hp-track"><div style="width:${Math.max(0, echoHuntState.echoHp / difficulty.echoHp * 100)}%"></div></div><p>ATK <strong>${echoAttack}</strong></p></article></div><div class="echo-hunt-actions"><button type="button" class="wish-button echo-hunt-attack-button" data-echo-hunt-action="attack">${translations[currentLanguage]['echo-hunt-attack']}</button><button type="button" class="wish-button" data-echo-hunt-action="skill" ${echoHuntState.skillCooldown > 0 ? 'disabled' : ''}>${translations[currentLanguage]['echo-hunt-skill']}${echoHuntState.skillCooldown > 0 ? ` (${echoHuntState.skillCooldown})` : ''}</button></div></div>`;
+            echoHuntGame.querySelectorAll('[data-echo-hunt-action]').forEach(button => button.addEventListener('click', () => echoHuntAttack(button.dataset.echoHuntAction)));
             return;
         }
         const selectedDifficulty = echoHuntDifficulties[echoHuntState.difficulty];
@@ -2895,15 +2899,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
         const characterState = getCharacterTrainingState(character.name);
         const options = echoCatalog.filter(echo => echo.rarity === 4);
-        echoHuntState = { difficulty: echoHuntState.difficulty, active: true, characterHp: 100 + characterState.level * 10, echoHp: difficulty.echoHp, defeated: 0, currentEcho: options[Math.floor(Math.random() * options.length)] };
+        echoHuntState = { difficulty: echoHuntState.difficulty, active: true, characterHp: 100 + characterState.level * 10, echoHp: difficulty.echoHp, defeated: 0, skillCooldown: 0, currentEcho: options[Math.floor(Math.random() * options.length)] };
         renderEchoHunt();
     }
 
-    function echoHuntAttack() {
+    function echoHuntAttack(action = 'attack') {
         if (!echoHuntState.active) return;
         const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
         const characterState = getCharacterTrainingState(character.name);
-        const damage = 15 + characterState.level * 3;
+        if (action === 'skill' && echoHuntState.skillCooldown > 0) return;
+        const damage = (15 + characterState.level * 3) * (action === 'skill' ? 2 : 1);
+        if (action === 'skill') echoHuntState.skillCooldown = 3;
         echoHuntState.echoHp = Math.max(0, echoHuntState.echoHp - damage);
         if (echoHuntState.echoHp === 0) {
             echoHuntState.defeated++;
@@ -2915,7 +2921,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 echoInventory.push(...rewards);
                 changeShellCredits(currentUser, difficulty.shell);
-                echoHuntState = { difficulty: echoHuntState.difficulty, active: false, characterHp: 0, echoHp: 0, defeated: 0, currentEcho: null };
+                echoHuntState = { difficulty: echoHuntState.difficulty, active: false, characterHp: 0, echoHp: 0, defeated: 0, skillCooldown: 0, currentEcho: null };
                 saveCurrentUserData();
                 renderEchoHunt();
                 document.getElementById('echoHuntMessage').textContent = translations[currentLanguage]['echo-hunt-victory'].replace('{count}', difficulty.echoCount).replace('{shell}', difficulty.shell);
@@ -2927,12 +2933,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             echoHuntState.characterHp = Math.max(0, echoHuntState.characterHp - (5 + Object.keys(echoHuntDifficulties).indexOf(echoHuntState.difficulty) * 5));
             if (echoHuntState.characterHp === 0) {
-                echoHuntState = { difficulty: echoHuntState.difficulty, active: false, characterHp: 0, echoHp: 0, defeated: 0, currentEcho: null };
+                echoHuntState = { difficulty: echoHuntState.difficulty, active: false, characterHp: 0, echoHp: 0, defeated: 0, skillCooldown: 0, currentEcho: null };
                 renderEchoHunt();
                 document.getElementById('echoHuntMessage').textContent = translations[currentLanguage]['echo-hunt-defeat'];
                 return;
             }
         }
+        if (echoHuntState.skillCooldown > 0 && action !== 'skill') echoHuntState.skillCooldown--;
         renderEchoHunt();
     }
 
