@@ -37,6 +37,7 @@
                 <li><a href="#" class="nav-link" data-page="training" data-translate="nav-training">Antrenament</a></li>
                 <li><a href="#" class="nav-link" data-page="domain" data-translate="nav-domain">Domain</a></li>
                 <li><a href="#" class="nav-link" data-page="domains" data-translate="nav-domains">Domeniu</a></li>
+                <li><a href="#" class="nav-link" data-page="boss" data-translate="nav-boss">Boss</a></li>
                 <li><a href="#" class="nav-link" data-page="hunting" data-translate="nav-hunting">Vânătoare</a></li>
                 <li><a href="#" class="nav-link" data-page="shop" data-translate="nav-shop">Shop</a></li>
             </ul>
@@ -138,18 +139,24 @@
                 </div>
                 
                 <div class="features">
-                    <div class="feature-card">
+                    <button type="button" class="feature-card home-page-card" data-home-page="wish">
                         <h3 data-translate="feature-simulator-title">Simulator Wish</h3>
                         <p data-translate="feature-simulator-desc">Simulează sistemul de wish din joc cu rate personalizabile și pity tracking pentru 5 stele.</p>
-                    </div>
-                    <div class="feature-card">
+                    </button>
+                    <button type="button" class="feature-card home-page-card" data-home-page="characters">
                         <h3 data-translate="feature-characters-title">Colecție Personaje</h3>
                         <p data-translate="feature-characters-desc">Vizualizează toate personajele pe care le-ai obținut, organizate după raritate.</p>
-                    </div>
-                    <div class="feature-card">
+                    </button>
+                    <button type="button" class="feature-card home-page-card" data-home-page="weapons">
                         <h3 data-translate="feature-weapons-title">Colecție Arme</h3>
                         <p data-translate="feature-weapons-desc">Explorează arsenalul tău complet, cu toate armele organizate pe categorii.</p>
-                    </div>
+                    </button>
+                    <button type="button" class="home-page-card" data-home-page="training"><h3 data-translate="home-training-title">Antrenament</h3><p data-translate="home-training-description">Crește nivelul personajelor, armelor și echourilor.</p></button>
+                    <button type="button" class="home-page-card" data-home-page="domain"><h3 data-translate="home-expedition-title">Expediție</h3><p data-translate="home-expedition-description">Trimite personajele în expediții pentru recompense.</p></button>
+                    <button type="button" class="home-page-card" data-home-page="domains"><h3 data-translate="home-domain-title">Domeniu</h3><p data-translate="home-domain-description">Joacă mini-jocuri pentru resurse și echouri.</p></button>
+                    <button type="button" class="home-page-card" data-home-page="boss"><h3 data-translate="home-boss-title">Boss</h3><p data-translate="home-boss-description">Înfruntă boss-uri cu echipa ta de trei personaje.</p></button>
+                    <button type="button" class="home-page-card" data-home-page="hunting"><h3 data-translate="home-hunting-title">Vânătoare</h3><p data-translate="home-hunting-description">Trimite un personaj la vânătoare pentru recompense.</p></button>
+                    <button type="button" class="home-page-card" data-home-page="shop"><h3 data-translate="home-shop-title">Magazin</h3><p data-translate="home-shop-description">Schimbă Shell Credits pe Astrite.</p></button>
                 </div>
             </div>
         </div>
@@ -441,6 +448,18 @@
                         <div id="sealedTubeSurgeGame" class="resonance-surge-game"></div>
                     </article>
                 </div>
+            </div>
+        </div>
+
+        <!-- Pagina Boss -->
+        <div class="page" id="boss">
+            <div class="boss-container">
+                <header class="boss-header">
+                    <span class="boss-eyebrow" data-translate="boss-eyebrow">BOSS CHALLENGE</span>
+                    <h1 data-translate="boss-title">Boss</h1>
+                    <p data-translate="boss-description">Formează o echipă de trei personaje și înfruntă un boss pentru Astrite.</p>
+                </header>
+                <div id="bossGame" class="boss-game"></div>
             </div>
         </div>
 
