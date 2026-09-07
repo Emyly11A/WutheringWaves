@@ -3485,6 +3485,11 @@ nav {
 .echo-hunt-combatant img { width: 64px; height: 64px; object-fit: contain; }
 .echo-hunt-enemy { border-color: rgba(255,122,217,0.3); }
 .echo-hunt-message { min-height: 1.2rem; margin: 0; color: var(--muted); line-height: 1.4; }
+.ultimate-video-popup { position: fixed; z-index: 2100; inset: 0; display: grid; place-items: center; padding: 1.25rem; background: rgba(1, 6, 17, 0.86); animation: hunt-popup-in 0.2s ease-out; }
+.ultimate-video-card { position: relative; width: min(760px, 100%); padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid rgba(124,240,255,0.48); border-radius: 20px; background: linear-gradient(145deg, #101e3b, #070f23); box-shadow: 0 0 34px rgba(124,240,255,0.22); }
+.ultimate-video-card h2 { margin: 0 2.2rem 1rem 0; color: var(--accent); font-family: 'Orbitron', sans-serif; font-size: clamp(0.95rem, 3vw, 1.25rem); }
+.ultimate-video-card video { display: block; width: 100%; max-height: 70vh; border-radius: 12px; background: #000; }
+.ultimate-video-close { position: absolute; top: 0.65rem; right: 0.75rem; width: 2rem; height: 2rem; border: 0; border-radius: 50%; background: rgba(255,255,255,0.1); color: var(--text); cursor: pointer; font-size: 1.35rem; line-height: 1; }
 .resonance-surge-game { display: grid; gap: 0.7rem; margin-top: 1rem; }
 .resonance-surge-game h3 { margin: 0.25rem 0 0; color: var(--accent); font-family: 'Orbitron', sans-serif; font-size: 0.8rem; }
 .resonance-surge-battle { display: grid; gap: 0.7rem; }
