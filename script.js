@@ -1659,6 +1659,44 @@ document.addEventListener('DOMContentLoaded', () => {
         return `poze charactere/char ${character.rarity} full/${fileName}.png`;
     }
 
+    function getUltimateVideos(character) {
+        const videoFileNames = {
+            'Luuk Hersen': ['Luuk.mp4'],
+            'Yangyang: Xuanling': ['Yangyang Xiangling.mp4']
+        };
+        const multipleVideos = new Set([
+            'Aemeath', 'Augusta', 'Calcharo', 'Carlotta', 'Carthetiya',
+            'Denia', 'Hiyuki', 'Shorekeeper'
+        ]);
+        const fileNames = videoFileNames[character.name] || (
+            multipleVideos.has(character.name)
+                ? [`${character.name}.mp4`, `${character.name} 2.mp4`]
+                : [`${character.name}.mp4`]
+        );
+        return fileNames.map(fileName => `poze charactere/video/${encodeURIComponent(fileName)}`);
+    }
+
+    function showUltimateVideo(character) {
+        const videos = getUltimateVideos(character);
+        const videoSource = videos[Math.floor(Math.random() * videos.length)];
+        const popup = document.createElement('div');
+        popup.className = 'ultimate-video-popup';
+        popup.setAttribute('role', 'dialog');
+        popup.setAttribute('aria-modal', 'true');
+        popup.innerHTML = `<section class="ultimate-video-card"><button type="button" class="ultimate-video-close" aria-label="Închide">×</button><h2>${character.name} · ${translations[currentLanguage]['domain-ultimate']}</h2><video class="ultimate-video" autoplay muted playsinline></video></section>`;
+        const close = () => popup.remove();
+        popup.addEventListener('click', event => {
+            if (event.target === popup) close();
+        });
+        popup.querySelector('.ultimate-video-close').addEventListener('click', close);
+        document.body.appendChild(popup);
+        const video = popup.querySelector('video');
+        video.addEventListener('ended', close, { once: true });
+        video.src = videoSource;
+        video.load();
+        video.play().catch(error => console.error('Ultimate video playback failed:', error));
+    }
+
     function getTrainingWeaponImage(weapon) {
         return `poze%20arme/arme%20${weapon.rarity}%20full/${encodeURIComponent(weapon.name)}.png`;
     }
@@ -2731,6 +2769,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
                 const attack = 15 + getCharacterTrainingState(character.name).level * 3;
                 if (action === 'skill' && state.skillCooldown > 0) return;
+                if (action === 'skill') showUltimateVideo(character);
                 state.enemyHp = Math.max(0, state.enemyHp - (action === 'skill' ? attack * 2 : attack));
                 if (action === 'skill') state.skillCooldown = 3;
                 if (state.enemyHp === 0) { state.score++; if (state.score >= difficulty.waves) return finishResourceSurge(kind, true); state.wave++; startResourceWave(kind); }
@@ -2815,6 +2854,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const attack = 15 + characterState.level * 3;
             const damage = action === 'skill' ? attack * 2 : attack;
             if (action === 'skill' && resonanceSurgeState.skillCooldown > 0) return;
+            if (action === 'skill') showUltimateVideo(character);
             resonanceSurgeState.enemyHp = Math.max(0, resonanceSurgeState.enemyHp - damage);
             if (action === 'skill') resonanceSurgeState.skillCooldown = 3;
             if (resonanceSurgeState.enemyHp === 0) {
@@ -2908,6 +2948,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
         const characterState = getCharacterTrainingState(character.name);
         if (action === 'skill' && echoHuntState.skillCooldown > 0) return;
+        if (action === 'skill') showUltimateVideo(character);
         const damage = (15 + characterState.level * 3) * (action === 'skill' ? 2 : 1);
         if (action === 'skill') echoHuntState.skillCooldown = 3;
         echoHuntState.echoHp = Math.max(0, echoHuntState.echoHp - damage);
