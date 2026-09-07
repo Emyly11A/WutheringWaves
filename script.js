@@ -185,6 +185,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function getWeaponType(weapon) {
         return Object.keys(weaponTypeGroups).find(type => weaponTypeGroups[type].includes(weapon.name)) || 'Unknown';
     }
+
+    const bosses = [
+        { name: "Aleph 1's Creation", image: "boss/Aleph%201's%20Creation.png" },
+        { name: "Bell Borne Geochelone", image: "boss/Bell%20Borne%20Geochelone.png" },
+        { name: "Denia", image: "boss/Denia.png" },
+        { name: "Dreamless", image: "boss/Dreamless.png" },
+        { name: "Fleurdelys", image: "boss/Fleurdelys.png" },
+        { name: "Hecate", image: "boss/Hecate.png" },
+        { name: "Jue", image: "boss/Jue.png" },
+        { name: "Scar Aberrant Nightmare", image: "boss/Scar%20Aberrant%20Nightmare.png" },
+        { name: "Scar Lightbane Reversal", image: "boss/Scar%20Lightbane%20Reversal.png" },
+        { name: "Sigillum", image: "boss/Sigillum.png" },
+        { name: "Threnodian Leviathan", image: "boss/Threnodian%20Leviathan.png" },
+        { name: "Thousand Puppet Pavilion", image: "boss/Thousand%20Puppet%20Pavilion.png" },
+        { name: "Voidworm", image: "boss/Voidworm.png" }
+    ];
     
     // DOM Elements
     const navLinks = document.querySelectorAll('.nav-link');
@@ -320,6 +336,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let usedHuntingCharacters = [];
     let selectedHuntCharacterName = null;
     let selectedEchoHuntCharacterName = null;
+    let bossTeam = [null, null, null];
+    let bossSelection = { boss: bosses[0].name, level: 1 };
+    let bossBattle = null;
     let huntingLastResetDate = null;
     let huntingSonataFilter = [];
     let huntingRarityFilter = [];
@@ -354,7 +373,25 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav-training': 'Antrenament',
             'nav-domain': 'Expediție',
             'nav-domains': 'Domeniu',
+            'nav-boss': 'Boss',
             'nav-hunting': 'Vânătoare',
+            'boss-eyebrow': 'PROVOCARE BOSS',
+            'boss-title': 'Boss',
+            'boss-description': 'Formează o echipă de trei personaje și înfruntă un boss pentru Astrite.',
+            'boss-select-team': 'Alege 3 personaje',
+            'boss-select-boss': 'Alege bossul',
+            'boss-select-level': 'Nivel boss',
+            'boss-start': 'Intră în luptă',
+            'boss-auto': 'Lupta se desfășoară automat. Folosește Ultimatele când dorești.',
+            'boss-back': 'Înapoi',
+            'boss-reward': 'Recompensă: +{astrite} Astrite · +{union} Union EXP',
+            'boss-login': 'Autentifică-te pentru a începe o luptă.',
+            'boss-no-characters': 'Obține cel puțin 3 personaje din Wish pentru a începe.',
+            'boss-team-error': 'Alege trei personaje diferite.',
+            'boss-attack': 'Atacă',
+            'boss-team': 'Echipa ta',
+            'boss-victory': 'Victorie! Ai primit +{astrite} Astrite și +{union} Union EXP.',
+            'boss-defeat': 'Echipa a fost învinsă. Încearcă o echipă mai puternică.',
             'hunting-eyebrow': 'EXPEDIȚIE DE VÂNĂTOARE',
             'hunting-title': 'Vânătoare',
             'hunting-description': 'Trimite un personaj într-o vânătoare. Fiecare personaj poate pleca o singură dată.',
@@ -364,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'hunting-empty': 'Obține un personaj din Wish pentru a începe vânătoarea.',
             'hunting-login': 'Autentifică-te pentru a porni o vânătoare.',
             'hunting-select-error': 'Alege un personaj disponibil.',
-            'hunting-success': '{character} s-a întors cu {shell} Shell Credits și {count} Echoes.',
+            'hunting-success': '{character} s-a întors cu {shell} Shell Credits, {count} Echoes și +{union} Union EXP.',
             'hunting-reward-title': 'Recompense de vânătoare',
             'hunting-reward-shell': 'Shell Credits câștigate',
             'hunting-echoes': 'Echoes obținute',
@@ -389,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'resonance-surge-active': 'Învinge valurile de inamici!',
             'resonance-surge-score': 'Val',
             'resonance-surge-time': 'Timp',
-            'resonance-surge-finished': 'Resonance Surge completat! +{rewards} și +{shell} Shell Credits.',
+            'resonance-surge-finished': 'Resonance Surge completat! +{rewards}, +{shell} Shell Credits și +{union} Union EXP.',
             'resonance-surge-login': 'Autentifică-te și obține un personaj pentru a juca.',
             'resonance-surge-no-character': 'Obține un personaj din Wish pentru a juca.',
             'resonance-surge-energy': 'Energie insuficientă. Ai nevoie de {energy}.',
@@ -411,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'echo-hunt-login': 'Autentifică-te și obține un personaj pentru a juca.',
             'echo-hunt-no-character': 'Obține un personaj din Wish pentru a juca.',
             'echo-hunt-fight': '{character} luptă împotriva lui {echo}.',
-            'echo-hunt-victory': 'Victorie! Ai primit {count} Echo de 4 Cost și {shell} Shell Credits.',
+            'echo-hunt-victory': 'Victorie! Ai primit {count} Echo de 4 Cost, {shell} Shell Credits și +{union} Union EXP.',
             'echo-hunt-defeat': 'Ai fost învins. Încearcă din nou cu un personaj mai bine antrenat.',
             'echo-hunt-energy': 'Energie insuficientă. Ai nevoie de {energy}.',
             'echo-hunt-requirements': '{energy} energie · {count} Echoes · {shell} Shell Credits',
@@ -450,6 +487,18 @@ document.addEventListener('DOMContentLoaded', () => {
             'feature-characters-desc': 'Vizualizează toate personajele pe care le-ai obținut, organizate după raritate.',
             'feature-weapons-title': 'Colecție Arme',
             'feature-weapons-desc': 'Explorează arsenalul tău complet, cu toate armele organizate pe categorii.',
+            'home-training-title': 'Antrenament',
+            'home-training-description': 'Crește nivelul personajelor, armelor și echourilor.',
+            'home-expedition-title': 'Expediție',
+            'home-expedition-description': 'Trimite personajele în expediții pentru recompense.',
+            'home-domain-title': 'Domeniu',
+            'home-domain-description': 'Joacă mini-jocuri pentru resurse și echouri.',
+            'home-boss-title': 'Boss',
+            'home-boss-description': 'Înfruntă boss-uri cu echipa ta de trei personaje.',
+            'home-hunting-title': 'Vânătoare',
+            'home-hunting-description': 'Trimite un personaj la vânătoare pentru recompense.',
+            'home-shop-title': 'Magazin',
+            'home-shop-description': 'Schimbă Shell Credits pe Astrite.',
             'wish-title': 'Wuthering Waves Wishing Simulator',
             'wish-description': 'Apasă pe butoane pentru a face o tragere!',
             'wish-total-wishes': 'Total Trageri: ',
@@ -569,7 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'domain-game-limit-reached': 'Ai atins limita de 10 expediții pentru astăzi.',
             'domain-game-login': 'Autentifică-te pentru a începe o expediție.',
             'domain-game-active': 'Colectează nucleele înainte să dispară!',
-            'domain-game-finished': 'Expediția s-a încheiat: +{shell} Shell Credits și +{astrite} Astrite.',
+            'domain-game-finished': 'Expediția s-a încheiat: +{shell} Shell Credits, +{astrite} Astrite și +{union} Union EXP.',
             'domain-play-btn': 'Joacă!',
             'nav-shop': 'Magazin',
             'shop-eyebrow': 'BURSA DE RESURSE',
@@ -608,7 +657,25 @@ document.addEventListener('DOMContentLoaded', () => {
             'nav-training': 'Training',
             'nav-domain': 'Expedition',
             'nav-domains': 'Domain',
+            'nav-boss': 'Boss',
             'nav-hunting': 'Hunting',
+            'boss-eyebrow': 'BOSS CHALLENGE',
+            'boss-title': 'Boss',
+            'boss-description': 'Form a team of three characters and defeat a boss for Astrite.',
+            'boss-select-team': 'Choose 3 characters',
+            'boss-select-boss': 'Choose boss',
+            'boss-select-level': 'Boss level',
+            'boss-start': 'Enter battle',
+            'boss-auto': 'The battle runs automatically. Use Ultimates whenever you want.',
+            'boss-back': 'Back',
+            'boss-reward': 'Reward: +{astrite} Astrite · +{union} Union EXP',
+            'boss-login': 'Log in to start a battle.',
+            'boss-no-characters': 'Get at least 3 characters from Wish to begin.',
+            'boss-team-error': 'Choose three different characters.',
+            'boss-attack': 'Attack',
+            'boss-team': 'Your team',
+            'boss-victory': 'Victory! You received +{astrite} Astrite and +{union} Union EXP.',
+            'boss-defeat': 'Your team was defeated. Try a stronger team.',
             'hunting-eyebrow': 'HUNTING EXPEDITION',
             'hunting-title': 'Hunting',
             'hunting-description': 'Send a character on a hunt. Each character can only go once.',
@@ -618,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'hunting-empty': 'Get a character from Wish to start hunting.',
             'hunting-login': 'Log in to start a hunt.',
             'hunting-select-error': 'Choose an available character.',
-            'hunting-success': '{character} returned with {shell} Shell Credits and {count} Echoes.',
+            'hunting-success': '{character} returned with {shell} Shell Credits, {count} Echoes, and +{union} Union EXP.',
             'hunting-reward-title': 'Hunting rewards',
             'hunting-reward-shell': 'Shell Credits earned',
             'hunting-echoes': 'Echoes obtained',
@@ -643,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'resonance-surge-active': 'Collect the particles!',
             'resonance-surge-score': 'Particles',
             'resonance-surge-time': 'Time',
-            'resonance-surge-finished': 'Mission complete! +{rewards} and +{shell} Shell Credits.',
+            'resonance-surge-finished': 'Mission complete! +{rewards}, +{shell} Shell Credits, and +{union} Union EXP.',
             'resonance-surge-login': 'Log in and obtain a character to play.',
             'resonance-surge-no-character': 'Get a character from Wish to play.',
             'resonance-surge-energy': 'Not enough energy. You need {energy}.',
@@ -665,7 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'echo-hunt-login': 'Log in and obtain a character to play.',
             'echo-hunt-no-character': 'Get a character from Wish to play.',
             'echo-hunt-fight': '{character} is fighting {echo}.',
-            'echo-hunt-victory': 'Victory! You received {count} 4-Cost Echoes and {shell} Shell Credits.',
+            'echo-hunt-victory': 'Victory! You received {count} 4-Cost Echoes, {shell} Shell Credits, and +{union} Union EXP.',
             'echo-hunt-defeat': 'You were defeated. Try again with a better-trained character.',
             'echo-hunt-energy': 'Not enough energy. You need {energy}.',
             'echo-hunt-requirements': '{energy} energy · {count} Echoes · {shell} Shell Credits',
@@ -704,6 +771,18 @@ document.addEventListener('DOMContentLoaded', () => {
             'feature-characters-desc': 'View all the characters you\'ve obtained, organized by rarity.',
             'feature-weapons-title': 'Weapon Collection',
             'feature-weapons-desc': 'Explore your complete arsenal, with all weapons organized by categories.',
+            'home-training-title': 'Training',
+            'home-training-description': 'Level up your characters, weapons, and Echoes.',
+            'home-expedition-title': 'Expedition',
+            'home-expedition-description': 'Send characters on expeditions for rewards.',
+            'home-domain-title': 'Domain',
+            'home-domain-description': 'Play mini-games for resources and Echoes.',
+            'home-boss-title': 'Boss',
+            'home-boss-description': 'Challenge bosses with your team of three characters.',
+            'home-hunting-title': 'Hunting',
+            'home-hunting-description': 'Send a character hunting for rewards.',
+            'home-shop-title': 'Shop',
+            'home-shop-description': 'Exchange Shell Credits for Astrite.',
             'wish-title': 'Wuthering Waves Wishing Simulator',
             'wish-description': 'Press the buttons to make a pull!',
             'wish-total-wishes': 'Total Pulls: ',
@@ -823,7 +902,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'domain-game-limit-reached': 'You have reached today’s limit of 10 expeditions.',
             'domain-game-login': 'Log in to start an expedition.',
             'domain-game-active': 'Collect cores before they disappear!',
-            'domain-game-finished': 'Expedition complete: +{shell} Shell Credits and +{astrite} Astrite.',
+            'domain-game-finished': 'Expedition complete: +{shell} Shell Credits, +{astrite} Astrite, and +{union} Union EXP.',
             'domain-play-btn': 'Play',
             'nav-shop': 'Shop',
             'shop-eyebrow': 'RESOURCE EXCHANGE',
@@ -975,6 +1054,8 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedHuntCharacterName,
             selectedEchoHuntCharacterName,
             huntingLastResetDate,
+            bossTeam,
+            bossSelection,
             domainProgress
         };
         
@@ -1054,6 +1135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('trainingContent')) renderTrainingPage();
         if (document.getElementById('profileEmail')) updateProfileDropdown();
         if (document.getElementById('huntingCharacters')) renderHuntingPage();
+        if (document.getElementById('bossGame')) renderBossPage();
         if (document.getElementById('echoHuntGame')) renderEchoHunt();
         if (document.getElementById('resonanceSurgeGame') && typeof renderResonanceSurge === 'function') renderResonanceSurge();
         if (typeof window !== 'undefined' && window.renderResourceSurge) {
@@ -1178,7 +1260,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 echoInventory: [],
                 usedHuntingCharacters: [],
                 selectedHuntCharacterName: null,
-                huntingLastResetDate: null
+                huntingLastResetDate: null,
+                bossTeam: [null, null, null],
+                bossSelection: { boss: bosses[0].name, level: 1 }
         });
     }
     
@@ -1554,6 +1638,8 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedHuntCharacterName = userData.selectedHuntCharacterName || null;
             selectedEchoHuntCharacterName = userData.selectedEchoHuntCharacterName || null;
             huntingLastResetDate = userData.huntingLastResetDate || null;
+            bossTeam = Array.isArray(userData.bossTeam) ? userData.bossTeam : [null, null, null];
+            bossSelection = userData.bossSelection || { boss: bosses[0].name, level: 1 };
             if (weaponProgress['Red String']) {
                 weaponProgress['Red Spring'] = weaponProgress['Red Spring'] || weaponProgress['Red String'];
                 delete weaponProgress['Red String'];
@@ -1634,14 +1720,68 @@ document.addEventListener('DOMContentLoaded', () => {
         'Zani': 'Blazing Justice', 'Lynae': 'Spectrum Blaster', 'Luuk Hersen': "Daybreaker's Spine",
         'Lucy': 'Spectral Trigger', 'Camellya': 'Red Spring', 'Roccia': 'Tragicomedy',
         'Cantarella': 'Whispers of Sirens', 'Phrolova': 'Lethean Elegy', 'Chisa': 'Kumokiri',
-        'Yangyang: Xuanling': 'Azure Oath'
+        'Yangyang: Xuanling': 'Azure Oath', 'Jingran': 'Thounsandfold Deliverance',
+        'Qingxiao': 'Glint of Clouds'
     };
+    const echoSynergies = {
+        'Lingyang': 'Lingering Tunes', 'Zhezhi': 'Empyrean Anthem', 'Carlotta': 'Frosty Resolve',
+        'Lucilla': 'Wishes of Quiet Snowfall', 'Hiyuki': 'Wishes of Quiet Snowfall', 'Suisui': 'Song of Feathered Trace',
+        'Encore': 'Molten Rift', 'Changli': 'Molten Rift', 'Brant': 'Tidebreaking Courage',
+        'Lupa': 'Flaming Clawprint', 'Galbrena': "Flamewing's Shadow", 'Mornye': 'Halo of Starry Radiance',
+        'Aemeath': 'Trailblazing Star', 'Denia': 'Reel of Spliced Memories', 'Calcharo': 'Void Thunder',
+        'Yinlin': 'Empyrean Anthem', 'Xiangli Yao': 'Void Thunder', 'Augusta': 'Crown of Valor',
+        'Rebecca': 'Shadow of Shattered Dreams', 'Jiyan': 'Gusts of Welkin', 'Jianxin': 'Moonlit Clouds',
+        'Ciaccona': 'Gusts of Welkin', 'Cartethyia': 'Windward Pilgrimage', 'Iuno': 'Crown of Valor',
+        'Qiuyuan': 'Gusts of Welkin', 'Sigrika': 'Sound of True Name', 'Verina': 'Rejuvenating Glow',
+        'Jinhsi': 'Celestial Light', 'Shorekeeper': 'Rejuvenating Glow', 'Phoebe': 'Eternal Radiance',
+        'Zani': 'Eternal Radiance', 'Lynae': 'Pact of Neonlight Leap', 'Luuk Hersen': 'Rite of Gilded Revelation',
+        'Lucy': 'Shadow of Shattered Dreams', 'Camellya': 'Havoc Eclipse', 'Roccia': 'Midnight Veil',
+        'Cantarella': 'Midnight Veil', 'Phrolova': 'Dream of the Lost', 'Chisa': 'Thread of Severed Fate',
+        'Yangyang: Xuanling': 'Song of Feathered Trace', 'Jingran': 'Lamp of Nether Road',
+        'Qingxiao': "Heart of Evil's Purge"
+    };
+    const dpsCharacters = new Set([
+        'Aemeath', 'Augusta', 'Cartethyia', 'Hiyuki', 'Sigrika', 'Yangyang: Xuanling',
+        'Luuk Hersen', 'Phrolova', 'Galbrena', 'Camellya', 'Carlotta', 'Jinshi',
+        'Changli', 'Jiyan', 'Encore', 'Xiangli Yao', 'Calcharo', 'Zani',
+        'Lingyang', 'Qingxiao', 'Jingran'
+    ]);
+    const attackBufferCharacters = new Set([
+        'Phoebe', 'Zhezhi', 'Yinlin', 'Ciaccona', 'Shorekeeper', 'Verina',
+        'Mornye', 'Chisa', 'Lucilla', 'Suisui', 'Qiuyuan', 'Lynae', 'Denia'
+    ]);
+    const healerCharacters = new Set([
+        'Shorekeeper', 'Verina', 'Mornye', 'Chisa', 'Suisui', 'Jianxin'
+    ]);
+
+    function getCharacterRoles(characterName) {
+        const roles = [];
+        if (dpsCharacters.has(characterName)) roles.push('DPS');
+        if (attackBufferCharacters.has(characterName)) roles.push('Buffer ATK');
+        if (healerCharacters.has(characterName)) roles.push('Healer');
+        return roles;
+    }
 
     function getCharacterTrainingState(characterName) {
         if (!characterProgress[characterName]) {
             characterProgress[characterName] = { level: 1, exp: 0 };
         }
         return characterProgress[characterName];
+    }
+
+    function getCharacterConstellation(characterName) {
+        return Math.max(1, getItemCopyCount(characterName));
+    }
+
+    function getCharacterBattleStats(characterName) {
+        const level = getCharacterTrainingState(characterName).level;
+        const constellation = getCharacterConstellation(characterName);
+        return {
+            level,
+            constellation,
+            maxHp: (100 + level * 10) * constellation,
+            attack: (15 + level * 3) * constellation
+        };
     }
 
     function getCharacterLevelInfo(state) {
@@ -1722,15 +1862,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return echoProgress[echoId];
     }
 
-    function getEchoDamage(echoId) {
-        return 50 + (getEchoTrainingState(echoId).level - 1) * 2;
+    function getEchoDamage(echoId, characterName = null) {
+        const echo = getFourCostEchoes().find(item => item.id === echoId);
+        const level = getEchoTrainingState(echoId).level;
+        const base = 50 + (level - 1) * 2;
+        const synergy = 100 + (level - 1) * 5;
+        const hasSynergy = Boolean(echo && characterName && echoSynergies[characterName] === echo.sonata);
+        return { base, synergy, active: hasSynergy ? synergy : base, hasSynergy };
     }
 
     function getWeaponDamage(weaponName, characterName = null) {
         if (!weaponName) return { base: 0, synergy: 0, active: 0, hasSynergy: false };
         const level = getWeaponTrainingState(weaponName).level;
-        const base = 50 + (level - 1) * 2;
-        const synergy = 100 + (level - 1) * 5;
+        const constellation = getItemCopyCount(weaponName);
+        const base = (50 + (level - 1) * 2) * constellation;
+        const synergy = (100 + (level - 1) * 5) * constellation;
         const hasSynergy = Boolean(characterName && weaponSynergies[characterName] === weaponName);
         return { base, synergy, active: hasSynergy ? synergy : base, hasSynergy };
     }
@@ -1940,14 +2086,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const state = getCharacterTrainingState(selectedCharacter.name);
         const levelInfo = getCharacterLevelInfo(state);
         const progress = state.level >= CHARACTER_MAX_LEVEL ? 100 : Math.min(100, (levelInfo.expInLevel / levelInfo.expRequired) * 100);
-        const characterHp = 600 + (state.level - 1) * 50;
-        const characterDmg = 200 + (state.level - 1) * 10;
+        const characterConstellation = getCharacterConstellation(selectedCharacter.name);
+        const characterHp = (600 + (state.level - 1) * 50) * characterConstellation;
+        const characterDmg = (200 + (state.level - 1) * 10) * characterConstellation;
         const equippedWeaponName = equippedWeapons[selectedCharacter.name] || '';
         const equippedWeapon = obtainedWeapons.find(weapon => weapon.name === equippedWeaponName);
         const weaponDamage = getWeaponDamage(equippedWeaponName, selectedCharacter.name);
         const equippableWeapons = getFilteredAndSortedWeapons(obtainedWeapons, equipmentWeaponFilter);
         const equippedEchoId = equippedEchoes[selectedCharacter.name] || '';
         const equippedEcho = getFourCostEchoes().find(echo => echo.id === equippedEchoId);
+        const echoDamage = equippedEcho ? getEchoDamage(equippedEcho.id, selectedCharacter.name) : { active: 0, hasSynergy: false };
         const equippableEchoes = getFourCostEchoes().filter(echo => !equipmentEchoSonataFilter.length || equipmentEchoSonataFilter.includes(echo.sonata));
 
         container.innerHTML = `
@@ -1976,10 +2124,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="training-exp-track"><div class="training-exp-fill" style="width:${progress}%"></div></div>
                     <p>${state.level >= CHARACTER_MAX_LEVEL ? translations[currentLanguage]['training-max-level'] : `${levelInfo.expInLevel} / ${levelInfo.expRequired} EXP`}</p>
                     <div class="training-stat-grid">
+                        <div><span>Constelație</span><strong>C${characterConstellation}</strong></div>
                         <div><span>${translations[currentLanguage]['training-hp']}</span><strong>${characterHp}</strong></div>
                         <div><span>${translations[currentLanguage]['training-dmg']}</span><strong>${characterDmg}</strong></div>
                         <div><span>${translations[currentLanguage]['training-weapon-dmg']}</span><strong>${weaponDamage.active}</strong></div>
-                        <div><span>${translations[currentLanguage]['training-total-dmg']}</span><strong>${characterDmg + weaponDamage.active}</strong></div>
+                        <div><span>DMG Echo</span><strong>${echoDamage.active}</strong></div>
+                        <div><span>${translations[currentLanguage]['training-total-dmg']}</span><strong>${characterDmg + weaponDamage.active + echoDamage.active}</strong></div>
                     </div>
                     <h3>${translations[currentLanguage]['training-weapon-equipped']}</h3>
                     <div class="training-equipment-slot">
@@ -2001,7 +2151,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="training-equipment-slot">
                         <img src="${equippedEcho?.image || 'Extra/Basic%20Sealed%20Tube.png'}" alt="${equippedEcho?.name || translations[currentLanguage]['training-echo-none']}">
                         <strong>${equippedEcho?.name || translations[currentLanguage]['training-echo-none']}</strong>
-                        <span>${equippedEcho?.sonata || ''}</span>
+                        <span>${equippedEcho ? `${equippedEcho.sonata} · ${echoDamage.hasSynergy ? translations[currentLanguage]['training-synergy-active'] : translations[currentLanguage]['training-synergy-inactive']}` : ''}</span>
                     </div>
                     ${getEchoSonataFilterMarkup(equipmentEchoSonataFilter, 'data-equipment-echo-sonata')}
                     <div class="profile-avatar-options training-weapon-options training-echo-options">
@@ -2136,6 +2286,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="training-exp-track"><div class="training-exp-fill" style="width:${progress}%"></div></div>
                     <p>${state.level >= WEAPON_MAX_LEVEL ? translations[currentLanguage]['training-max-level'] : `${levelInfo.expInLevel} / ${levelInfo.expRequired} EXP`}</p>
                     <div class="training-stat-grid">
+                        <div><span>Constelație</span><strong>C${getItemCopyCount(selectedWeapon.name)}</strong></div>
                         <div><span>${translations[currentLanguage]['training-base-dmg']}</span><strong>${damage.base}</strong></div>
                         <div><span>${translations[currentLanguage]['training-synergy-dmg']}</span><strong>${damage.synergy}</strong></div>
                         <div><span>${translations[currentLanguage]['training-weapon-dmg']}</span><strong>${damage.active}</strong></div>
@@ -2266,27 +2417,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const state = getEchoTrainingState(selectedEcho.id);
         const levelInfo = getCharacterLevelInfo(state);
         const progress = state.level >= ECHO_MAX_LEVEL ? 100 : Math.min(100, (levelInfo.expInLevel / levelInfo.expRequired) * 100);
-        const echoDamage = getEchoDamage(selectedEcho.id);
+        const equippedCharacterName = Object.keys(equippedEchoes).find(characterName => equippedEchoes[characterName] === selectedEcho.id) || null;
+        const echoDamage = getEchoDamage(selectedEcho.id, equippedCharacterName);
 
         container.innerHTML = `
             <section class="training-character-picker">
                 <h2>${translations[currentLanguage]['training-echo-select']}</h2>
                 ${getEchoSonataFilterMarkup(trainingEchoSonataFilter, 'data-training-echo-sonata')}
                 <div class="training-character-list">
-                    ${trainingEchoes.map(echo => `<button class="training-character-option${echo.id === selectedEcho.id ? ' selected' : ''}" type="button" data-training-echo="${echo.id}"><img src="${echo.image}" alt="${echo.name}"><span>${echo.name}</span></button>`).join('')}
+                    ${trainingEchoes.map(echo => `<button class="training-character-option training-echo-option${echo.id === selectedEcho.id ? ' selected' : ''}" type="button" data-training-echo="${echo.id}"><span class="training-echo-option-image"><img src="${echo.image}" alt="${echo.name}"><img class="training-echo-option-sonata" src="${encodeURI(echo.sonataImage)}" alt="${echo.sonata}" title="${echo.sonata}"></span><span>${echo.name}</span></button>`).join('')}
                 </div>
             </section>
             <section class="training-detail-panel">
                 <div class="training-character-showcase training-weapon-showcase training-echo-showcase">
                     ${getTrainingModeMarkup()}
                     <img src="${selectedEcho.image}" alt="${selectedEcho.name}">
-                    <h2>${selectedEcho.name}</h2><p>${selectedEcho.sonata} · cost 4</p>
+                    <h2>${selectedEcho.name}</h2>
+                    <div class="training-echo-sonata">
+                        <img src="${encodeURI(selectedEcho.sonataImage)}" alt="${selectedEcho.sonata}">
+                        <span>${selectedEcho.sonata}</span>
+                    </div>
                 </div>
                 <div class="training-level-panel">
                     <div class="training-level-heading"><span>${translations[currentLanguage]['training-level']}</span><strong>${state.level} / ${ECHO_MAX_LEVEL}</strong></div>
                     <div class="training-exp-track"><div class="training-exp-fill" style="width:${progress}%"></div></div>
                     <p>${state.level >= ECHO_MAX_LEVEL ? translations[currentLanguage]['training-max-level'] : `${levelInfo.expInLevel} / ${levelInfo.expRequired} EXP`}</p>
-                    <div class="training-stat-grid"><div><span>DMG</span><strong>${echoDamage}</strong></div></div>
+                    <div class="training-stat-grid">
+                        <div><span>${translations[currentLanguage]['training-base-dmg']}</span><strong>${echoDamage.base}</strong></div>
+                        <div><span>${translations[currentLanguage]['training-synergy-dmg']}</span><strong>${echoDamage.synergy}</strong></div>
+                        <div><span>DMG Echo</span><strong>${echoDamage.active}</strong></div>
+                        <div><span>${echoDamage.hasSynergy ? translations[currentLanguage]['training-synergy-active'] : translations[currentLanguage]['training-synergy-inactive']}</span><strong>${equippedCharacterName || '—'}</strong></div>
+                    </div>
                     <h3>${translations[currentLanguage]['training-sealed-tubes']}</h3>
                     ${getTrainingMaterialsActionsMarkup('tube', translations[currentLanguage]['training-use'])}
                     <div class="training-potions">
@@ -2461,14 +2622,14 @@ document.addEventListener('DOMContentLoaded', () => {
         huntButton.onclick = startHunt;
     }
 
-    function showHuntRewardPopup(rewards, shellReward) {
+    function showHuntRewardPopup(rewards, shellReward, unionReward) {
         document.getElementById('huntRewardsPopup')?.remove();
         const popup = document.createElement('div');
         popup.id = 'huntRewardsPopup';
         popup.className = 'hunt-rewards-popup';
         popup.setAttribute('role', 'dialog');
         popup.setAttribute('aria-modal', 'true');
-        popup.innerHTML = `<section class="hunt-rewards-card"><h2>${translations[currentLanguage]['hunting-reward-title']}</h2><p class="hunt-rewards-shell">${translations[currentLanguage]['hunting-reward-shell']}: <strong>+${shellReward}</strong></p><div class="hunt-rewards-list">${rewards.map(echo => `<article class="hunt-reward-echo rarity-${echo.rarity}-echo"><img src="${echo.image}" alt="${echo.name}"><span>${echo.name}</span><small>${echo.sonata} · cost ${echo.rarity}</small></article>`).join('')}</div><p class="hunt-rewards-close">Apasă oriunde pentru a închide</p></section>`;
+        popup.innerHTML = `<section class="hunt-rewards-card"><h2>${translations[currentLanguage]['hunting-reward-title']}</h2><p class="hunt-rewards-shell">${translations[currentLanguage]['hunting-reward-shell']}: <strong>+${shellReward}</strong></p><p class="hunt-rewards-shell">Union EXP: <strong>+${unionReward}</strong></p><div class="hunt-rewards-list">${rewards.map(echo => `<article class="hunt-reward-echo rarity-${echo.rarity}-echo"><img src="${echo.image}" alt="${echo.name}"><span>${echo.name}</span><small>${echo.sonata} · cost ${echo.rarity}</small></article>`).join('')}</div><p class="hunt-rewards-close">Apasă oriunde pentru a închide</p></section>`;
         popup.addEventListener('click', () => popup.remove(), { once: true });
         document.body.appendChild(popup);
     }
@@ -2484,6 +2645,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const echoCount = 5 + Math.floor(Math.random() * 16);
         const shellReward = 500 + Math.floor(Math.random() * 501);
+        const unionReward = 25;
         const rewards = Array.from({ length: echoCount }, () => {
             const rarity = Math.random() < 0.42 ? 3 : 1;
             const options = echoCatalog.filter(echo => echo.rarity === rarity);
@@ -2493,14 +2655,15 @@ document.addEventListener('DOMContentLoaded', () => {
         usedHuntingCharacters.push(character.name);
         selectedHuntCharacterName = null;
         shellCredits += shellReward;
+        addUnionExp(unionReward);
         updateShellCreditsDisplay(shellCredits);
         saveCurrentUserData();
         updateProfileDropdown();
         renderHuntingPage();
         const resultMessage = document.getElementById('huntingMessage');
-        resultMessage.textContent = translations[currentLanguage]['hunting-success'].replace('{character}', character.name).replace('{shell}', shellReward).replace('{count}', echoCount);
+        resultMessage.textContent = translations[currentLanguage]['hunting-success'].replace('{character}', character.name).replace('{shell}', shellReward).replace('{count}', echoCount).replace('{union}', unionReward);
         resultMessage.className = 'hunting-message success';
-        showHuntRewardPopup(rewards, shellReward);
+        showHuntRewardPopup(rewards, shellReward, unionReward);
     }
 
     // --- Domain mini-game ---
@@ -2652,7 +2815,8 @@ document.addEventListener('DOMContentLoaded', () => {
         addUnionExp(25);
         domainGameResult.textContent = translations[currentLanguage]['domain-game-finished']
             .replace('{shell}', domainRoundShellCredits)
-            .replace('{astrite}', domainRoundAstrite);
+            .replace('{astrite}', domainRoundAstrite)
+            .replace('{union}', 25);
     }
 
     function startDomainGame() {
@@ -2733,8 +2897,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const rewards = rewardText(state.difficulty);
                 if (state.active) {
                     const characterState = getCharacterTrainingState(character.name);
-                    const maxHp = 100 + characterState.level * 10;
-                    const attack = 15 + characterState.level * 3;
+                    const battleStats = getCharacterBattleStats(character.name);
+                    const maxHp = battleStats.maxHp;
+                    const attack = battleStats.attack;
                     game.innerHTML = `<div class="resonance-surge-battle"><div class="resonance-surge-hud"><span>Val: <strong>${state.wave} / ${difficulty.waves}</strong></span><span>Timp: <strong>${state.seconds}s</strong></span></div><div class="resonance-surge-arena"><article class="resonance-surge-combatant resonance-surge-hero"><img src="${getTrainingCharacterImage(character)}" alt="${character.name}"><h3>${character.name}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${state.characterHp} / ${maxHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${state.characterHp / maxHp * 100}%"></div></div><p>ATK <strong>${attack}</strong></p></article><div class="resonance-surge-vs">VS</div><article class="resonance-surge-combatant resonance-surge-enemy"><img src="${state.enemyImage}" alt="${state.enemyName}"><h3>${state.enemyName}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${state.enemyHp} / ${difficulty.enemyHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${state.enemyHp / difficulty.enemyHp * 100}%"></div></div><p>ATK <strong>${difficulty.enemyAttack}</strong></p></article></div><div class="resonance-surge-actions"><button type="button" class="wish-button" data-resource-action="attack">Atac normal</button><button type="button" class="wish-button" data-resource-action="skill" ${state.skillCooldown > 0 ? 'disabled' : ''}>${translations[currentLanguage]['domain-ultimate']}${state.skillCooldown > 0 ? ` (${state.skillCooldown})` : ''}</button></div><p class="resonance-surge-message">Învinge valurile pentru ${label}!</p></div>`;
                     game.querySelectorAll('[data-resource-action]').forEach(button => button.addEventListener('click', () => resourceSurgeAction(kind, button.dataset.resourceAction)));
                     return;
@@ -2749,7 +2914,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const state = resourceSurgeStates[kind];
                 const difficulty = resonanceSurgeDifficulties[state.difficulty];
                 if (!spendEnergy(difficulty.energy)) return;
-                state.active = true; state.score = 0; state.wave = 1; state.seconds = difficulty.duration; state.characterHp = 100 + getCharacterTrainingState(selectedEchoHuntCharacterName).level * 10; state.skillCooldown = 0;
+                state.active = true; state.score = 0; state.wave = 1; state.seconds = difficulty.duration; state.characterHp = getCharacterBattleStats(selectedEchoHuntCharacterName).maxHp; state.skillCooldown = 0;
                 startResourceWave(kind);
                 renderResourceSurge(kind);
                 state.countdown = setInterval(() => { state.seconds--; if (state.seconds <= 0) finishResourceSurge(kind, false); else renderResourceSurge(kind); }, 1000);
@@ -2767,7 +2932,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const state = resourceSurgeStates[kind]; if (!state.active) return;
                 const difficulty = resonanceSurgeDifficulties[state.difficulty];
                 const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
-                const attack = 15 + getCharacterTrainingState(character.name).level * 3;
+                const attack = getCharacterBattleStats(character.name).attack;
                 if (action === 'skill' && state.skillCooldown > 0) return;
                 if (action === 'skill') showUltimateVideo(character);
                 state.enemyHp = Math.max(0, state.enemyHp - (action === 'skill' ? attack * 2 : attack));
@@ -2786,9 +2951,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     const rewardKeys = state.difficulty === 'easy' ? ['basic', 'medium'] : state.difficulty === 'medium' ? ['medium', 'advanced'] : ['advanced', 'premium'];
                     target[rewardKeys[0]] += 5; target[rewardKeys[1]] += 3;
                     changeShellCredits(currentUser, resonanceSurgeDifficulties[state.difficulty].shell);
+                    addUnionExp(25);
                     saveCurrentUserData();
                 }
-                state.active = false; renderResourceSurge(kind);
+                state.active = false;
+                const message = document.getElementById(kind === 'energyCore' ? 'energyCoreSurgeMessage' : 'sealedTubeSurgeMessage');
+                if (message && victory) {
+                    message.textContent = translations[currentLanguage]['resonance-surge-finished']
+                        .replace('{rewards}', difficulty.rewardText)
+                        .replace('{shell}', difficulty.shell)
+                        .replace('{union}', 25);
+                }
+                renderResourceSurge(kind);
             }
             if (typeof window !== 'undefined') window.renderResourceSurge = renderResourceSurge;
             if (!obtainedCharacters.length) {
@@ -2800,8 +2974,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
             if (resonanceSurgeState.active) {
                 const characterState = getCharacterTrainingState(character.name);
-                const characterMaxHp = 100 + characterState.level * 10;
-                const characterAttack = 15 + characterState.level * 3;
+                const characterStats = getCharacterBattleStats(character.name);
+                const characterMaxHp = characterStats.maxHp;
+                const characterAttack = characterStats.attack;
                 const characterImage = getTrainingCharacterImage(character);
                 game.innerHTML = `<div class="resonance-surge-battle"><div class="resonance-surge-hud"><span>${translations[currentLanguage]['resonance-surge-score']}: <strong>${resonanceSurgeState.wave} / ${difficulty.waves}</strong></span><span>${translations[currentLanguage]['resonance-surge-time']}: <strong>${resonanceSurgeState.seconds}s</strong></span></div><div class="resonance-surge-arena"><article class="resonance-surge-combatant resonance-surge-hero"><img src="${characterImage}" alt="${character.name}" onerror="this.onerror=null;this.src='${character.img}'"><h3>${character.name}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${resonanceSurgeState.characterHp} / ${characterMaxHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${Math.max(0, resonanceSurgeState.characterHp / characterMaxHp * 100)}%"></div></div><p>ATK <strong>${characterAttack}</strong></p></article><div class="resonance-surge-vs">VS</div><article class="resonance-surge-combatant resonance-surge-enemy"><img src="${resonanceSurgeState.enemyImage}" alt="${resonanceSurgeState.enemyName}"><h3>${resonanceSurgeState.enemyName}</h3><div class="resonance-surge-stat"><span>HP</span><strong>${resonanceSurgeState.enemyHp} / ${difficulty.enemyHp}</strong></div><div class="resonance-surge-hp-track"><div style="width:${Math.max(0, resonanceSurgeState.enemyHp / difficulty.enemyHp * 100)}%"></div></div><p>ATK <strong>${difficulty.enemyAttack}</strong></p></article></div><div class="resonance-surge-actions"><button type="button" class="wish-button" data-surge-action="attack">Atac normal</button><button type="button" class="wish-button" data-surge-action="skill" ${resonanceSurgeState.skillCooldown > 0 ? 'disabled' : ''}>${translations[currentLanguage]['domain-ultimate']}${resonanceSurgeState.skillCooldown > 0 ? ` (${resonanceSurgeState.skillCooldown})` : ''}</button></div><p class="resonance-surge-message" id="resonanceSurgeMessage">${translations[currentLanguage]['resonance-surge-active']}</p></div>`;
                 game.querySelectorAll('[data-surge-action]').forEach(button => button.addEventListener('click', () => resonanceSurgeAction(button.dataset.surgeAction)));
@@ -2829,12 +3004,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     resonancePotions[type] += amount;
                 });
                 changeShellCredits(currentUser, difficulty.shell);
+                addUnionExp(25);
             }
             resonanceSurgeState = { difficulty: resonanceSurgeState.difficulty, active: false, score: 0, seconds: 0, characterHp: 0, enemyHp: 0, wave: 1, skillCooldown: 0, enemyName: '', enemyImage: '', countdown: null };
             saveCurrentUserData();
             renderResonanceSurge();
             const message = document.getElementById('resonanceSurgeMessage');
-            if (message) message.textContent = victory ? translations[currentLanguage]['resonance-surge-finished'].replace('{rewards}', difficulty.rewardText).replace('{shell}', difficulty.shell) : 'Ai fost învins. Încearcă din nou.';
+            if (message) message.textContent = victory ? translations[currentLanguage]['resonance-surge-finished'].replace('{rewards}', difficulty.rewardText).replace('{shell}', difficulty.shell).replace('{union}', 25) : 'Ai fost învins. Încearcă din nou.';
         }
 
         function startResonanceWave() {
@@ -2851,7 +3027,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const difficulty = resonanceSurgeDifficulties[resonanceSurgeState.difficulty];
             const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
             const characterState = getCharacterTrainingState(character.name);
-            const attack = 15 + characterState.level * 3;
+            const attack = getCharacterBattleStats(character.name).attack;
             const damage = action === 'skill' ? attack * 2 : attack;
             if (action === 'skill' && resonanceSurgeState.skillCooldown > 0) return;
             if (action === 'skill') showUltimateVideo(character);
@@ -2885,7 +3061,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resonanceSurgeState.active = true;
             resonanceSurgeState.score = 0;
             resonanceSurgeState.seconds = difficulty.duration;
-            resonanceSurgeState.characterHp = 100 + getCharacterTrainingState(selectedEchoHuntCharacterName).level * 10;
+            resonanceSurgeState.characterHp = getCharacterBattleStats(selectedEchoHuntCharacterName).maxHp;
             resonanceSurgeState.wave = 1;
             resonanceSurgeState.skillCooldown = 0;
             startResonanceWave();
@@ -2906,9 +3082,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const difficulty = echoHuntDifficulties[echoHuntState.difficulty];
         const selectedCharacter = obtainedCharacters.find(character => character.name === selectedEchoHuntCharacterName);
         const characterState = getCharacterTrainingState(selectedCharacter.name);
-        const characterMaxHp = 100 + characterState.level * 10;
+        const characterMaxHp = getCharacterBattleStats(selectedCharacter.name).maxHp;
         if (echoHuntState.active) {
-            const characterAttack = 15 + characterState.level * 3;
+        const characterAttack = getCharacterBattleStats(selectedCharacter.name).attack;
             const echoAttack = 5 + Object.keys(echoHuntDifficulties).indexOf(echoHuntState.difficulty) * 5;
             const characterImage = getTrainingCharacterImage(selectedCharacter);
             echoHuntGame.innerHTML = `<div class="echo-hunt-battle-page"><div class="echo-hunt-battle-header"><span>ECHO HUNT</span><strong>${translations[currentLanguage]['echo-hunt-fight'].replace('{character}', selectedCharacter.name).replace('{echo}', echoHuntState.currentEcho.name)}</strong></div><div class="echo-hunt-battle-arena"><article class="echo-hunt-battle-card echo-hunt-hero"><div class="echo-hunt-battle-image"><img src="${characterImage}" alt="${selectedCharacter.name}" onerror="this.onerror=null;this.src='${selectedCharacter.img}'"></div><h3>${selectedCharacter.name}</h3><div class="echo-hunt-stat"><span>${translations[currentLanguage]['echo-hunt-character-hp']}</span><strong>${echoHuntState.characterHp} / ${characterMaxHp}</strong></div><div class="echo-hunt-hp-track"><div style="width:${Math.max(0, echoHuntState.characterHp / characterMaxHp * 100)}%"></div></div><p>ATK <strong>${characterAttack}</strong></p></article><div class="echo-hunt-vs">VS</div><article class="echo-hunt-battle-card echo-hunt-enemy"><div class="echo-hunt-battle-image"><img src="${echoHuntState.currentEcho.image}" alt="${echoHuntState.currentEcho.name}"></div><h3>${echoHuntState.currentEcho.name}</h3><div class="echo-hunt-stat"><span>${translations[currentLanguage]['echo-hunt-echo-hp']}</span><strong>${echoHuntState.echoHp} / ${difficulty.echoHp}</strong></div><div class="echo-hunt-hp-track"><div style="width:${Math.max(0, echoHuntState.echoHp / difficulty.echoHp * 100)}%"></div></div><p>ATK <strong>${echoAttack}</strong></p></article></div><div class="echo-hunt-actions"><button type="button" class="wish-button echo-hunt-attack-button" data-echo-hunt-action="attack">${translations[currentLanguage]['echo-hunt-attack']}</button><button type="button" class="wish-button" data-echo-hunt-action="skill" ${echoHuntState.skillCooldown > 0 ? 'disabled' : ''}>${translations[currentLanguage]['echo-hunt-skill']}${echoHuntState.skillCooldown > 0 ? ` (${echoHuntState.skillCooldown})` : ''}</button></div></div>`;
@@ -2939,7 +3115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const character = obtainedCharacters.find(item => item.name === selectedEchoHuntCharacterName);
         const characterState = getCharacterTrainingState(character.name);
         const options = echoCatalog.filter(echo => echo.rarity === 4);
-        echoHuntState = { difficulty: echoHuntState.difficulty, active: true, characterHp: 100 + characterState.level * 10, echoHp: difficulty.echoHp, defeated: 0, skillCooldown: 0, currentEcho: options[Math.floor(Math.random() * options.length)] };
+        echoHuntState = { difficulty: echoHuntState.difficulty, active: true, characterHp: getCharacterBattleStats(character.name).maxHp, echoHp: difficulty.echoHp, defeated: 0, skillCooldown: 0, currentEcho: options[Math.floor(Math.random() * options.length)] };
         renderEchoHunt();
     }
 
@@ -2949,7 +3125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const characterState = getCharacterTrainingState(character.name);
         if (action === 'skill' && echoHuntState.skillCooldown > 0) return;
         if (action === 'skill') showUltimateVideo(character);
-        const damage = (15 + characterState.level * 3) * (action === 'skill' ? 2 : 1);
+        const damage = getCharacterBattleStats(character.name).attack * (action === 'skill' ? 2 : 1);
         if (action === 'skill') echoHuntState.skillCooldown = 3;
         echoHuntState.echoHp = Math.max(0, echoHuntState.echoHp - damage);
         if (echoHuntState.echoHp === 0) {
@@ -2965,7 +3141,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 echoHuntState = { difficulty: echoHuntState.difficulty, active: false, characterHp: 0, echoHp: 0, defeated: 0, skillCooldown: 0, currentEcho: null };
                 saveCurrentUserData();
                 renderEchoHunt();
-                document.getElementById('echoHuntMessage').textContent = translations[currentLanguage]['echo-hunt-victory'].replace('{count}', difficulty.echoCount).replace('{shell}', difficulty.shell);
+                const unionReward = 25;
+                addUnionExp(unionReward);
+                document.getElementById('echoHuntMessage').textContent = translations[currentLanguage]['echo-hunt-victory'].replace('{count}', difficulty.echoCount).replace('{shell}', difficulty.shell).replace('{union}', unionReward);
                 return;
             }
             echoHuntState.echoHp = difficulty.echoHp;
@@ -3094,6 +3272,221 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
+    function renderBossPage() {
+        const game = document.getElementById('bossGame');
+        if (!game) return;
+        if (!currentUser) {
+            game.innerHTML = `<p class="boss-message">${translations[currentLanguage]['boss-login']}</p>`;
+            return;
+        }
+        if (obtainedCharacters.length < 3) {
+            game.innerHTML = `<p class="boss-message">${translations[currentLanguage]['boss-no-characters']}</p>`;
+            return;
+        }
+        if (bossBattle) {
+            const boss = bossBattle.boss;
+            const battleFinished = bossBattle.result === 'victory' || bossBattle.result === 'defeat';
+            const teamDamage = bossBattle.team.reduce((total, name) => {
+                return total + getCharacterBattleStats(name).attack;
+            }, 0);
+            game.innerHTML = `<section class="boss-battle">
+                <div class="boss-battle-hud"><span>${translations[currentLanguage]['boss-select-level']} <strong>${bossBattle.level}</strong></span><span>HP <strong>${Math.max(0, bossBattle.bossHp)} / ${bossBattle.maxBossHp}</strong></span></div>
+                <div class="boss-battle-arena">
+                    <article class="boss-team-card"><h2>${translations[currentLanguage]['boss-team']}</h2><div class="boss-team-list">${bossBattle.team.map((name, index) => {
+                        const character = obtainedCharacters.find(item => item.name === name);
+                        const battleStats = getCharacterBattleStats(name);
+                        const level = battleStats.level;
+                        const currentHp = Math.max(0, bossBattle.teamHp[index]);
+                        const maxHp = bossBattle.maxTeamHp[index];
+                        const roles = getCharacterRoles(name);
+                        return `<div class="boss-character-card"><img src="${getTrainingCharacterImage(character)}" alt="${name}" onerror="this.onerror=null;this.src='${character.img}'"><div><strong>${name}</strong><span>Lv. ${level} · C${battleStats.constellation} · ATK ${Math.round(getBossCharacterAttack(name, index))}</span><small class="boss-character-roles">${roles.join(' · ') || '—'}</small><div class="boss-character-hp-track"><div style="width:${Math.max(0, currentHp / maxHp * 100)}%"></div></div><small>${currentHp} / ${maxHp} HP</small></div></div>`;
+                    }).join('')}</div></article>
+                    <div class="boss-vs">VS</div>
+                    <article class="boss-enemy-card"><img src="${boss.image}" alt="${boss.name}"><h2>${boss.name}</h2><div class="boss-hp-track"><div style="width:${Math.max(0, bossBattle.bossHp / bossBattle.maxBossHp * 100)}%"></div></div><p>HP ${Math.max(0, bossBattle.bossHp)} / ${bossBattle.maxBossHp}</p><span>Boss nivel ${bossBattle.level} · ATK ${bossBattle.attack}</span></article>
+                </div>
+                <p class="boss-auto-status">${battleFinished ? (bossBattle.result === 'victory' ? translations[currentLanguage]['boss-victory'].replace('{astrite}', bossBattle.reward).replace('{union}', bossBattle.unionReward) : translations[currentLanguage]['boss-defeat']) : `${translations[currentLanguage]['boss-auto']} · ATK echipă: ${Math.round(bossBattle.teamAttackMultiplier * 100)}%`}</p>
+                <div class="boss-ultimate-actions">${bossBattle.team.map((name, index) => {
+                    const characterDefeated = bossBattle.teamHp[index] <= 0;
+                    const disabled = battleFinished || bossBattle.ultimateUsed[index] || characterDefeated;
+                    const roles = getCharacterRoles(name);
+                    const effect = roles.includes('Buffer ATK') && roles.includes('Healer') ? '+25% ATK + Heal' : roles.includes('Buffer ATK') ? '+25% ATK' : roles.includes('Healer') ? 'Heal' : 'DMG x2';
+                    return `<button type="button" class="wish-button boss-ultimate-button" data-boss-ultimate="${index}" ${disabled ? 'disabled' : ''}>${translations[currentLanguage]['domain-ultimate']} · ${name} · ${effect}${bossBattle.ultimateUsed[index] ? ' ✓' : characterDefeated ? ' · KO' : ''}</button>`;
+                }).join('')}</div>
+                ${battleFinished ? `${bossBattle.result === 'victory' ? `<p class="boss-reward">${translations[currentLanguage]['boss-reward'].replace('{astrite}', bossBattle.reward).replace('{union}', bossBattle.unionReward)}</p>` : ''}<button type="button" class="boss-back-button" data-boss-back>${translations[currentLanguage]['boss-back']}</button>` : '<p class="boss-message" id="bossBattleMessage"></p>'}
+            </section>`;
+            game.querySelectorAll('[data-boss-ultimate]').forEach(button => button.addEventListener('click', () => useBossUltimate(Number(button.dataset.bossUltimate))));
+            game.querySelector('[data-boss-back]')?.addEventListener('click', () => {
+                clearInterval(bossBattle.countdown);
+                bossBattle = null;
+                renderBossPage();
+            });
+            return;
+        }
+        const selectedBoss = bosses.find(item => item.name === bossSelection.boss) || bosses[0];
+        const activeTeam = bossTeam.map((name, index) => name || obtainedCharacters[index]?.name || null);
+        bossTeam = activeTeam;
+        game.innerHTML = `<section class="boss-setup">
+            <h2>${translations[currentLanguage]['boss-select-team']}</h2>
+            <div class="boss-team-slots">${activeTeam.map((name, index) => {
+                const character = obtainedCharacters.find(item => item.name === name);
+                return `<button type="button" class="boss-team-slot${name ? ' selected' : ''}" data-boss-slot="${index}">${character ? `<img src="${character.img}" alt="${character.name}"><strong>${character.name}</strong>` : '<span>+</span>'}<small>${index + 1}</small></button>`;
+            }).join('')}</div>
+            <div class="boss-selector-section"><span class="boss-selector-label">${translations[currentLanguage]['boss-select-team']}</span><div class="boss-character-grid">${obtainedCharacters.map(character => `<button type="button" class="boss-character-option${activeTeam.includes(character.name) ? ' selected' : ''}" data-boss-character="${character.name}"><img src="${character.img}" alt="${character.name}"><span>${character.name}</span>${activeTeam.includes(character.name) ? '<b>✓</b>' : ''}</button>`).join('')}</div></div>
+            <div class="boss-selector-section"><span class="boss-selector-label">${translations[currentLanguage]['boss-select-boss']}</span><div class="boss-boss-grid">${bosses.map(boss => `<button type="button" class="boss-boss-option${boss.name === selectedBoss.name ? ' selected' : ''}" data-boss-name="${boss.name}"><img src="${boss.image}" alt="${boss.name}"><span>${boss.name}</span></button>`).join('')}</div></div>
+            <div class="boss-selector-section"><label class="boss-level-input-label" for="bossLevelInput">${translations[currentLanguage]['boss-select-level']}</label><div class="boss-level-input-row"><input id="bossLevelInput" type="number" min="1" max="100" step="1" value="${Math.max(1, Math.min(100, Number(bossSelection.level) || 1))}" data-boss-level><span>+<strong data-boss-level-reward>${Math.max(1, Math.min(100, Number(bossSelection.level) || 1)) * 10}</strong> Astrite</span></div></div>
+            <button type="button" class="wish-button" data-boss-start>${translations[currentLanguage]['boss-start']}</button>
+            <p class="boss-message" id="bossSetupMessage"></p>
+        </section>`;
+        game.querySelectorAll('[data-boss-character]').forEach(button => {
+            button.addEventListener('click', () => {
+                const name = button.dataset.bossCharacter;
+                const existingIndex = bossTeam.indexOf(name);
+                if (existingIndex >= 0) bossTeam[existingIndex] = null;
+                else {
+                    const emptyIndex = bossTeam.findIndex(item => !item);
+                    if (emptyIndex >= 0) bossTeam[emptyIndex] = name;
+                }
+                saveCurrentUserData();
+                renderBossPage();
+            });
+        });
+        game.querySelectorAll('[data-boss-slot]').forEach(button => {
+            button.addEventListener('click', () => {
+                bossTeam[Number(button.dataset.bossSlot)] = null;
+                saveCurrentUserData();
+                renderBossPage();
+            });
+        });
+        game.querySelectorAll('[data-boss-name]').forEach(button => button.addEventListener('click', () => {
+            bossSelection.boss = button.dataset.bossName;
+            saveCurrentUserData();
+            renderBossPage();
+        }));
+        game.querySelector('[data-boss-level]').addEventListener('change', event => {
+            bossSelection.level = Math.max(1, Math.min(100, Number(event.target.value) || 1));
+            event.target.value = bossSelection.level;
+            saveCurrentUserData();
+            const reward = game.querySelector('[data-boss-level-reward]');
+            if (reward) reward.textContent = bossSelection.level * 10;
+        });
+        game.querySelector('[data-boss-start]').addEventListener('click', startBossBattle);
+    }
+
+    function startBossBattle() {
+        const message = document.getElementById('bossSetupMessage');
+        const team = bossTeam.map((name, index) => name || obtainedCharacters[index]?.name).filter(Boolean);
+        if (team.length !== 3 || new Set(team).size !== 3) {
+            message.textContent = translations[currentLanguage]['boss-team-error'];
+            return;
+        }
+        const boss = bosses.find(item => item.name === bossSelection.boss) || bosses[0];
+        const level = Math.max(1, Math.min(100, Number(bossSelection.level) || 1));
+        bossTeam = team;
+        bossSelection = { boss: boss.name, level };
+        bossBattle = {
+            boss,
+            level,
+            team,
+            teamHp: team.map(name => getCharacterBattleStats(name).maxHp),
+            maxTeamHp: team.map(name => getCharacterBattleStats(name).maxHp),
+            maxBossHp: 300 + level * 180,
+            bossHp: 300 + level * 180,
+            attack: 8 + level * 4,
+            ultimateUsed: [false, false, false],
+            result: null,
+            reward: 0,
+            unionReward: 0,
+            teamAttack: team.map(name => getCharacterBattleStats(name).attack),
+            teamAttackMultiplier: 1,
+            countdown: null
+        };
+        saveCurrentUserData();
+        renderBossPage();
+        bossBattle.countdown = setInterval(bossAutoAttack, 5000);
+    }
+
+    function getBossCharacterAttack(characterName, teamIndex = -1) {
+        if (teamIndex >= 0 && bossBattle?.teamAttack?.[teamIndex] != null) return bossBattle.teamAttack[teamIndex];
+        return getCharacterBattleStats(characterName).attack * (bossBattle?.teamAttackMultiplier || 1);
+    }
+
+    function bossAutoAttack() {
+        if (!bossBattle) return;
+        const teamDamage = bossBattle.team.reduce((total, name, index) => {
+            if (bossBattle.teamHp[index] <= 0) return total;
+            return total + getBossCharacterAttack(name, index);
+        }, 0);
+        bossBattle.bossHp = Math.max(0, bossBattle.bossHp - teamDamage);
+        if (bossBattle.bossHp <= 0) {
+            const reward = bossBattle.level * 10;
+            const unionReward = bossBattle.level * 5;
+            astrite += reward;
+            updateAstriteDisplay(astrite);
+            addUnionExp(unionReward);
+            saveCurrentUserData();
+            clearInterval(bossBattle.countdown);
+            bossBattle.result = 'victory';
+            bossBattle.reward = reward;
+            bossBattle.unionReward = unionReward;
+            renderBossPage();
+            return;
+        }
+
+        const incoming = bossBattle.attack;
+        const availableTargets = bossBattle.teamHp
+            .map((hp, index) => hp > 0 ? index : -1)
+            .filter(index => index >= 0);
+        if (availableTargets.length) {
+            const target = availableTargets[Math.floor(Math.random() * availableTargets.length)];
+            bossBattle.teamHp[target] = Math.max(0, bossBattle.teamHp[target] - incoming);
+        }
+        if (!bossBattle.teamHp.some(hp => hp > 0)) {
+            clearInterval(bossBattle.countdown);
+            bossBattle.result = 'defeat';
+            bossBattle.reward = 0;
+            renderBossPage();
+            return;
+        }
+        renderBossPage();
+    }
+
+    function useBossUltimate(index) {
+        if (!bossBattle || bossBattle.result || bossBattle.ultimateUsed[index]) return;
+        const characterName = bossBattle.team[index];
+        const character = obtainedCharacters.find(item => item.name === characterName);
+        if (!character) return;
+        const level = getCharacterTrainingState(characterName).level;
+        const roles = getCharacterRoles(characterName);
+        if (roles.includes('Buffer ATK')) {
+            bossBattle.teamAttackMultiplier += 0.25;
+            bossBattle.teamAttack = bossBattle.team.map(name => getCharacterBattleStats(name).attack * bossBattle.teamAttackMultiplier);
+        }
+        if (roles.includes('Healer')) {
+            const healing = getCharacterBattleStats(characterName).maxHp * 0.1 * level;
+            bossBattle.teamHp = bossBattle.teamHp.map((hp, teamIndex) => Math.min(bossBattle.maxTeamHp[teamIndex], hp + healing));
+        }
+        if (!roles.includes('Buffer ATK') && !roles.includes('Healer')) {
+            bossBattle.bossHp = Math.max(0, bossBattle.bossHp - getCharacterBattleStats(characterName).attack * 2 * bossBattle.teamAttackMultiplier);
+        }
+        bossBattle.ultimateUsed[index] = true;
+        showUltimateVideo(character);
+        if (bossBattle.bossHp <= 0) {
+            const reward = bossBattle.level * 10;
+            const unionReward = bossBattle.level * 5;
+            astrite += reward;
+            updateAstriteDisplay(astrite);
+            addUnionExp(unionReward);
+            saveCurrentUserData();
+            clearInterval(bossBattle.countdown);
+            bossBattle.result = 'victory';
+            bossBattle.reward = reward;
+            bossBattle.unionReward = unionReward;
+            renderBossPage();
+            return;
+        }
+        renderBossPage();
+    }
+
     // --- Page navigation ---
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -3123,6 +3516,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateShopUI();
             } else if (targetPage === 'hunting') {
                 renderHuntingPage();
+            } else if (targetPage === 'boss') {
+                renderBossPage();
             } else if (targetPage === 'domains') {
                 renderEchoHunt();
                 renderResonanceSurge();
@@ -3131,6 +3526,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.renderResourceSurge('sealedTube');
                 }
             }
+        });
+    });
+
+    document.querySelectorAll('[data-home-page]').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelector(`[data-page="${card.dataset.homePage}"]`)?.click();
         });
     });
     
