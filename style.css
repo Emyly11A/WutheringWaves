@@ -27,6 +27,21 @@
     --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
+:root[data-theme="ocean"] {
+    --bg-1: #031923; --bg-2: #073a52; --panel: rgba(4, 31, 44, 0.88); --panel-2: rgba(8, 58, 78, 0.92);
+    --line-strong: rgba(88, 219, 255, 0.32); --text: #effcff; --muted: #8dc9db; --accent: #66e3ff; --accent-2: #67b7ff; --accent-3: #9ee6cc;
+}
+
+:root[data-theme="ember"] {
+    --bg-1: #190907; --bg-2: #3a1610; --panel: rgba(39, 14, 12, 0.9); --panel-2: rgba(72, 24, 16, 0.92);
+    --line-strong: rgba(255, 155, 91, 0.33); --text: #fff7f1; --muted: #d3a69a; --accent: #ffb066; --accent-2: #ff6f7d; --accent-3: #ffe08a;
+}
+
+:root[data-theme="moon"] {
+    --bg-1: #0f1025; --bg-2: #24203f; --panel: rgba(22, 20, 50, 0.9); --panel-2: rgba(42, 36, 78, 0.92);
+    --line-strong: rgba(190, 179, 255, 0.34); --text: #f8f6ff; --muted: #b5add9; --accent: #c1b2ff; --accent-2: #f1a8ff; --accent-3: #bde7ff;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -3022,6 +3037,31 @@ nav {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.05rem;
 }
+
+.missions-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.missions-grid h3 { margin-bottom: 0.7rem; color: var(--accent-3); font-family: 'Orbitron', sans-serif; font-size: 0.76rem; letter-spacing: 0.08em; }
+.mission-card, .achievement-card { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; padding: 0.85rem; border: 1px solid rgba(255,255,255,0.11); border-radius: 13px; background: rgba(2, 10, 24, 0.28); }
+.mission-card + .mission-card { margin-top: 0.65rem; }
+.mission-card > div { min-width: 0; flex: 1; }
+.mission-card strong, .achievement-card strong { display: block; color: var(--text); font-size: 0.8rem; }
+.mission-card span, .mission-card small, .achievement-card p, .achievement-card small { color: var(--muted); font-size: 0.7rem; }
+.mission-card small, .achievement-card small { display: block; margin-top: 0.35rem; color: var(--accent-3); font-weight: 800; }
+.mission-track { height: 5px; overflow: hidden; margin-top: 0.4rem; border-radius: 99px; background: rgba(255,255,255,0.1); }
+.mission-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-3)); }
+.mission-card button, .achievement-card button { flex: 0 0 auto; padding: 0.45rem 0.6rem; border: 1px solid rgba(124,240,255,0.28); border-radius: 8px; background: rgba(124,240,255,0.1); color: var(--accent); font: inherit; font-size: 0.68rem; font-weight: 800; cursor: pointer; }
+.mission-card.complete, .achievement-card.complete { border-color: rgba(255,209,102,0.42); }
+.mission-card.claimed, .achievement-card.claimed { opacity: 0.62; }
+.mission-card button:disabled, .achievement-card button:disabled { cursor: default; opacity: 0.55; }
+.achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; }
+.achievement-card { display: block; min-height: 145px; }
+.achievement-card p { margin: 0.45rem 0; line-height: 1.4; }
+.achievement-card button { width: 100%; margin-top: 0.75rem; }
+.theme-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.65rem; }
+.theme-options button { min-height: 78px; padding: 0.75rem; border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; background: linear-gradient(135deg, var(--panel-2), var(--bg-2)); color: var(--text); font: 800 0.72rem 'Orbitron', sans-serif; cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease; }
+.theme-options button:hover { transform: translateY(-2px); border-color: var(--accent); }
+.theme-options button.active { border-color: var(--accent-3); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-3) 28%, transparent); }
+
+@media (max-width: 680px) { .missions-grid, .theme-options { grid-template-columns: 1fr 1fr; } }
 
 .profile-resource-grid,
 .profile-stats-grid {
