@@ -3369,7 +3369,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const selectedBoss = bosses.find(item => item.name === bossSelection.boss) || bosses[0];
-        const activeTeam = bossTeam.map((name, index) => name || obtainedCharacters[index]?.name || null);
+        // Păstrează explicit sloturile goale: debifarea unui caracter nu trebuie
+        // să fie înlocuită automat cu alt personaj.
+        const activeTeam = Array.from({ length: 3 }, (_, index) => bossTeam[index] || null);
         bossTeam = activeTeam;
         game.innerHTML = `<section class="boss-setup">
             <h2>${translations[currentLanguage]['boss-select-team']}</h2>
@@ -3420,7 +3422,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startBossBattle() {
         const message = document.getElementById('bossSetupMessage');
-        const team = bossTeam.map((name, index) => name || obtainedCharacters[index]?.name).filter(Boolean);
+        const team = bossTeam.filter(Boolean);
         if (team.length !== 3 || new Set(team).size !== 3) {
             message.textContent = translations[currentLanguage]['boss-team-error'];
             return;
