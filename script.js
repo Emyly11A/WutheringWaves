@@ -355,6 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let trainingWeaponFilter = 'all';
     let trainingWeaponSort = 'level-desc';
     let equipmentWeaponFilter = 'all';
+    let missionProgress = { dailyDate: '', weeklyKey: '', daily: {}, weekly: {} };
+    let claimedAchievements = [];
+    let selectedTheme = 'aurora';
+    let activityStats = { wishes: 0, hunts: 0, bossWins: 0 };
+    let claimedMissionRewards = { daily: [], weekly: [] };
     const trainingMaterialQuantities = { potion: {}, core: {}, tube: {} };
 
     if (totalWishesSpan) {
@@ -568,6 +573,15 @@ document.addEventListener('DOMContentLoaded', () => {
             'profile-weapon-5': 'Arme 5★',
             'profile-weapon-4': 'Arme 4★',
             'profile-weapon-3': 'Arme 3★',
+            'missions-title': 'Misiuni',
+            'missions-daily': 'Misiuni zilnice',
+            'missions-weekly': 'Misiuni săptămânale',
+            'achievements-title': 'Achievements',
+            'theme-title': 'Temă vizuală',
+            'theme-aurora': 'Neon Aurora',
+            'theme-ocean': 'Oceanic',
+            'theme-ember': 'Ember',
+            'theme-moon': 'Moonlight',
             'training-eyebrow': 'DEZVOLTARE PERSONAJ',
             'training-title': 'Antrenament',
             'training-description': 'Dezvoltă personajele și armele obținute folosind resursele dedicate.',
@@ -852,6 +866,15 @@ document.addEventListener('DOMContentLoaded', () => {
             'profile-weapon-5': '5-star weapons',
             'profile-weapon-4': '4-star weapons',
             'profile-weapon-3': '3-star weapons',
+            'missions-title': 'Missions',
+            'missions-daily': 'Daily missions',
+            'missions-weekly': 'Weekly missions',
+            'achievements-title': 'Achievements',
+            'theme-title': 'Visual theme',
+            'theme-aurora': 'Neon Aurora',
+            'theme-ocean': 'Oceanic',
+            'theme-ember': 'Ember',
+            'theme-moon': 'Moonlight',
             'training-eyebrow': 'CHARACTER DEVELOPMENT',
             'training-title': 'Training',
             'training-description': 'Develop obtained characters and weapons using their dedicated resources.',
@@ -1056,6 +1079,11 @@ document.addEventListener('DOMContentLoaded', () => {
             huntingLastResetDate,
             bossTeam,
             bossSelection,
+            missionProgress,
+            claimedMissionRewards,
+            claimedAchievements,
+            selectedTheme,
+            activityStats,
             domainProgress
         };
         
@@ -1165,6 +1193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUser = { username: user.username, email: user.email };
         localStorage.setItem('wwCurrentUser', JSON.stringify(currentUser));
         loadUserData();
+        applyTheme(selectedTheme);
         updateAccountUI();
         updateProfileDropdown();
     }
@@ -1201,6 +1230,12 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedHuntCharacterName = null;
         huntingLastResetDate = null;
         trainingMode = 'character';
+        missionProgress = { dailyDate: '', weeklyKey: '', daily: {}, weekly: {} };
+        claimedMissionRewards = { daily: [], weekly: [] };
+        claimedAchievements = [];
+        selectedTheme = 'aurora';
+        activityStats = { wishes: 0, hunts: 0, bossWins: 0 };
+        applyTheme('aurora');
         updateAstriteDisplay(0);
         updateShellCreditsDisplay(0);
         updateUnionExpDisplay();
@@ -1262,7 +1297,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedHuntCharacterName: null,
                 huntingLastResetDate: null,
                 bossTeam: [null, null, null],
-                bossSelection: { boss: bosses[0].name, level: 1 }
+                bossSelection: { boss: bosses[0].name, level: 1 },
+                missionProgress: { dailyDate: '', weeklyKey: '', daily: {}, weekly: {} },
+                claimedMissionRewards: { daily: [], weekly: [] },
+                claimedAchievements: [],
+                selectedTheme: 'aurora',
+                activityStats: { wishes: 0, hunts: 0, bossWins: 0 }
         });
     }
     
@@ -1638,6 +1678,11 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedHuntCharacterName = userData.selectedHuntCharacterName || null;
             selectedEchoHuntCharacterName = userData.selectedEchoHuntCharacterName || null;
             huntingLastResetDate = userData.huntingLastResetDate || null;
+            missionProgress = userData.missionProgress || { dailyDate: '', weeklyKey: '', daily: {}, weekly: {} };
+            claimedMissionRewards = userData.claimedMissionRewards || { daily: [], weekly: [] };
+            claimedAchievements = userData.claimedAchievements || [];
+            selectedTheme = userData.selectedTheme || 'aurora';
+            activityStats = userData.activityStats || { wishes: 0, hunts: 0, bossWins: 0 };
             bossTeam = Array.isArray(userData.bossTeam) ? userData.bossTeam : [null, null, null];
             bossSelection = userData.bossSelection || { boss: bosses[0].name, level: 1 };
             if (weaponProgress['Red String']) {
@@ -2656,6 +2701,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedHuntCharacterName = null;
         shellCredits += shellReward;
         addUnionExp(unionReward);
+        trackActivity('hunts');
         updateShellCreditsDisplay(shellCredits);
         saveCurrentUserData();
         updateProfileDropdown();
@@ -3423,6 +3469,7 @@ document.addEventListener('DOMContentLoaded', () => {
             astrite += reward;
             updateAstriteDisplay(astrite);
             addUnionExp(unionReward);
+            trackActivity('bossWins');
             saveCurrentUserData();
             clearInterval(bossBattle.countdown);
             bossBattle.result = 'victory';
@@ -3888,6 +3935,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         renderWishHistory();
         updateUI(results);
+        trackActivity('wishes', numWishes);
         updateWishPurchaseUI();
         
         wish1Button.disabled = false;
@@ -4061,8 +4109,157 @@ document.addEventListener('DOMContentLoaded', () => {
         profileAvatarButton.setAttribute('aria-expanded', 'false');
     });
 
+    function getLocalDateKey(date = new Date()) {
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    }
+
+    function getWeekKey(date = new Date()) {
+        const monday = new Date(date);
+        const offset = (monday.getDay() + 6) % 7;
+        monday.setDate(monday.getDate() - offset);
+        return getLocalDateKey(monday);
+    }
+
+    function resetMissionPeriods() {
+        const today = getLocalDateKey();
+        const week = getWeekKey();
+        let changed = false;
+        if (missionProgress.dailyDate !== today) {
+            missionProgress.dailyDate = today;
+            missionProgress.daily = {};
+            claimedMissionRewards.daily = [];
+            changed = true;
+        }
+        if (missionProgress.weeklyKey !== week) {
+            missionProgress.weeklyKey = week;
+            missionProgress.weekly = {};
+            claimedMissionRewards.weekly = [];
+            changed = true;
+        }
+        if (changed && currentUser) saveCurrentUserData();
+    }
+
+    function getMissionDefinitions(type) {
+        const ro = currentLanguage === 'ro';
+        return type === 'daily'
+            ? [
+                { id: 'wish', goal: 5, label: ro ? 'Fă 5 trageri Wish' : 'Make 5 Wish pulls', reward: { shell: 150 } },
+                { id: 'hunt', goal: 1, label: ro ? 'Trimite un caracter la vânătoare' : 'Send a character hunting', reward: { shell: 250 } },
+                { id: 'boss', goal: 1, label: ro ? 'Învinge un boss' : 'Defeat a boss', reward: { astrite: 15 } }
+            ]
+            : [
+                { id: 'wish', goal: 50, label: ro ? 'Fă 50 trageri Wish' : 'Make 50 Wish pulls', reward: { shell: 700, astrite: 25 } },
+                { id: 'hunt', goal: 5, label: ro ? 'Trimite personaje la 5 vânători' : 'Send characters on 5 hunts', reward: { shell: 1000 } },
+                { id: 'boss', goal: 3, label: ro ? 'Învinge 3 boși' : 'Defeat 3 bosses', reward: { astrite: 75 } }
+            ];
+    }
+
+    function getMissionProgressKey(activity) {
+        return activity === 'wishes' ? 'wish' : activity === 'hunts' ? 'hunt' : 'boss';
+    }
+
+    function trackActivity(activity, amount = 1) {
+        if (!currentUser || amount <= 0) return;
+        resetMissionPeriods();
+        const missionKey = getMissionProgressKey(activity);
+        missionProgress.daily[missionKey] = (missionProgress.daily[missionKey] || 0) + amount;
+        missionProgress.weekly[missionKey] = (missionProgress.weekly[missionKey] || 0) + amount;
+        activityStats[activity] = (activityStats[activity] || 0) + amount;
+        saveCurrentUserData();
+        updateProfileDropdown();
+    }
+
+    function formatReward(reward) {
+        return [reward.shell ? `+${reward.shell} Shell Credits` : '', reward.astrite ? `+${reward.astrite} Astrite` : ''].filter(Boolean).join(' · ');
+    }
+
+    function renderMissions() {
+        resetMissionPeriods();
+        ['daily', 'weekly'].forEach(type => {
+            const container = document.getElementById(type === 'daily' ? 'dailyMissions' : 'weeklyMissions');
+            if (!container) return;
+            const values = missionProgress[type] || {};
+            const claimed = claimedMissionRewards[type] || [];
+            container.innerHTML = getMissionDefinitions(type).map(mission => {
+                const progress = Math.min(mission.goal, values[mission.id] || 0);
+                const complete = progress >= mission.goal;
+                const isClaimed = claimed.includes(mission.id);
+                const buttonText = isClaimed ? (currentLanguage === 'ro' ? 'Primită' : 'Claimed') : (complete ? (currentLanguage === 'ro' ? 'Revendică' : 'Claim') : (currentLanguage === 'ro' ? 'În progres' : 'In progress'));
+                return `<article class="mission-card${complete ? ' complete' : ''}${isClaimed ? ' claimed' : ''}"><div><strong>${mission.label}</strong><span>${progress} / ${mission.goal}</span><div class="mission-track"><i style="width:${(progress / mission.goal) * 100}%"></i></div><small>${formatReward(mission.reward)}</small></div><button type="button" data-claim-mission="${type}:${mission.id}" ${!complete || isClaimed ? 'disabled' : ''}>${buttonText}</button></article>`;
+            }).join('');
+        });
+        document.querySelectorAll('[data-claim-mission]').forEach(button => button.addEventListener('click', () => {
+            const [type, id] = button.dataset.claimMission.split(':');
+            claimMissionReward(type, id);
+        }));
+    }
+
+    function claimMissionReward(type, id) {
+        const mission = getMissionDefinitions(type).find(item => item.id === id);
+        const complete = (missionProgress[type]?.[id] || 0) >= mission?.goal;
+        if (!currentUser || !mission || !complete || claimedMissionRewards[type]?.includes(id)) return;
+        claimedMissionRewards[type].push(id);
+        shellCredits += mission.reward.shell || 0;
+        astrite += mission.reward.astrite || 0;
+        updateShellCreditsDisplay(shellCredits);
+        updateAstriteDisplay(astrite);
+        saveCurrentUserData();
+        updateProfileDropdown();
+    }
+
+    function getAchievements() {
+        const ro = currentLanguage === 'ro';
+        return [
+            { id: 'first-wish', label: ro ? 'Prima rezonanță' : 'First resonance', detail: ro ? 'Fă prima tragere Wish.' : 'Make your first Wish pull.', current: totalWishes, goal: 1, reward: { astrite: 50 } },
+            { id: 'collector', label: ro ? 'Colecționar' : 'Collector', detail: ro ? 'Obține 10 caractere diferite.' : 'Obtain 10 different characters.', current: obtainedCharacters.length, goal: 10, reward: { shell: 500 } },
+            { id: 'five-star', label: ro ? 'Stea strălucitoare' : 'Shining star', detail: ro ? 'Obține un item de 5 stele.' : 'Obtain a 5-star item.', current: count5Star, goal: 1, reward: { astrite: 100 } },
+            { id: 'hunter', label: ro ? 'Vânător veteran' : 'Veteran hunter', detail: ro ? 'Finalizează 10 vânători.' : 'Complete 10 hunts.', current: activityStats.hunts || 0, goal: 10, reward: { shell: 800 } },
+            { id: 'boss-slayer', label: ro ? 'Ucigaș de boși' : 'Boss slayer', detail: ro ? 'Învinge 10 boși.' : 'Defeat 10 bosses.', current: activityStats.bossWins || 0, goal: 10, reward: { astrite: 200 } }
+        ];
+    }
+
+    function renderAchievements() {
+        const container = document.getElementById('achievementsList');
+        if (!container) return;
+        container.innerHTML = getAchievements().map(achievement => {
+            const progress = Math.min(achievement.goal, achievement.current);
+            const complete = progress >= achievement.goal;
+            const claimed = claimedAchievements.includes(achievement.id);
+            const buttonText = claimed ? (currentLanguage === 'ro' ? 'Primită' : 'Claimed') : (complete ? (currentLanguage === 'ro' ? 'Revendică' : 'Claim') : `${progress} / ${achievement.goal}`);
+            return `<article class="achievement-card${complete ? ' complete' : ''}${claimed ? ' claimed' : ''}"><strong>${achievement.label}</strong><p>${achievement.detail}</p><small>${formatReward(achievement.reward)}</small><button type="button" data-claim-achievement="${achievement.id}" ${!complete || claimed ? 'disabled' : ''}>${buttonText}</button></article>`;
+        }).join('');
+        container.querySelectorAll('[data-claim-achievement]').forEach(button => button.addEventListener('click', () => claimAchievement(button.dataset.claimAchievement)));
+    }
+
+    function claimAchievement(id) {
+        const achievement = getAchievements().find(item => item.id === id);
+        if (!currentUser || !achievement || achievement.current < achievement.goal || claimedAchievements.includes(id)) return;
+        claimedAchievements.push(id);
+        shellCredits += achievement.reward.shell || 0;
+        astrite += achievement.reward.astrite || 0;
+        updateShellCreditsDisplay(shellCredits);
+        updateAstriteDisplay(astrite);
+        saveCurrentUserData();
+        updateProfileDropdown();
+    }
+
+    function applyTheme(theme, shouldSave = false) {
+        selectedTheme = ['aurora', 'ocean', 'ember', 'moon'].includes(theme) ? theme : 'aurora';
+        document.documentElement.dataset.theme = selectedTheme;
+        document.querySelectorAll('[data-theme-choice]').forEach(button => {
+            const active = button.dataset.themeChoice === selectedTheme;
+            button.classList.toggle('active', active);
+            button.setAttribute('aria-pressed', String(active));
+        });
+        if (shouldSave && currentUser) saveCurrentUserData();
+    }
+
+    document.querySelectorAll('[data-theme-choice]').forEach(button => button.addEventListener('click', () => applyTheme(button.dataset.themeChoice, true)));
+
     // Actualizează datele din profil
     function updateProfileDropdown() {
+        resetMissionPeriods();
+        applyTheme(selectedTheme);
         updateUnionExpDisplay();
         updateProfileAvatar();
         renderProfileAvatarPicker();
@@ -4085,5 +4282,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('profileWeap5').textContent = weap5;
         document.getElementById('profileWeap4').textContent = weap4;
         document.getElementById('profileWeap3').textContent = weap3;
+        renderMissions();
+        renderAchievements();
     }
 });
