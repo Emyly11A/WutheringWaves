@@ -1789,11 +1789,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'Aemeath', 'Augusta', 'Cartethyia', 'Hiyuki', 'Sigrika', 'Yangyang: Xuanling',
         'Luuk Hersen', 'Phrolova', 'Galbrena', 'Camellya', 'Carlotta', 'Jinshi',
         'Changli', 'Jiyan', 'Encore', 'Xiangli Yao', 'Calcharo', 'Zani',
-        'Lingyang', 'Qingxiao', 'Jingran'
+        'Lingyang', 'Qingxiao', 'Jingran', 'Iuno', 'Lucy'
     ]);
     const attackBufferCharacters = new Set([
         'Phoebe', 'Zhezhi', 'Yinlin', 'Ciaccona', 'Shorekeeper', 'Verina',
-        'Mornye', 'Chisa', 'Lucilla', 'Suisui', 'Qiuyuan', 'Lynae', 'Denia', 'Brant'
+        'Mornye', 'Chisa', 'Lucilla', 'Suisui', 'Qiuyuan', 'Lynae', 'Denia', 'Brant', 'Iuno',
+        'Cantarella', 'Lupa', 'Rebecca', 'Roccia'
     ]);
     const healerCharacters = new Set([
         'Shorekeeper', 'Verina', 'Mornye', 'Chisa', 'Suisui', 'Jianxin', 'Brant'
