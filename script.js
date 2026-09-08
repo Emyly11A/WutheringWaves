@@ -1793,15 +1793,20 @@ document.addEventListener('DOMContentLoaded', () => {
     ]);
     const attackBufferCharacters = new Set([
         'Phoebe', 'Zhezhi', 'Yinlin', 'Ciaccona', 'Shorekeeper', 'Verina',
-        'Mornye', 'Chisa', 'Lucilla', 'Suisui', 'Qiuyuan', 'Lynae', 'Denia'
+        'Mornye', 'Chisa', 'Lucilla', 'Suisui', 'Qiuyuan', 'Lynae', 'Denia', 'Brant'
     ]);
     const healerCharacters = new Set([
-        'Shorekeeper', 'Verina', 'Mornye', 'Chisa', 'Suisui', 'Jianxin'
+        'Shorekeeper', 'Verina', 'Mornye', 'Chisa', 'Suisui', 'Jianxin', 'Brant'
+    ]);
+    const supportCharacters = new Set([
+        'Phoebe', 'Zhezhi', 'Yinlin', 'Ciaccona', 'Shorekeeper', 'Verina',
+        'Mornye', 'Chisa', 'Suisui', 'Brant'
     ]);
 
     function getCharacterRoles(characterName) {
         const roles = [];
         if (dpsCharacters.has(characterName)) roles.push('DPS');
+        if (supportCharacters.has(characterName)) roles.push('Support');
         if (attackBufferCharacters.has(characterName)) roles.push('Buffer ATK');
         if (healerCharacters.has(characterName)) roles.push('Healer');
         return roles;
